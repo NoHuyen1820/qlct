@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "330122403452",
+    "firebase_url": "https://qlct-app-default-rtdb.firebaseio.com",
+    "project_id": "qlct-app",
+    "storage_bucket": "qlct-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330122403452:android:fd4499ab429e278ff573f9",
+        "android_client_info": {
+          "package_name": "com.example.qlct"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "330122403452-q12kcg8b5hcgggd6c5n4qibr0lgcdfb4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlI-OWW4XYy6EdpF2rXQT5wAH6vOFdhc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "330122403452-q12kcg8b5hcgggd6c5n4qibr0lgcdfb4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "330122403452-m1scivqjuvlbhbld5mhv85apl3h799hc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.moneyManagermentApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

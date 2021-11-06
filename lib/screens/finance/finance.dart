@@ -8,14 +8,16 @@ import 'package:qlct/theme/colors.dart';
 
 class FinanceOverviewFragment extends StatelessWidget {
   final String title;
-  final String amount;
-  final List<FinanceItem> items;
+  final Future<String> futureAmount;
+  final List<FinanceItem>? items;
+  final Future<List<FinanceItem>>? futureItems;
 
   const FinanceOverviewFragment(
       {Key? key,
       required this.title,
-      required this.amount,
-      required this.items})
+      required this.futureAmount,
+      this.items,
+      this.futureItems})
       : super(key: key);
 
   @override
@@ -36,16 +38,43 @@ class FinanceOverviewFragment extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 13.0, color: QLCTColors.primaryColorDark),
                     )),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      amount,
-                      style: const TextStyle(
-                          fontSize: 44.0, color: QLCTColors.primaryColor),
-                    ))
+                FutureBuilder(
+                  future: futureAmount,
+                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      return Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            snapshot.data,
+                            style: const TextStyle(
+                                fontSize: 44.0, color: QLCTColors.primaryColor),
+                          ));
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                )
               ],
             ),
-            for (var item in items) item,
+            // for (varitem in items) item,
+            FutureBuilder(
+              future: futureItems,
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) {
+                        FinanceItem fItem = snapshot.data[index];
+                        return fItem;
+                      });
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+            // for (var item in items) item,
             SizedBox(
                 width: double.maxFinite,
                 child: TextButton(
@@ -104,7 +133,7 @@ class FinanceItem extends StatelessWidget {
                           Text(
                             title,
                             style: const TextStyle(
-                                fontSize: 16.0, color: Colors.black45),
+                                fontSize: 16.0, color: Colors.black87),
                           ),
                           Text(
                             subtitle,
@@ -116,8 +145,7 @@ class FinanceItem extends StatelessWidget {
                       Text(
                         amount,
                         style: isNegative
-                            ? const TextStyle(
-                                fontSize: 20.0, color: Colors.red)
+                            ? const TextStyle(fontSize: 20.0, color: Colors.red)
                             : const TextStyle(
                                 fontSize: 20.0, color: RallyColors.buttonColor),
                       )

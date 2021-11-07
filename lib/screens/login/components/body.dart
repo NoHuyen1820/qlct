@@ -25,8 +25,7 @@ class _LoginState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController =
-        TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
 
     final authService = Provider.of<AuthService>(context);
 
@@ -51,8 +50,7 @@ class _LoginState extends State<Body> {
                 RoundedPasswordField(
                   controller: passwordController,
                   hintText: "Mật Khẩu",
-                  onChange: (value) {
-                  },
+                  onChange: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Vui lòng nhập mật khẩu";
@@ -64,21 +62,13 @@ class _LoginState extends State<Body> {
                   text: "Đăng nhập",
                   press: () async {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.of(context)
-                          .pushReplacement(
-                          MaterialPageRoute(builder: (
-                              context) => const RootApp())
-                      );
-                      // UserNew? user = await authService
-                      //     .signInWithEmailAndPasswordLocal(
-                      //     emailController.text, passwordController.text);
-                      // if (user != null) {
-                      //   Navigator.of(context)
-                      //       .pushReplacement(
-                      //       MaterialPageRoute(builder: (
-                      //           context) => const RootApp())
-                      //   );
-                      // }
+                      UserNew? user =
+                          await authService.signInWithEmailAndPasswordLocal(
+                              emailController.text, passwordController.text);
+                      if (user != null) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const RootApp()));
+                      }
                     }
                   },
                 )

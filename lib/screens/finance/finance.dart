@@ -9,13 +9,17 @@ import 'package:qlct/theme/colors.dart';
 class FinanceOverviewFragment extends StatelessWidget {
   final String title;
   final String amount;
-  final List<FinanceItem> items;
+  final Future<String>? futureAmount;
+  final List<FinanceItem>? items;
+  final Future<List<FinanceItem>>? futureItems;
 
   const FinanceOverviewFragment(
       {Key? key,
       required this.title,
       required this.amount,
-      required this.items})
+      this.futureAmount,
+      this.items,
+      this.futureItems})
       : super(key: key);
 
   @override
@@ -45,7 +49,7 @@ class FinanceOverviewFragment extends StatelessWidget {
                     ))
               ],
             ),
-            for (var item in items) item,
+            for (var item in items!) item,
             SizedBox(
                 width: double.maxFinite,
                 child: TextButton(
@@ -104,7 +108,7 @@ class FinanceItem extends StatelessWidget {
                           Text(
                             title,
                             style: const TextStyle(
-                                fontSize: 16.0, color: Colors.black45),
+                                fontSize: 16.0, color: Colors.black87),
                           ),
                           Text(
                             subtitle,
@@ -116,8 +120,7 @@ class FinanceItem extends StatelessWidget {
                       Text(
                         amount,
                         style: isNegative
-                            ? const TextStyle(
-                                fontSize: 20.0, color: Colors.red)
+                            ? const TextStyle(fontSize: 20.0, color: Colors.red)
                             : const TextStyle(
                                 fontSize: 20.0, color: RallyColors.buttonColor),
                       )

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qlct/Screens/Welcome/welcome_screen.dart';
@@ -17,6 +19,7 @@ class Wrapper extends StatelessWidget {
       builder: (_, AsyncSnapshot<UserNew?> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           final UserNew? user = snapshot.data;
+          if(user != null) log(user.uid);
           return user == null ? const WelcomeScreen() : const RootApp();
         } else {
           return const Scaffold(

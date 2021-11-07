@@ -22,11 +22,6 @@ class _OverviewScreenState extends State<OverviewScreen> {
   var transactionService = TransactionService();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
@@ -38,30 +33,52 @@ class _OverviewScreenState extends State<OverviewScreen> {
             children: [
               const Text(
                 "Overview",
-                style: TextStyle(color: Colors.black, fontSize: 35.0),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 35.0,
+                    decorationStyle: TextDecorationStyle.wavy),
               ),
               const SizedBox(
                 height: 5.0,
               ),
-              PieFinanceChart(),
+              const PieFinanceChart(),
               const SizedBox(
                 height: 20.0,
               ),
-              Center(
-                  child: FinanceOverviewFragment(
-                title: 'BUDGET',
-                futureAmount: buildAmountTotalBudgets(),
-                //futureItems:
-                //    buildBudgetFinanceItem(),
-                items: budgetItem,
-              )),
-              // Center(
-              //   child: FinanceOverviewFragment(
-              //     title: 'TRANSACTION',
-              //     futureAmount: '3.500.000d',
-              //     futureItems: buildTransactionFinanceItem(),
-              //   ),
-              // ),
+              FutureBuilder(
+                future: Future.wait([
+                  buildAmountTotalBudgets(),
+                ]),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    return FinanceOverviewFragment(
+                      title: 'BUDGET',
+                      amount: snapshot.data[0].toString(),
+                      items: budgetItems,
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+              FutureBuilder(
+                future: Future.wait([
+                  buildAmountTotalTransactions(),
+                ]),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    return FinanceOverviewFragment(
+                      title: 'TRANSACTION',
+                      amount: snapshot.data[0].toString(),
+                      items: transactionItems,
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
             ],
           ),
         )),
@@ -69,11 +86,16 @@ class _OverviewScreenState extends State<OverviewScreen> {
     );
   }
 
-  List<FinanceItem> budgetItem = [];
-  BigDecimal amountTotalBudgets = BigDecimal.parse("0.0");
-
   // Call budgetService get all budgets
   // and add into budgetItems
+  List<FinanceItem> budgetItems = [];
+  BigDecimal amountTotalBudgets = BigDecimal.parse("0.0");
+  Future<String> buildAmountTotalBudgets() async {
+    budgetItems = await buildBudgetFinanceItem();
+    log("BEGIN - END - buildAmountTotalBudgets: " +
+        amountTotalBudgets.toString());
+    return amountTotalBudgets.toString() + "đ";
+  }
   Future<List<FinanceItem>> buildBudgetFinanceItem() async {
     log("BEGIN - buildFinanceItem");
     Future<List<Budget>> budgetFu = budgetService.getAllBudget();
@@ -85,34 +107,38 @@ class _OverviewScreenState extends State<OverviewScreen> {
           title: b.name,
           subtitle: b.createdAt.toString().substring(0, 10),
           amount: b.amount);
-      budgetItem.add(f);
+      budgetItems.add(f);
     }
-    log(budgetItem.length.toString());
+    log(budgetItems.length.toString());
     log("END - buildFinanceItem");
-    return budgetItem.sublist(0, 4);
-  }
-  Future<String> buildAmountTotalBudgets() async {
-    budgetItem = await buildBudgetFinanceItem();
-    log("BEGIN - END - buildAmountTotalBudgets: " + amountTotalBudgets.toString());
-    return amountTotalBudgets.toString() + "đ";
+    return budgetItems.sublist(0, 4);
   }
 
-  List<FinanceItem> transactionItem = [];
-
+  // Call transactionService get all transactions
+  // and add into transactionItems
+  List<FinanceItem> transactionItems = [];
+  BigDecimal amountTotalTransactions = BigDecimal.parse("0.0");
+  Future<String> buildAmountTotalTransactions() async {
+    transactionItems = await buildTransactionFinanceItem();
+    log("BEGIN - END - buildAmountTotalTransactions: " +
+        amountTotalTransactions.toString());
+    return amountTotalTransactions.toString() + "đ";
+  }
   Future<List<FinanceItem>> buildTransactionFinanceItem() async {
     log("BEGIN - buildTransactionFinanceItem");
     Future<List<Transaction>> transactionFu =
         transactionService.getAllTransaction();
     List<Transaction> transactions = await transactionFu;
     for (Transaction trans in transactions) {
+      amountTotalTransactions += BigDecimal.parse(trans.amount);
       FinanceItem financeItem = FinanceItem(
           title: trans.transactionName,
           subtitle: trans.createdAt.toString().substring(0, 10),
           amount: trans.amount.toString());
-      transactionItem.add(financeItem);
+      transactionItems.add(financeItem);
     }
-    log(transactionItem.length.toString());
+    log(transactionItems.length.toString());
     log("END - buildTransactionFinanceItem");
-    return transactionItem.sublist(0, 4);
+    return transactionItems.sublist(0, 4);
   }
 }

@@ -7,7 +7,6 @@ import 'package:qlct/services/protocol.dart';
 import 'package:qlct/services/response_dto.dart';
 
 class BudgetService {
-
   // same as same
   Future<List<Budget>> getAllBudget() async {
     log("BEGIN - BudgetService: getAllBudget");
@@ -15,12 +14,9 @@ class BudgetService {
     Future<ResponseDTO> responseFu = Protocol.makeGetRequest(url);
     ResponseDTO responseDTO = await responseFu; // remove Future
     dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]
-    // if (data is List<dynamic>) {
-      log(data.runtimeType.toString());
-      // log(data.toString());
+    log(data.runtimeType.toString());
     List<Budget> budgets = [];
     for (dynamic d in data) {
-      log(jsonEncode(d));
       try {
         var validMap = jsonDecode(jsonEncode(d)) as Map<String, dynamic>;
         Budget budget = Budget.fromJson(validMap);

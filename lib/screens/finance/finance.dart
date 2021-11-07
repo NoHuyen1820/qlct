@@ -8,14 +8,16 @@ import 'package:qlct/theme/colors.dart';
 
 class FinanceOverviewFragment extends StatelessWidget {
   final String title;
-  final Future<String> futureAmount;
+  final String amount;
+  final Future<String>? futureAmount;
   final List<FinanceItem>? items;
   final Future<List<FinanceItem>>? futureItems;
 
   const FinanceOverviewFragment(
       {Key? key,
       required this.title,
-      required this.futureAmount,
+      required this.amount,
+      this.futureAmount,
       this.items,
       this.futureItems})
       : super(key: key);
@@ -38,43 +40,16 @@ class FinanceOverviewFragment extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 13.0, color: QLCTColors.primaryColorDark),
                     )),
-                FutureBuilder(
-                  future: futureAmount,
-                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.hasData) {
-                      return Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            snapshot.data,
-                            style: const TextStyle(
-                                fontSize: 44.0, color: QLCTColors.primaryColor),
-                          ));
-                    } else {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                  },
-                )
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      amount,
+                      style: const TextStyle(
+                          fontSize: 44.0, color: QLCTColors.primaryColor),
+                    ))
               ],
             ),
-            // for (varitem in items) item,
-            FutureBuilder(
-              future: futureItems,
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        FinanceItem fItem = snapshot.data[index];
-                        return fItem;
-                      });
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
-            // for (var item in items) item,
+            for (var item in items!) item,
             SizedBox(
                 width: double.maxFinite,
                 child: TextButton(

@@ -1,4 +1,4 @@
-import 'package:qlct/screens/Welcome/welcome_screen.dart';
+import 'package:qlct/screens/budget/budget_list.dart';
 import 'package:qlct/screens/overview/overview_screen.dart';
 import 'package:qlct/screens/profile/profile_screen.dart';
 import 'package:qlct/screens/report/report_screen.dart';
@@ -20,7 +20,7 @@ class _RootAppState extends State<RootApp> {
   List<Widget> pages = [
     const OverviewScreen(),
     const ReportScreen(),
-    const WelcomeScreen(),
+    const BudgetListScreen(),
     const ProfileScreen(),
     const OverviewScreen(),
   ];
@@ -73,8 +73,8 @@ class _RootAppState extends State<RootApp> {
     ];
 
     return AnimatedBottomNavigationBar(
-      activeColor: QLCTColors.primaryColorDark,
-      splashColor: QLCTColors.primaryColor,
+      activeColor: QLCTColors.mainColor,
+      splashColor: QLCTColors.mainColor,
       inactiveColor: Colors.black38,
       icons: iconItems,
       activeIndex: pageIndex,

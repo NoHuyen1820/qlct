@@ -66,7 +66,7 @@ class RallyColors {
 
 class QLCTColors {
 
-  static const Color mainColor = Color(0xFF9146FF);
+  static const Color mainPurpleColor = Color(0xFF7b68ee);
   static const Color mainColorLight = Color(0xFFB15DFF);
 
   static const Color primaryColorDark = Color(0xFF7200CA);
@@ -76,6 +76,13 @@ class QLCTColors {
   static const Color blueColor = Color(0xFF0082FB);
   static const Color cyanColor = Color(0xFF72DEFF);
   static const Color cyanColorLight = Color(0xFFB2F2FF);
+
+  static const Color mainGreenColor = Color(0xff00b884);
+  static const Color mainPinkColor = Color(0xfffd71af);
+  static const Color mainRedColor = Color(0xfffd7172);
+  static const Color mainBlueColor = Color(0xff49ccf9);
+  static const Color mainYellowColor = Color(0xffffc800);
+  static const Color mainGreenLightColor = Color(0xff68eebe);
 
   static const Color whiteColor = Color(0xFBFEFFFF);
 

@@ -39,14 +39,14 @@ class FinanceOverviewFragment extends StatelessWidget {
                     child: Text(
                       title,
                       style: const TextStyle(
-                          fontSize: 13.0, color: QLCTColors.mainColor),
+                          fontSize: 13.0, color: QLCTColors.mainPurpleColor),
                     )),
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       amount,
                       style: const TextStyle(
-                          fontSize: 44.0, color: QLCTColors.mainColor),
+                          fontSize: 44.0, color: QLCTColors.mainPurpleColor),
                     ))
               ],
             ),
@@ -56,7 +56,7 @@ class FinanceOverviewFragment extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {},
                   child: const Text("SEE ALL",
-                      style: TextStyle(color: QLCTColors.mainColor)),
+                      style: TextStyle(color: QLCTColors.mainPurpleColor)),
                 ))
           ],
         ),
@@ -94,7 +94,7 @@ class FinanceItem extends StatelessWidget {
                   Container(
                       margin: const EdgeInsets.only(right: 10.0),
                       child: isNegative
-                          ? const FaIcon(FontAwesome.down, color: Colors.red)
+                          ? const FaIcon(FontAwesome.down, color: QLCTColors.mainRedColor)
                           : const FaIcon(FontAwesome.up,
                               color: RallyColors.buttonColor)),
                   Expanded(
@@ -121,7 +121,7 @@ class FinanceItem extends StatelessWidget {
                       Text(
                         amount,
                         style: isNegative
-                            ? const TextStyle(fontSize: 20.0, color: Colors.red)
+                            ? const TextStyle(fontSize: 20.0, color: QLCTColors.mainRedColor)
                             : const TextStyle(
                                 fontSize: 20.0, color: RallyColors.buttonColor),
                       )
@@ -147,7 +147,7 @@ class FinanceItem extends StatelessWidget {
       actions: const <Widget>[
         IconSlideAction(
           caption: 'Remove',
-          color: Colors.red,
+          color: QLCTColors.mainRedColor,
           icon: FontAwesomeIcons.solidTrashAlt,
         )
       ],

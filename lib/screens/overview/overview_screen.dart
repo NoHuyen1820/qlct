@@ -2,12 +2,13 @@ import 'dart:developer';
 
 import 'package:big_decimal/big_decimal.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:qlct/components/chart/pie_finance_chart.dart';
 import 'package:qlct/model/budget.dart';
 import 'package:qlct/model/transaction.dart';
 import 'package:qlct/screens/finance/finance.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
-import 'package:qlct/services/budget_service/transaction_service.dart';
+import 'package:qlct/services/transaction_service/transaction_service.dart';
 
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
+  var logger = Logger(printer: PrettyPrinter(),);
   // Declare need services
   var budgetService = BudgetService();
   var transactionService = TransactionService();
@@ -92,26 +94,26 @@ class _OverviewScreenState extends State<OverviewScreen> {
   BigDecimal amountTotalBudgets = BigDecimal.parse("0.0");
   Future<String> buildAmountTotalBudgets() async {
     budgetItems = await buildBudgetFinanceItem();
-    log("BEGIN - END - buildAmountTotalBudgets: " +
+    logger.i("BEGIN - END - buildAmountTotalBudgets: " +
         amountTotalBudgets.toString());
     return amountTotalBudgets.toString() + "đ";
   }
   Future<List<FinanceItem>> buildBudgetFinanceItem() async {
-    log("BEGIN - buildFinanceItem");
+    logger.i("BEGIN - buildBudgetFinanceItem");
     Future<List<Budget>> budgetFu = budgetService.getAllBudget();
     List<Budget> budgets = await budgetFu;
     for (Budget b in budgets) {
       amountTotalBudgets += BigDecimal.parse(b.amount);
-      log("amount" + b.amount);
+      logger.i("amount" + b.amount);
       FinanceItem f = FinanceItem(
           title: b.name,
           subtitle: b.createdAt.toString().substring(0, 10),
           amount: b.amount);
       budgetItems.add(f);
     }
-    log(budgetItems.length.toString());
-    log("END - buildFinanceItem");
-    return budgetItems.sublist(0, 4);
+    logger.i(budgetItems.length.toString());
+    logger.i("END - buildBudgetFinanceItem");
+    return budgetItems;
   }
 
   // Call transactionService get all transactions
@@ -120,12 +122,12 @@ class _OverviewScreenState extends State<OverviewScreen> {
   BigDecimal amountTotalTransactions = BigDecimal.parse("0.0");
   Future<String> buildAmountTotalTransactions() async {
     transactionItems = await buildTransactionFinanceItem();
-    log("BEGIN - END - buildAmountTotalTransactions: " +
+    logger.i("BEGIN - END - buildAmountTotalTransactions: " +
         amountTotalTransactions.toString());
     return amountTotalTransactions.toString() + "đ";
   }
   Future<List<FinanceItem>> buildTransactionFinanceItem() async {
-    log("BEGIN - buildTransactionFinanceItem");
+    logger.i("BEGIN - buildTransactionFinanceItem");
     Future<List<Transaction>> transactionFu =
         transactionService.getAllTransaction();
     List<Transaction> transactions = await transactionFu;
@@ -137,8 +139,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
           amount: trans.amount.toString());
       transactionItems.add(financeItem);
     }
-    log(transactionItems.length.toString());
-    log("END - buildTransactionFinanceItem");
-    return transactionItems.sublist(0, 4);
+    logger.i(transactionItems.length.toString());
+    logger.i("END - buildTransactionFinanceItem");
+    return transactionItems;
   }
 }

@@ -66,7 +66,7 @@ class RallyColors {
 
 class QLCTColors {
 
-  static const Color mainColor = Color(0xFF9146FF);
+  static const Color mainColor = Color(0xFF7b68ee);
   static const Color mainColorLight = Color(0xFFB15DFF);
 
   static const Color primaryColorDark = Color(0xFF7200CA);

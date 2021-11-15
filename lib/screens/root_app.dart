@@ -50,7 +50,7 @@ class _RootAppState extends State<RootApp> {
               Icons.add,
               size: 25,
             ),
-            backgroundColor: QLCTColors.mainColor
+            backgroundColor: QLCTColors.mainPurpleColor
             //params
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked
@@ -73,8 +73,8 @@ class _RootAppState extends State<RootApp> {
     ];
 
     return AnimatedBottomNavigationBar(
-      activeColor: QLCTColors.mainColor,
-      splashColor: QLCTColors.mainColor,
+      activeColor: QLCTColors.mainPurpleColor,
+      splashColor: QLCTColors.mainPurpleColor,
       inactiveColor: Colors.black38,
       icons: iconItems,
       activeIndex: pageIndex,

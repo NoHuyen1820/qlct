@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:qlct/components/rounded_input.dart';
 import 'package:qlct/model/budget.dart';
 import 'package:qlct/screens/finance/finance.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
+import 'package:qlct/theme/colors.dart';
 
 class BudgetListScreen extends StatefulWidget {
   const BudgetListScreen({Key? key}) : super(key: key);
@@ -19,10 +21,12 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
   final TextEditingController emailController = TextEditingController();
   var budgetService = BudgetService();
   late List<Widget> _children;
+  late String selectedBudgetType;
 
   @override
   void initState() {
     _children = [];
+    selectedBudgetType = "1";
   }
 
   @override
@@ -31,8 +35,8 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
     var isEmptyList = false;
 
     final addBudgetButton = Container(
-      height: 100,
-      width: 100,
+      height: 80,
+      width: 80,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.white,
@@ -53,52 +57,13 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
             showModalBottomSheet<void>(
                 isScrollControlled: true,
                 context: context,
+                backgroundColor: Colors.transparent,
                 builder: (context) {
-                  return Container(
-                    height: 700,
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SingleChildScrollView(
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              const Text(
-                                "Budget information",
-                                style: TextStyle(
-                                    fontFamily:
-                                    "Rubik-Bold",
-                                    color: Colors.black87,
-                                    fontSize: 25,
-                                    fontWeight:
-                                    FontWeight.w700),
-                              ),
-                              RoundedInputField(
-                                hintText: "Budget name",
-                                onChange: (value) {},
-                                controller: emailController,
-                              ),
-                              RoundedInputField(
-                                hintText: "Amount",
-                                onChange: (value) {},
-                                controller: emailController,
-                              ),
-                              RoundedInputField(
-                                hintText: "Type",
-                                onChange: (value) {},
-                                controller: emailController,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+                  return const BudgetModalBottomSheet();
                 });
           },
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               children: [
                 const Spacer(),
@@ -342,4 +307,151 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
     log("END - buildBudgetCardList");
     return bcs;
   }
+}
+
+class BudgetModalBottomSheet extends StatefulWidget {
+  const BudgetModalBottomSheet({Key? key}) : super(key: key);
+
+  @override
+  _BudgetModalBottomSheetState createState() => _BudgetModalBottomSheetState();
+
+}
+
+class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  String selectedBudgetType = "1";
+
+  Widget radioCustom(String label, String value, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      margin: const EdgeInsets.only(top: 16.0),
+      decoration: BoxDecoration(
+        color: selectedBudgetType == value ? color : Colors.transparent,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(15.0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: selectedBudgetType == value ? color.withOpacity(0.5) : Colors.transparent,
+              spreadRadius: 4,
+              blurRadius: 7,
+              offset: const Offset(0, 3),
+            )
+          ],
+      ),
+      child: Center(
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedBudgetType = value;
+            });
+          },
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15,
+              letterSpacing: 0.0,
+              color: selectedBudgetType == value ? Colors.white : Colors.grey,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buttonCustom(String content, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+      margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(30.0),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.5),
+            spreadRadius: 4,
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          )
+        ],
+      ),
+      child: Center(
+        child: GestureDetector(
+          onTap: () {
+
+          },
+          child: Text(
+            content,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 17,
+              letterSpacing: 0.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          height: MediaQuery.of(context).size.height * .85,
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.8),
+          ),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const Text(
+                    "EDITING BUDGET",
+                    style: TextStyle(
+                        fontFamily:
+                        "Rubik-Bold",
+                        color: Colors.black87,
+                        fontSize: 25,
+                        fontWeight:
+                        FontWeight.w300),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        radioCustom("INCOME", "1", QLCTColors.mainGreenColor),
+                        radioCustom("EXPENSE", "2", QLCTColors.mainPinkColor),
+                      ],
+                    ),
+                  ),
+                  const MinimalInputField(
+                      fieldName: "NAME",
+                      initValue: "New Budget",
+                      colorFieldName: QLCTColors.mainPurpleColor),
+                  const MinimalInputField(
+                      fieldName: "AMOUNT",
+                      initValue: "0.0",
+                      colorFieldName: QLCTColors.mainPurpleColor),
+                  buttonCustom("CREATE", QLCTColors.mainPurpleColor),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

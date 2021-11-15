@@ -1,5 +1,7 @@
 class Hosting {
-  static const String host = "http://localhost:1818";
+  static const String hostDCT = "192.168.1.3";
+  static const String local = "localhost";
+  static const String host = "http://" + hostDCT + ":1818";
   static const String getAllBudget = host + "/budget/getBudgets";
   static const String getBudget = host + "/budget/getBudget";
   static const String updateBudget = host + "budget/updateBudget";

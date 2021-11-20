@@ -18,7 +18,10 @@ class OverviewScreen extends StatefulWidget {
 }
 
 class _OverviewScreenState extends State<OverviewScreen> {
-  var logger = Logger(printer: PrettyPrinter(),);
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
+
   // Declare need services
   var budgetService = BudgetService();
   var transactionService = TransactionService();

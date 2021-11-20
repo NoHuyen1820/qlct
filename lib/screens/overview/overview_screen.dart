@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:big_decimal/big_decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -137,9 +135,11 @@ class _OverviewScreenState extends State<OverviewScreen> {
     for (Transaction trans in transactions) {
       amountTotalTransactions += BigDecimal.parse(trans.amount);
       FinanceItem financeItem = FinanceItem(
-          title: trans.transactionName,
-          subtitle: trans.createdAt.toString().substring(0, 10),
-          amount: trans.amount.toString());
+        title: trans.transactionName,
+        subtitle: trans.createdAt.toString().substring(0, 10),
+        amount: trans.amount.toString(),
+        type: trans.type.toInt(),
+      );
       transactionItems.add(financeItem);
     }
     logger.i(transactionItems.length.toString());

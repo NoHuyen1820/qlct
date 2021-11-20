@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -5,6 +7,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:qlct/constants.dart';
+import 'package:qlct/model/transaction.dart';
+import 'package:qlct/screens/finance/finance.dart';
+import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
 
 class TransactionListScreen extends StatefulWidget {
@@ -18,10 +23,11 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   var logger = Logger(
     printer: PrettyPrinter(),
   );
+  var transactionService = TransactionService();
   String valueChooseMonth = listMonth.first;
   String valueChooseYear = listYear.first;
-  String _currentdate = DateFormat.yMMMMd('en-US').format(DateTime.now());
-
+  String _fromDate = DateFormat.yMMMMd('en-US').format(DateTime.now());
+  String _toDate = DateFormat.yMMMMd('en-US').format(DateTime.now());
   Widget buttonCustom(String content, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
@@ -62,7 +68,6 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -150,18 +155,18 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                       minTime: DateTime(2018, 3, 5),
                                       maxTime: DateTime(2025, 1, 1),
                                       onChanged: (date) {
-                                        logger.i("Onchange date: " + date.toString());
-                                      }, onConfirm: (date) {
-                                        _currentdate =
-                                        '${date.year} - ${date.month} - ${date.day}';
-                                        setState(() {});
-                                      },
+                                      logger.i("Onchange date: " + date.toString());
+                                  }, onConfirm: (date) {
+                                        String formatDate = DateFormat.yMMMMd('en-US').format(date);
+                                        _fromDate = formatDate;
+                                    setState(() {});
+                                  },
                                       currentTime: DateTime.now(),
                                       locale: LocaleType.en);
                                   setState(() {});
                                 },
                                 child: Text(
-                                  " $_currentdate",
+                                  " $_fromDate",
                                   style: const TextStyle(
                                     color:Colors.black87,
                                     fontSize: 17,
@@ -235,18 +240,18 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                       minTime: DateTime(2018, 3, 5),
                                       maxTime: DateTime(2025, 1, 1),
                                       onChanged: (date) {
-                                        logger.i("Onchange date: " + date.toString());
-                                      }, onConfirm: (date) {
-                                        _currentdate =
-                                        '${date.year} - ${date.month} - ${date.day}';
-                                        setState(() {});
-                                      },
+                                    logger.i("Onchange date: " + date.toString());
+                                  }, onConfirm: (date) {
+                                    String formatDate = DateFormat.yMMMMd('en-US').format(date);
+                                    _toDate = formatDate;
+                                    setState(() {});
+                                  },
                                       currentTime: DateTime.now(),
                                       locale: LocaleType.en);
                                   setState(() {});
                                 },
                                 child: Text(
-                                  " $_currentdate",
+                                  " $_toDate",
                                   style: const TextStyle(
                                     color:Colors.black87,
                                     fontSize: 17,
@@ -395,10 +400,52 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                   ),
                 ],
               ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              FutureBuilder(
+                future: Future.wait([
+                  buildTransactionItem(),
+                ]),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TransactionFragment(
+                        transactionItems: transactionItems,
+                      ),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              )
             ],
           ),
         ),
       ),
     );
+  }
+
+  List<TransactionItem> transactionItems = [];
+
+  Future<List<TransactionItem>> buildTransactionItem() async {
+    logger.i("BEGIN- buildTransactionItem");
+    Future<List<Transaction>> transactionFu =
+        transactionService.getAllTransaction();
+    List<Transaction> transactions = await transactionFu;
+    for (Transaction trans in transactions) {
+      TransactionItem transactionItem = TransactionItem(
+        title: trans.transactionName,
+        subtitle: trans.createdAt.toString().substring(0, 10),
+        amount: trans.amount.toString(),
+        type: trans.type,
+      );
+      transactionItems.add(transactionItem);
+    }
+    logger.i(transactionItems.length.toString());
+    logger.i("END - buildTransactionItem");
+    return transactionItems;
   }
 }

@@ -11,6 +11,7 @@ import 'package:qlct/model/transaction.dart';
 import 'package:qlct/screens/finance/finance.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
+import 'package:qlct/utils.dart';
 
 class TransactionListScreen extends StatefulWidget {
   const TransactionListScreen({Key? key}) : super(key: key);
@@ -27,11 +28,21 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   String valueChooseMonth = listMonth.first;
   String valueChooseYear = listYear.first;
   String _fromDate = DateFormat.yMMMMd('en-US').format(DateTime.now());
+  late String _fromDateParam;
   String _toDate = DateFormat.yMMMMd('en-US').format(DateTime.now());
+  late String _toDateParam;
+
+  @override
+  void initState() {
+    _fromDateParam = QLCTUtils.dateTimeToString(DateTime.now(), "000000");
+    _toDateParam = QLCTUtils.dateTimeToString(DateTime.now(), "235959");
+    super.initState();
+  }
+
   Widget buttonCustom(String content, Color color) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
-      margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+      margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
       decoration: BoxDecoration(
         color: color,
         borderRadius: const BorderRadius.all(
@@ -47,11 +58,12 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
         ],
       ),
       child: Center(
-        child: GestureDetector(
-          onTap: () {
-            logger.i("Month:" + valueChooseMonth.toString());
-            logger.i("Year" + valueChooseYear.toString());
-          },
+        child: TextButton(
+          onPressed: () {
+            //TODO -implement call service
+            logger.i("From Date Param String" + _fromDateParam);
+            logger.i("To Date Param" + _toDateParam);
+            },
           child: Text(
             content,
             textAlign: TextAlign.center,
@@ -64,11 +76,6 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -156,9 +163,11 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                       maxTime: DateTime(2025, 1, 1),
                                       onChanged: (date) {
                                       logger.i("Onchange date: " + date.toString());
-                                  }, onConfirm: (date) {
+                                  },
+                                      onConfirm: (date) {
                                         String formatDate = DateFormat.yMMMMd('en-US').format(date);
                                         _fromDate = formatDate;
+                                    _fromDateParam = QLCTUtils.dateTimeToString(date, "000000");
                                     setState(() {});
                                   },
                                       currentTime: DateTime.now(),
@@ -244,6 +253,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                   }, onConfirm: (date) {
                                     String formatDate = DateFormat.yMMMMd('en-US').format(date);
                                     _toDate = formatDate;
+                                    _toDateParam = QLCTUtils.dateTimeToString(date, "235959");
                                     setState(() {});
                                   },
                                       currentTime: DateTime.now(),

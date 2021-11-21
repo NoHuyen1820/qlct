@@ -20,11 +20,12 @@ class _RootAppState extends State<RootApp> {
   int pageIndex = 0;
   List<Widget> pages = [
     const OverviewScreen(),
-    const ReportScreen(),
+    const TransactionListScreen(),
     const BudgetListScreen(),
     const ProfileScreen(),
    // const OverviewScreen(),
-    const TransactionListScreen(),
+    const ReportScreen(),
+
   ];
 
   @override

@@ -67,7 +67,7 @@ class _LoginState extends State<Body> {
                               emailController.text, passwordController.text);
                       if (user != null) {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const RootApp()));
+                            builder: (context) => const RootApp(currentIndex: 0)));
                       }
                     }
                   },

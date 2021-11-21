@@ -42,4 +42,17 @@ class BudgetService {
     // String responseJson = await response;
     // log(responseJson);
   }
+
+  createBudget(Budget budget) async {
+    log("BEGIN - BudgetService: createBudget");
+    String url = Hosting.createBudget;
+    String jsonBody = jsonEncode(budget);
+    log(jsonBody);
+    Future<ResponseDTO> responseFu = Protocol.makePostRequest(url, jsonBody);
+    ResponseDTO responseDTO = await responseFu;
+    dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]
+    log(data.runtimeType.toString());
+
+    log("END - BudgetService: createBudget");
+  }
 }

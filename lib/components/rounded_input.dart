@@ -68,7 +68,7 @@ class MinimalInputField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
       child: TextFormField(
-        initialValue: initValue,
+        controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,
           labelText: fieldName,

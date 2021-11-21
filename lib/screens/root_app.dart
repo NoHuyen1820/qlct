@@ -9,7 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
 class RootApp extends StatefulWidget {
-  const RootApp({Key? key}) : super(key: key);
+  final int currentIndex;
+  const RootApp({Key? key, required this.currentIndex}) : super(key: key);
 
   @override
   _RootAppState createState() => _RootAppState();
@@ -28,6 +29,7 @@ class _RootAppState extends State<RootApp> {
   @override
   void initState() {
     // TODO: implement initState
+    pageIndex = widget.currentIndex;
     super.initState();
   }
 
@@ -50,7 +52,7 @@ class _RootAppState extends State<RootApp> {
               Icons.add,
               size: 25,
             ),
-            backgroundColor: QLCTColors.mainColor
+            backgroundColor: QLCTColors.mainPurpleColor
             //params
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked
@@ -73,8 +75,8 @@ class _RootAppState extends State<RootApp> {
     ];
 
     return AnimatedBottomNavigationBar(
-      activeColor: QLCTColors.mainColor,
-      splashColor: QLCTColors.mainColor,
+      activeColor: QLCTColors.mainPurpleColor,
+      splashColor: QLCTColors.mainPurpleColor,
       inactiveColor: Colors.black38,
       icons: iconItems,
       activeIndex: pageIndex,

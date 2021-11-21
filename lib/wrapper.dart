@@ -20,7 +20,7 @@ class Wrapper extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           final UserNew? user = snapshot.data;
           if(user != null) log(user.uid);
-          return user == null ? const WelcomeScreen() : const RootApp();
+          return user == null ? const WelcomeScreen() : RootApp(currentIndex: 0);
         } else {
           return const Scaffold(
             body: Center(

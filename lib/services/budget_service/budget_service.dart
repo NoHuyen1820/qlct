@@ -8,9 +8,11 @@ import 'package:qlct/services/response_dto.dart';
 
 class BudgetService {
   // same as same
-  Future<List<Budget>> getAllBudget() async {
+  Future<List<Budget>> getAllBudget(String userCode) async {
     log("BEGIN - BudgetService: getAllBudget");
-    String url = Hosting.getAllBudget;
+    String url = Hosting.getAllBudgetByUserCode;
+    String param = "?userCode=" + userCode;
+    url += param;
     Future<ResponseDTO> responseFu = Protocol.makeGetRequest(url);
     ResponseDTO responseDTO = await responseFu; // remove Future
     dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]

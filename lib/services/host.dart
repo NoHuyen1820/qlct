@@ -2,7 +2,7 @@ class Hosting {
   static const String hostDCT = "192.168.1.3";
   static const String hostNgrok = "http://localhost:1818";
   static const String local = "localhost";
-  static const String host = "http://" + hostDCT + ":1818";
+  static const String host = "http://" + local + ":1818";
   static const String getAllBudget = hostNgrok + "/budget/getBudgets";
   static const String getBudget = host + "/budget/getBudget";
   static const String updateBudget = host + "/budget/updateBudget";

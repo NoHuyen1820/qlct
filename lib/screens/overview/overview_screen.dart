@@ -2,6 +2,7 @@ import 'package:big_decimal/big_decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:qlct/components/chart/pie_finance_chart.dart';
+import 'package:qlct/firebase/auth_service.dart';
 import 'package:qlct/model/budget.dart';
 import 'package:qlct/model/transaction.dart';
 import 'package:qlct/screens/finance/finance.dart';
@@ -23,6 +24,14 @@ class _OverviewScreenState extends State<OverviewScreen> {
   // Declare need services
   var budgetService = BudgetService();
   var transactionService = TransactionService();
+  var authService = AuthService();
+  late String _userCode;
+
+  @override
+  void initState() {
+    _userCode = authService.getCurrentUID();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +112,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
   }
   Future<List<FinanceItem>> buildBudgetFinanceItem() async {
     logger.i("BEGIN - buildBudgetFinanceItem");
-    Future<List<Budget>> budgetFu = budgetService.getAllBudget();
+    Future<List<Budget>> budgetFu = budgetService.getAllBudget(_userCode);
     List<Budget> budgets = await budgetFu;
     for (Budget b in budgets) {
       amountTotalBudgets += BigDecimal.parse(b.amount);
@@ -137,10 +146,10 @@ class _OverviewScreenState extends State<OverviewScreen> {
     for (Transaction trans in transactions) {
       amountTotalTransactions += BigDecimal.parse(trans.amount);
       FinanceItem financeItem = FinanceItem(
-        title: trans.transactionName,
+        title: trans.transactionName!,
         subtitle: trans.createdAt.toString().substring(0, 10),
         amount: trans.amount.toString(),
-        type: trans.type.toInt(),
+        type: trans.type!.toInt(),
       );
       transactionItems.add(financeItem);
     }

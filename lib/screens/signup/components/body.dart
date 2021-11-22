@@ -29,7 +29,6 @@ class _SignUpState extends State<Body> {
 
   @override
   void initState() {
-    // _isHidePassword = true;
 
   }
 
@@ -45,7 +44,7 @@ class _SignUpState extends State<Body> {
               key: _formKey,
               child: Column(children: <Widget>[
                 const Text(
-                  "Đăng kí",
+                  "SIGN UP",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -55,27 +54,27 @@ class _SignUpState extends State<Body> {
                   controller: emailController,
                 ),
                 RoundedPasswordField(
-                  hintText: "Mật khẩu",
+                  hintText: "Password",
                   onChange: (value) {},
                   controller: passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Vui lòng nhập mật khẩu";
+                      return "Please enter the password!";
                     } else {
-                      if (value.length < 6) return "Mật khẩu phải ít nhất 6 kí tự";
+                      if (value.length < 6) return "Password must be at least 6 characters";
                     }
                     return null;
                   },
                 ),
                 RoundedPasswordField(
-                  hintText: "Nhập lại mật khẩu",
+                  hintText: "Confirm password",
                   onChange: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Vui lòng nhập lại mật khẩu";
+                      return "Please re-enter your password";
                     } else {
                       if (value != passwordController.text) {
-                        return "Mật khẩu xác thực không trùng khớp";
+                        return "Password and confirm password do not match";
                       }
                     }
                     return null;
@@ -83,12 +82,12 @@ class _SignUpState extends State<Body> {
                   controller: confirmPasswordController,
                 ),
                 RoundedButton(
-                  text: "Đăng kí",
+                  text: "SIGN UP",
                   press: () async {
                      if (_formKey.currentState!.validate()) {
                        // call check validate
                       ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Đang xử lý")));
+                          const SnackBar(content: Text("Processing")));
 
                         await authService.createUserWithEmailAndPasswordLocal(
                             emailController.text, passwordController.text);

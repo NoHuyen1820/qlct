@@ -7,8 +7,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:qlct/constants.dart';
+import 'package:qlct/firebase/auth_service.dart';
+import 'package:qlct/model/budget.dart';
 import 'package:qlct/model/transaction.dart';
 import 'package:qlct/screens/finance/finance.dart';
+import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:qlct/utils.dart';
@@ -25,17 +28,23 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
     printer: PrettyPrinter(),
   );
   var transactionService = TransactionService();
+  var budgetService = BudgetService();
+  var authService= AuthService() ;
   String valueChooseMonth = listMonth.first;
   String valueChooseYear = listYear.first;
   String _fromDate = DateFormat.yMMMMd('en-US').format(DateTime.now());
   late String _fromDateParam;
   String _toDate = DateFormat.yMMMMd('en-US').format(DateTime.now());
   late String _toDateParam;
+  late List<String> _budgetCodes;
+  late String _userCode;
 
   @override
   void initState() {
     _fromDateParam = QLCTUtils.dateTimeToString(DateTime.now(), "000000");
     _toDateParam = QLCTUtils.dateTimeToString(DateTime.now(), "235959");
+    _budgetCodes = [];
+    _userCode = authService.getCurrentUID();
     super.initState();
   }
 
@@ -59,10 +68,14 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
       ),
       child: Center(
         child: TextButton(
-          onPressed: () {
-            //TODO -implement call service
-            logger.i("From Date Param String" + _fromDateParam);
-            logger.i("To Date Param" + _toDateParam);
+          onPressed: () async {
+            // TODO - getListTransaction
+            // TODO -Update UI
+            _budgetCodes = await getBudgetCodes();
+            transactionService.getTransactionListByDate(_fromDateParam, _toDateParam, _budgetCodes);
+
+
+
             },
           child: Text(
             content,
@@ -161,9 +174,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                       showTitleActions: true,
                                       minTime: DateTime(2018, 3, 5),
                                       maxTime: DateTime(2025, 1, 1),
-                                      onChanged: (date) {
-                                      logger.i("Onchange date: " + date.toString());
-                                  },
+                                      onChanged: (date) {},
                                       onConfirm: (date) {
                                         String formatDate = DateFormat.yMMMMd('en-US').format(date);
                                         _fromDate = formatDate;
@@ -248,9 +259,8 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                       showTitleActions: true,
                                       minTime: DateTime(2018, 3, 5),
                                       maxTime: DateTime(2025, 1, 1),
-                                      onChanged: (date) {
-                                    logger.i("Onchange date: " + date.toString());
-                                  }, onConfirm: (date) {
+                                      onChanged: (date) {},
+                                      onConfirm: (date) {
                                     String formatDate = DateFormat.yMMMMd('en-US').format(date);
                                     _toDate = formatDate;
                                     _toDateParam = QLCTUtils.dateTimeToString(date, "235959");
@@ -447,15 +457,29 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
     List<Transaction> transactions = await transactionFu;
     for (Transaction trans in transactions) {
       TransactionItem transactionItem = TransactionItem(
-        title: trans.transactionName,
+        title: trans.transactionName!,
         subtitle: trans.createdAt.toString().substring(0, 10),
         amount: trans.amount.toString(),
-        type: trans.type,
+        type: trans.type!.toInt(),
       );
       transactionItems.add(transactionItem);
     }
     logger.i(transactionItems.length.toString());
     logger.i("END - buildTransactionItem");
     return transactionItems;
+  }
+
+  Future<List<String>> getBudgetCodes() async {
+    Future<List<Budget>> budgetFu = budgetService.getAllBudget(_userCode);
+    List<Budget> budgets = await budgetFu;
+    _budgetCodes = [];
+    List<String> budgetCodes = [];
+    for (Budget b in budgets) {
+      var budgetCode = b.budgetCode;
+      if (budgetCode != null) {
+        budgetCodes.add(budgetCode);
+      }
+    }
+    return budgetCodes;
   }
 }

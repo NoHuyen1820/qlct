@@ -19,6 +19,23 @@ class Protocol {
     } else {
       throw Exception('Failed to get method');
     }
+  }
 
+  static Future<ResponseDTO> makePostRequest(
+      String url, String jsonBody) async {
+    Map<String, String> headers = {"Content-type": "application/json"};
+
+    Response response =
+        await post(Uri.parse(url), headers: headers, body: jsonBody);
+
+    log("StatusCode when GET: " + response.statusCode.toString());
+    if (response.statusCode == 200) {
+      log(response.toString());
+      log(response.body);
+
+      return ResponseDTO.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to post method');
+    }
   }
 }

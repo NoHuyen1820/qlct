@@ -77,18 +77,29 @@ class FinanceItem extends StatelessWidget {
   final String title;
   final String subtitle;
   final String amount;
+  final int? type;
 
   const FinanceItem(
       {Key? key,
       required this.title,
       required this.subtitle,
-      required this.amount})
+      required this.amount,
+      this.type})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Decimal amountInt = Decimal.parse(amount);
-    bool isNegative = amountInt.isNegative;
+    final bool isNegative;
+    if (type != null) {
+      if (type != 1) {
+        isNegative = false;
+      } else {
+        isNegative = true;
+      }
+    } else {
+      Decimal amountInt = Decimal.parse(amount);
+      isNegative = amountInt.isNegative;
+    }
 
     return Slidable(
       child: TextButton(
@@ -115,12 +126,12 @@ class FinanceItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            title,
+                            title.trim(),
                             style: const TextStyle(
                                 fontSize: 16.0, color: Colors.black87),
                           ),
                           Text(
-                            subtitle,
+                            subtitle.trim(),
                             style: const TextStyle(
                                 fontSize: 13.0, color: Colors.black38),
                           )
@@ -264,6 +275,112 @@ class BudgetCard extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class TransactionItem extends StatelessWidget {
+  final Icon? icon;
+  final String title;
+  final String subtitle;
+  final String amount;
+  final int type;
+
+  const TransactionItem(
+      {Key? key,
+      this.icon,
+      required this.title,
+      required this.subtitle,
+      required this.amount,
+      required this.type})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Decimal amountInt = Decimal.parse(amount);
+    bool isNegative = amountInt.isNegative;
+    if (type == 1) {
+      isNegative = true;
+    } else {
+      isNegative = false;
+    }
+    return Slidable(
+      actionPane: const SlidableScrollActionPane(),
+      child: TextButton(
+        onPressed: () {},
+        child: Row(
+          children: [
+            Container(
+                margin: const EdgeInsets.only(right: 10.0),
+                child: isNegative
+                    ? const FaIcon(FontAwesome.down,
+                        color: QLCTColors.mainRedColor)
+                    : const FaIcon(FontAwesome.up,
+                        color: RallyColors.buttonColor)),
+            Expanded(
+                child: Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title.trim(),
+                      style: const TextStyle(
+                          fontSize: 16.0, color: Colors.black87),
+                    ),
+                    Text(
+                      subtitle.trim(),
+                      style: const TextStyle(
+                          fontSize: 13.0, color: Colors.black38),
+                    ),
+                  ],
+                ),
+                Text(
+                  amount,
+                  style: isNegative
+                      ? const TextStyle(
+                          fontSize: 20.0, color: QLCTColors.mainRedColor)
+                      : const TextStyle(
+                          fontSize: 20.0, color: RallyColors.buttonColor),
+                ),
+                const Divider(
+                  height: 1,
+                  indent: 0,
+                  endIndent: 0,
+                  color: Colors.grey,
+                ),
+              ],
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TransactionFragment extends StatelessWidget {
+  final List<TransactionItem>? transactionItems;
+  final Future<List<TransactionItem>>? futureItems;
+
+  const TransactionFragment({Key? key, this.transactionItems, this.futureItems})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color(0xffffffff),
+      margin: const EdgeInsets.only(bottom: 16.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            for (var item in transactionItems!) item,
+          ],
         ),
       ),
     );

@@ -68,6 +68,8 @@ dependencies:
   http: ^0.13.4
   modal_bottom_sheet: ^2.0.0
   logger: ^1.1.0
+  awesome_dropdown: ^0.0.4
+  flutter_datetime_picker: ^1.5.1
   passwordfield: ^0.1.0
   adaptive_dialog: ^1.2.0
   json_annotation: ^4.3.0

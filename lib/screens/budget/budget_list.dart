@@ -23,6 +23,7 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   var budgetService = BudgetService();
+  final _auth = AuthService();
   late List<Widget> _children;
   late String selectedBudgetType;
 
@@ -300,7 +301,7 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
 
   Future<List<BudgetCard>> buildBudgetCardList() async {
     log("BEGIN - buildBudgetCardList");
-    Future<List<Budget>> budgetFu = budgetService.getAllBudget();
+    Future<List<Budget>> budgetFu = budgetService.getAllBudget(_auth.getCurrentUID());
     List<Budget> budgets = await budgetFu;
     for (Budget b in budgets) {
       BudgetCard bc = BudgetCard(

@@ -2,6 +2,7 @@ import 'package:qlct/screens/budget/budget_list.dart';
 import 'package:qlct/screens/overview/overview_screen.dart';
 import 'package:qlct/screens/profile/profile_screen.dart';
 import 'package:qlct/screens/report/report_screen.dart';
+import 'package:qlct/screens/transaction/transaction_list.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -20,10 +21,12 @@ class _RootAppState extends State<RootApp> {
   int pageIndex = 0;
   List<Widget> pages = [
     const OverviewScreen(),
-    const ReportScreen(),
+    const TransactionListScreen(),
     const BudgetListScreen(),
     const ProfileScreen(),
-    const OverviewScreen(),
+   // const OverviewScreen(),
+    const ReportScreen(),
+
   ];
 
   @override

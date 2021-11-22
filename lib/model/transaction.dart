@@ -1,98 +1,81 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:qlct/utils.dart';
+
+part 'transaction.g.dart';
+
+@JsonSerializable()
 class Transaction {
-  String id;
+  String? id;
 
-  String transactionNumber;
+  String? transactionNumber;
 
-  String budgetCode;
+  String? budgetCode;
 
-  String userCode;
+  List<String>? budgetCodes;
 
+  String? userCode;
+
+  @JsonKey(fromJson: QLCTUtils.intToString, toJson: QLCTUtils.stringToInt)
   String amount;
 
-  int category;
+  int? category;
 
   bool? schedule;
 
-  int type;
+  int? type;
 
   String? note;
 
-  String transactionName;
+  String? transactionName;
 
-  int payment;
+  int? payment;
 
-  int status;
+  int? status;
 
-  bool deleteFlag;
+  bool? deleteFlag;
 
-  DateTime updatedAt;
+  @JsonKey(fromJson: QLCTUtils.stringToDateTime)
+  DateTime? updatedAt;
 
-  DateTime createdAt;
+  @JsonKey(fromJson: QLCTUtils.stringToDateTime)
+  DateTime? createdAt;
 
+  @JsonKey(nullable: true)
   DateTime? startAt;
 
+  @JsonKey(nullable: true)
   DateTime? endAt;
 
+  @JsonKey(nullable: true)
+  String? fromDate;
+
+  @JsonKey(nullable: true)
+  String? toDate;
+
   Transaction(
-      {required this.id,
-      required this.transactionNumber,
-      required this.budgetCode,
-      required this.userCode,
+      {this.id,
+      this.transactionNumber,
+      this.budgetCode,
+      this.userCode,
       required this.amount,
-      required this.category,
+      this.category,
       this.schedule,
-      required this.type,
+      this.type,
       this.note,
-      required this.transactionName,
-      required this.payment,
-      required this.status,
-      required this.deleteFlag,
-      required this.updatedAt,
-      required this.createdAt,
+      this.transactionName,
+      this.payment,
+      this.status,
+      this.deleteFlag,
+      this.updatedAt,
+      this.createdAt,
       this.startAt,
-      this.endAt});
+      this.endAt,
+      this.fromDate,
+      this.toDate,
+      this.budgetCodes});
 
-  factory Transaction.fromJson(Map<String, dynamic> json) {
-    return Transaction(
-      id: json['id'],
-      transactionNumber: json['transactionNumber'],
-      budgetCode: json['budgetCode'],
-      userCode: json['userCode'],
-      amount: json['amount'].toString(),
-      category: json['category'],
-      note: json['note'],
-      transactionName: json['transactionName'],
-      type: json['type'],
-      payment: json['payment'],
-      status: json['status'],
-      deleteFlag: json['deleteFlag'],
-      updatedAt: DateTime.parse(json['updatedAt'].substring(0, 8) + 'T' + json['updatedAt'].substring(8)),
-      createdAt: DateTime.parse(json['createdAt'].substring(0, 8) + 'T' + json['createdAt'].substring(8)),
-      startAt: DateTime.parse(json['startAt'].substring(0, 8) + 'T' + json['startAt'].substring(8)),
-      endAt: DateTime.parse(json['endAt'].substring(0, 8) + 'T' + json['endAt'].substring(8)),
-      schedule: json['schedule'],
-    );
-  }
+  factory Transaction.fromJson(Map<String, dynamic> json) => _$TransactionFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['transactionNumber'] = transactionNumber;
-    data['budgetCode'] = budgetCode;
-    data['userCode'] = userCode;
-    data['amount'] = amount;
-    data['category'] = category;
-    data['note'] = note;
-    data['transactionName'] = transactionName;
-    data['type'] = type;
-    data['payment'] = payment;
-    data['status'] = status;
-    data['deleteFlag'] = deleteFlag;
-    data['updatedAt'] = updatedAt;
-    data['createdAt'] = createdAt;
-    data['startAt'] = startAt;
-    data['endAt'] = endAt;
-    data['schedule'] = schedule;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$TransactionToJson(this);
+
 }

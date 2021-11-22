@@ -1,3 +1,7 @@
+import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
+import 'package:qlct/firebase/auth_service.dart';
+import 'package:qlct/screens/login/login_screen.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,10 +15,53 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
   final TextEditingController _email =
       TextEditingController(text: "abbie_wilson@gmail.com");
   TextEditingController dateOfBirth = TextEditingController(text: "04-19-1992");
   TextEditingController password = TextEditingController(text: "123456");
+
+  Widget buttonCustom(String content, Color color) {
+    final authService = Provider.of<AuthService>(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+      margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(30.0),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.5),
+            spreadRadius: 4,
+            blurRadius: 10,
+            offset: const Offset(0, 3),
+          )
+        ],
+      ),
+      child: Center(
+        child: TextButton(
+          onPressed: () async {
+            await authService.signOut();
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => const LoginScreen()));
+          },
+          child: Text(
+            content,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 17,
+              letterSpacing: 0.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,7 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                Text(
+                const Text(
                   "Date of birth",
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
@@ -245,6 +292,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   decoration: InputDecoration(
                       hintText: "Password", border: InputBorder.none),
                 ),
+                buttonCustom("SIGN OUT", QLCTColors.mainPurpleColor),
               ],
             ),
           )

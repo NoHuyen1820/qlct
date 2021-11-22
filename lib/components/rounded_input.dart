@@ -44,3 +44,40 @@ class RoundedInputField extends StatelessWidget {
     );
   }
 }
+
+class MinimalInputField extends StatelessWidget {
+
+  final String fieldName;
+  final String? hintText;
+  final String? initValue;
+  final Color colorFieldName;
+  final ValueChanged<String>? onChange;
+  final TextEditingController? controller;
+
+  const MinimalInputField({
+    Key? key,
+    required this.fieldName,
+    this.hintText,
+    required this.colorFieldName,
+    this.onChange,
+    this.controller,
+    this.initValue}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: fieldName,
+          focusedBorder: const UnderlineInputBorder(),
+          focusColor: colorFieldName,
+        ),
+      ),
+    );
+  }
+
+}
+

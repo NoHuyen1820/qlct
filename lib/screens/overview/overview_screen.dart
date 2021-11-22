@@ -59,6 +59,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       title: 'BUDGET',
                       amount: snapshot.data[0].toString(),
                       items: budgetItems,
+                      indexPage: 2,
                     );
                   } else {
                     return const Center(child: CircularProgressIndicator());
@@ -76,6 +77,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       title: 'TRANSACTION',
                       amount: snapshot.data[0].toString(),
                       items: transactionItems,
+                      indexPage: 1,
                     );
                   } else {
                     return const Center(child: CircularProgressIndicator());

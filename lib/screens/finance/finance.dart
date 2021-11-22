@@ -7,12 +7,15 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qlct/theme/colors.dart';
 
+import '../root_app.dart';
+
 class FinanceOverviewFragment extends StatelessWidget {
   final String title;
   final String amount;
   final Future<String>? futureAmount;
   final List<FinanceItem>? items;
   final Future<List<FinanceItem>>? futureItems;
+  final int? indexPage;
 
   const FinanceOverviewFragment(
       {Key? key,
@@ -20,7 +23,8 @@ class FinanceOverviewFragment extends StatelessWidget {
       required this.amount,
       this.futureAmount,
       this.items,
-      this.futureItems})
+      this.futureItems,
+      this.indexPage})
       : super(key: key);
 
   @override
@@ -54,7 +58,11 @@ class FinanceOverviewFragment extends StatelessWidget {
             SizedBox(
                 width: double.maxFinite,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (context) => RootApp(currentIndex: indexPage??0,)));
+                  },
                   child: const Text("SEE ALL",
                       style: TextStyle(color: QLCTColors.mainPurpleColor)),
                 ))
@@ -171,6 +179,7 @@ class BudgetCard extends StatelessWidget {
   final String? pngSrc;
   final String title;
   final String amount;
+  final String? password;
   final Function()? press;
   final bool isCreate;
 
@@ -178,6 +187,7 @@ class BudgetCard extends StatelessWidget {
     Key? key,
     required this.title,
     required this.amount,
+    this.password,
     required this.press,
     this.svgSrc,
     this.pngSrc,
@@ -186,6 +196,8 @@ class BudgetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Decimal amountInt = Decimal.parse(amount);
+    bool isNegative = amountInt.isNegative;
     return Container(
       // padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -230,7 +242,22 @@ class BudgetCard extends StatelessWidget {
                     width: 20,
                     fit: BoxFit.scaleDown,
                   ),
-                const Spacer(),
+                null == password ? Text(
+                  amount,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.fade,
+                  maxLines: 2,
+                  softWrap: false,
+                  style: TextStyle(
+                    fontFamily: "Rubik-Bold",
+                    color: isNegative ? QLCTColors.mainRedColor : QLCTColors
+                        .mainGreenColor,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 25,
+                  ),
+                ) :
+                  const FaIcon(FontAwesomeIcons.eyeSlash),
+                // const Spacer(),
                 Text(
                   title,
                   textAlign: TextAlign.center,
@@ -243,7 +270,8 @@ class BudgetCard extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                     fontSize: 25,
                   ),
-                )
+                ),
+                const Spacer(),
               ],
             ),
           ),

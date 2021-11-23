@@ -44,7 +44,7 @@ class _SignUpState extends State<Body> {
               key: _formKey,
               child: Column(children: <Widget>[
                 const Text(
-                  "SIGN UP",
+                  "Sign Up",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                 ),
                 SizedBox(height: size.height * 0.03),

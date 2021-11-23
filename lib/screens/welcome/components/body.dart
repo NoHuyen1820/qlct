@@ -18,8 +18,27 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              "Ứng dụng quản lí tài chính cá nhân",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              "Money Management",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: "Rubik-Bold",
+                  color: Colors.black,
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.w700,
+                  decorationStyle: TextDecorationStyle.wavy),
+            ),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            const Text(
+              "Welcome",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: "Rubik-Bold",
+                  color: Colors.black,
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.w700,
+                  decorationStyle: TextDecorationStyle.wavy),
             ),
             SizedBox(
               height: size.height * 0.03,
@@ -32,7 +51,7 @@ class Body extends StatelessWidget {
               height: size.height * 0.05,
             ),
             RoundedButton(
-              text: "Đăng nhập",
+              text: "SIGN IN",
               press: () {
                 Navigator.push(
                   context,
@@ -45,7 +64,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "Đăng kí",
+              text: "SIGN UP",
               press: () {
                 Navigator.push(
                   context,

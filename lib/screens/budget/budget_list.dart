@@ -303,6 +303,7 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
     log("BEGIN - buildBudgetCardList");
     Future<List<Budget>> budgetFu = budgetService.getAllBudget(_auth.getCurrentUID());
     List<Budget> budgets = await budgetFu;
+    bcs = [];
     for (Budget b in budgets) {
       BudgetCard bc = BudgetCard(
         press: () async {

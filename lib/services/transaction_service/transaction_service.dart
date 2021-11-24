@@ -29,9 +29,9 @@ class TransactionService {
     return transactions;
   }
 
-  getTransactionListByDate(
+  Future<List<Transaction>> getTransactionListByDate(
       String fromDate, String toDate, List<String> budgetCodes) async {
-    log("BEGIN - BudgetService:getTransactionListByDate");
+    log("BEGIN - TransactionService:getTransactionListByDate");
     String url = Hosting.getAllTransactionByMultiBudgetCode;
     Transaction transaction = Transaction(
       amount: '20000',
@@ -56,7 +56,7 @@ class TransactionService {
       }
     }
     log("Length of transaction list: " + transactions.length.toString());
-    log("END- BudgetService:getTransactionListByDate");
+    log("END- TransactionService:getTransactionListByDate");
     return transactions;
   }
 }

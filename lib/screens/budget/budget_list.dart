@@ -27,6 +27,7 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
   final _auth = AuthService();
   late List<Widget> _children;
   late String selectedBudgetType;
+  List<BudgetCard> bcs = [];
 
   @override
   void initState() {
@@ -298,8 +299,6 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
     );
   }
 
-  List<BudgetCard> bcs = [];
-
   Future<List<BudgetCard>> buildBudgetCardList() async {
     log("BEGIN - buildBudgetCardList");
     Future<List<Budget>> budgetFu = budgetService.getAllBudget(_auth.getCurrentUID());
@@ -469,10 +468,10 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
       ),
       child: Center(
         child: TextButton(
-          onPressed: () {
+          onPressed: () async {
       if(_formKey.currentState!.validate()){
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Đang xử lý")));
+            const SnackBar(content: Text("Creating...")));
 
         Budget budget = Budget(
           name: nameBudgetController.text,
@@ -480,8 +479,11 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
           password: passwordBudgetController.text,
           userCode: _auth.getCurrentUID(),
         );
-        _budgetService.createBudget(budget);
+        await _budgetService.createBudget(budget);
         Navigator.of(context).pop();
+        setState(() {
+
+        });
       }
       },
           child: Text(

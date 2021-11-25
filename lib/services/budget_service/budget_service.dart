@@ -45,6 +45,16 @@ class BudgetService {
     // log(responseJson);
   }
 
+  getBudgetByUserCode(String budgetCode) async {
+    if (budgetCode.trim() == "") return;
+    String url = Hosting.getAllBudgetByUserCode;
+    String param = "?budgetCode=" + budgetCode;
+    url += param;
+   Future<ResponseDTO> response = Protocol.makeGetRequest(url);
+    String responseJson = (await response) as String;
+    log(responseJson);
+  }
+
   createBudget(Budget budget) async {
     log("BEGIN - BudgetService: createBudget");
     String url = Hosting.createBudget;
@@ -54,7 +64,6 @@ class BudgetService {
     ResponseDTO responseDTO = await responseFu;
     dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]
     log(data.runtimeType.toString());
-
     log("END - BudgetService: createBudget");
   }
 }

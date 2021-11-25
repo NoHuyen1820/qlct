@@ -74,7 +74,7 @@ class FinanceOverviewFragment extends StatelessWidget {
 }
 
 class FinanceItem extends StatelessWidget {
-  final String title;
+  final String? title;
   final String subtitle;
   final String amount;
   final int? type;
@@ -126,7 +126,7 @@ class FinanceItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            title.trim(),
+                            title!.trim(),
                             style: const TextStyle(
                                 fontSize: 16.0, color: Colors.black87),
                           ),

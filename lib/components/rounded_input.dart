@@ -53,6 +53,7 @@ class MinimalInputField extends StatelessWidget {
   final Color colorFieldName;
   final ValueChanged<String>? onChange;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   const MinimalInputField({
     Key? key,
@@ -61,13 +62,14 @@ class MinimalInputField extends StatelessWidget {
     required this.colorFieldName,
     this.onChange,
     this.controller,
-    this.initValue}) : super(key: key);
+    this.initValue, this.validator}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
       child: TextFormField(
+        validator: validator,
         controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,

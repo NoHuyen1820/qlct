@@ -59,4 +59,15 @@ class TransactionService {
     log("END- TransactionService:getTransactionListByDate");
     return transactions;
   }
+  createTransaction(Transaction transaction) async {
+    log("BEGIN - TransactionService: createTransaction");
+    String url = Hosting.createTransaction;
+    String jsonBody = jsonEncode(transaction);
+    log(jsonBody);
+    Future<ResponseDTO> responseFu = Protocol.makePostRequest(url, jsonBody);
+    ResponseDTO responseDTO = await responseFu;
+    dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]
+    log(data.runtimeType.toString());
+    log("END - TransactionService: createTransaction");
+  }
 }

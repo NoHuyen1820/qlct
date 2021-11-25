@@ -9,6 +9,8 @@ import 'package:qlct/screens/finance/finance.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 
+import '../../constants.dart';
+
 class OverviewScreen extends StatefulWidget {
   const OverviewScreen({Key? key}) : super(key: key);
 
@@ -118,7 +120,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
       amountTotalBudgets += BigDecimal.parse(b.amount);
       logger.i("amount" + b.amount);
       FinanceItem f = FinanceItem(
-          title: b.name,
+          title: b.name.toString(),
           subtitle: b.createdAt.toString().substring(0, 10),
           amount: b.amount);
       budgetItems.add(f);
@@ -145,8 +147,13 @@ class _OverviewScreenState extends State<OverviewScreen> {
     List<Transaction> transactions = await transactionFu;
     for (Transaction trans in transactions) {
       amountTotalTransactions += BigDecimal.parse(trans.amount);
+      String? categorySTR ="Other category";
+      if(categorySelect.containsKey(trans.category)){
+        categorySTR = categorySelect![trans.category];
+      }
       FinanceItem financeItem = FinanceItem(
-        title: trans.transactionName!,
+        //type
+        title: categorySTR,
         subtitle: trans.createdAt.toString().substring(0, 10),
         amount: trans.amount.toString(),
         type: trans.type!.toInt(),

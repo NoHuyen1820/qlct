@@ -469,18 +469,20 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
       child: Center(
         child: TextButton(
           onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Đang xử lý")));
+      if(_formKey.currentState!.validate()){
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Đang xử lý")));
 
-            Budget budget = Budget(
-              name: nameBudgetController.text,
-              amount: amountBudgetController.text,
-              password: passwordBudgetController.text,
-              userCode: _auth.getCurrentUID(),
-            );
-            _budgetService.createBudget(budget);
-            Navigator.of(context).pop();
-          },
+        Budget budget = Budget(
+          name: nameBudgetController.text,
+          amount: amountBudgetController.text,
+          password: passwordBudgetController.text,
+          userCode: _auth.getCurrentUID(),
+        );
+        _budgetService.createBudget(budget);
+        Navigator.of(context).pop();
+      }
+      },
           child: Text(
             content,
             textAlign: TextAlign.center,
@@ -534,10 +536,23 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
                       child: Column(
                     children: [
                       MinimalInputField(
+                          validator:(value){
+                            if(value == null || value.isEmpty){
+                              return "Please enter a name budget";
+                            } if (value.length > 30){
+                              return "Field name is less than or equal to 30 characters";
+                            }
+                          },
                           fieldName: "NAME",
                           controller: nameBudgetController,
                           colorFieldName: QLCTColors.mainPurpleColor),
                       MinimalInputField(
+                          validator: (value){
+                            if( value == null || value.isEmpty){
+                              return "Please enter a amount budget ";
+                            }
+                            return null;
+                          },
                           fieldName: "AMOUNT",
                           controller: amountBudgetController,
                           colorFieldName: QLCTColors.mainPurpleColor),

@@ -71,8 +71,10 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
               );
 
               transService.createTransaction(transaction);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const RootApp(currentIndex: 4)));
+              // Navigator.of(context).pushReplacement(MaterialPageRoute(
+              //     builder: (context) => const RootApp(currentIndex: 1))).then((value) => setState(() {}));
+              Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => const RootApp(currentIndex: 1))).then((value) => setState(() {}));
             }
             return;
           },
@@ -196,8 +198,8 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        radioCustom("INCOME", "1", QLCTColors.mainGreenColor),
-                        radioCustom("EXPENSE", "2", QLCTColors.mainPinkColor),
+                        radioCustom("INCOME", "0", QLCTColors.mainGreenColor),
+                        radioCustom("EXPENSE", "1", QLCTColors.mainRedColor),
                       ],
                     ),
                   ),

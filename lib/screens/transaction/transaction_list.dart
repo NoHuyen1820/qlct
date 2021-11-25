@@ -418,8 +418,12 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
     for (Transaction trans in transactions) {
       trans.type == 0 ? amountTotalIncome += BigDecimal.parse(trans.amount)
       : amountTotalExpense += BigDecimal.parse(trans.amount);
+      String? categorySTR ="Other category";
+      if(categorySelect.containsKey(trans.category)){
+        categorySTR = categorySelect![trans.category];
+      }
       TransactionItem transactionItem = TransactionItem(
-        title: trans.transactionName!,
+        title: categorySTR,
         subtitle: trans.createdAt.toString().substring(0, 10),
         amount: trans.amount.toString(),
         type: trans.type!.toInt(),

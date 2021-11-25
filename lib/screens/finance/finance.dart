@@ -283,7 +283,7 @@ class BudgetCard extends StatelessWidget {
 
 class TransactionItem extends StatelessWidget {
   final Icon? icon;
-  final String title;
+  final String? title;
   final String subtitle;
   final String amount;
   final int type;
@@ -329,7 +329,7 @@ class TransactionItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title.trim(),
+                      title!.trim(),
                       style: const TextStyle(
                           fontSize: 16.0, color: Colors.black87),
                     ),

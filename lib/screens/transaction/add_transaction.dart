@@ -1,9 +1,5 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:qlct/firebase/auth_service.dart';
 import 'package:qlct/model/budget.dart';
 import 'package:qlct/model/transaction.dart';
@@ -33,9 +29,6 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
   final TextEditingController dateController = TextEditingController();
   final TextEditingController reccuringController = TextEditingController();
   String selectedTransType = "1";
-  final String _date = DateFormat.yMMMMd('en-US').format(DateTime.now());
-  late DateTime _dateParam;
-
 
   Widget buttonCustom(String content, Color color) {
     return Container(
@@ -57,7 +50,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
       ),
       child: Center(
         child: TextButton(
-          onPressed: () {
+          onPressed: () async {
             if(_formKey.currentState!.validate()){
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("Processing"))
@@ -70,11 +63,11 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                 note: noteController.text,
               );
 
-              transService.createTransaction(transaction);
+              await transService.createTransaction(transaction);
               // Navigator.of(context).pushReplacement(MaterialPageRoute(
               //     builder: (context) => const RootApp(currentIndex: 1))).then((value) => setState(() {}));
               Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => const RootApp(currentIndex: 1))).then((value) => setState(() {}));
+                  builder: (context) => const RootApp(currentIndex: 0))).then((value) => setState(() {}));
             }
             return;
           },
@@ -136,9 +129,12 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
   var authService = AuthService();
   var transService =TransactionService();
   late String _userCode;
+  String? _budget = "0000000"; //_budgetList.first.toString() ;
+  var mapBudgetCodes = <String?, String>{}; // <code, name>
+
  @override
   void initState() {
-   _dateParam = DateTime.now();
+   mapBudgetCodes[_budget] = "None";
     _userCode = authService.getCurrentUID();
     super.initState();
   }
@@ -215,46 +211,6 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          // const SizedBox(height:12),
-                          // Row(
-                          //     children: <Widget>[
-                          //       SizedBox(
-                          //         width: size.width /5,
-                          //         child: const Text("Note",
-                          //             style:TextStyle(
-                          //               fontSize:18,
-                          //               fontFamily: "Rubik-Bold",
-                          //               color: Colors.black87,
-                          //             )),
-                          //       ),
-                          //       Expanded(
-                          //         child: Padding(
-                          //           padding: const EdgeInsets.all(8.0),
-                          //           child: SizedBox(
-                          //             child: Container(
-                          //               decoration:const BoxDecoration(
-                          //                 color: Colors.white,
-                          //               ),
-                          //               child: TextFormField(
-                          //                 validator: (value){
-                          //                   if(value!.length > 30)
-                          //                   {
-                          //                     return "Note is less than or equal to 30 characters";
-                          //                   }
-                          //                   return null;
-                          //                 },
-                          //                 controller: noteController,
-                          //                 style: const TextStyle(
-                          //                   fontSize: 18,
-                          //                   color: Colors.black87,
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       )
-                          //     ]
-                          // ),
                           const SizedBox(height:12),
                           Row(
                             children: <Widget>[
@@ -335,30 +291,40 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                               color: Colors.white,
                                               borderRadius:BorderRadius.circular(10.0)
                                           ),
-                                          child: DropdownButton<String>(
-                                              value: _budget,
-                                          items: budgetOptions
-                                              .map((description, value) {
-                                                return MapEntry(
-                                                    description,
-                                                    DropdownMenuItem(
-                                                      value: value,
-                                                      child: Text(description),
-                                                    ));
-                                              }).values.toList(),
-                                              iconSize: 30,
-                                              icon: null,
-                                              style: const TextStyle(
-                                                color: Colors.black87,
-                                                fontSize: 18,
-                                              ),
-                                              // hint: const Text("Category"),
-                                              onChanged: (valueNew)  {
-                                                setState(() {
-                                                  _budget = valueNew!;
-                                                  // _getBudgetList();
-                                                });
+                                          child: FutureBuilder(
+                                            future: _getBudgetList(),
+                                            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                                              if (snapshot.hasData) {
+                                                return DropdownButton<String>(
+                                                    value: _budget,
+                                                    items: mapBudgetCodes
+                                                        .map((code, name) {
+                                                      return MapEntry(
+                                                          code,
+                                                          DropdownMenuItem(
+                                                            value: code,
+                                                            child: Text(name),
+                                                          ));
+                                                    }).values.toList(),
+                                                    iconSize: 30,
+                                                    icon: null,
+                                                    style: const TextStyle(
+                                                      color: Colors.black87,
+                                                      fontSize: 18,
+                                                    ),
+                                                    // hint: const Text("Category"),
+                                                    onChanged: (valueNew)  {
+                                                      setState(() {
+                                                        _budget = valueNew!;
+                                                        // _getBudgetList();
+                                                      });
+                                                    }
+                                                );
+                                              } else {
+                                                return const Center(child: CircularProgressIndicator());
                                               }
+                                            },
+
                                           ),
                                         ),
                                       ),
@@ -530,25 +496,19 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
       ),
     );
   }
-   String? _budget = "BG000006"; //_budgetList.first.toString() ;
-  Future<List<String>> _getBudgetList() async{
+
+  Future<Map<String?, String>> _getBudgetList() async{
     Future<List<Budget>> budgetFu = budgetService.getAllBudget(_userCode);
     List<Budget> budgets = await budgetFu;
-    List<String> budgetList =[];
     for (Budget b in budgets) {
-        var budgetName = b.name;
-      budgetList.add(budgetName);
+      mapBudgetCodes[b.budgetCode] = b.name;
     }
-    return budgetList;
+    return mapBudgetCodes;
     }
 
   String? _recurring = "01";
-  void _getRecurringList() {
-  }
 
   String? _mycategory ="1";
-  void _getCategoryList() {
-  }
 }
 
 

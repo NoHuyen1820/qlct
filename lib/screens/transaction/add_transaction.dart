@@ -67,7 +67,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
               // Navigator.of(context).pushReplacement(MaterialPageRoute(
               //     builder: (context) => const RootApp(currentIndex: 1))).then((value) => setState(() {}));
               Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => const RootApp(currentIndex: 0))).then((value) => setState(() {}));
+                  builder: (context) => const RootApp(currentIndex: 1))).then((value) => setState(() {}));
             }
             return;
           },
@@ -134,7 +134,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
 
  @override
   void initState() {
-   mapBudgetCodes[_budget] = "None";
+   mapBudgetCodes[_budget] = "-- Choose";
     _userCode = authService.getCurrentUID();
     super.initState();
   }
@@ -295,10 +295,14 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                             future: _getBudgetList(),
                                             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                                               if (snapshot.hasData) {
-                                                return DropdownButton<String>(
-                                                    value: _budget,
-                                                    items: mapBudgetCodes
-                                                        .map((code, name) {
+                                                return DropdownButtonFormField<String>(
+                                                    validator: (value) =>
+                                                    value == "0000000"
+                                                        ? 'Please select budget!'
+                                                        : null,
+                                                value: _budget,
+                                                items: mapBudgetCodes
+                                                    .map((code, name) {
                                                       return MapEntry(
                                                           code,
                                                           DropdownMenuItem(

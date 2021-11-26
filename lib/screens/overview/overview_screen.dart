@@ -110,7 +110,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     budgetItems = await buildBudgetFinanceItem();
     logger.i("BEGIN - END - buildAmountTotalBudgets: " +
         amountTotalBudgets.toString());
-    return amountTotalBudgets.toString() + "đ";
+    return amountTotalBudgets.toString();
   }
   Future<List<FinanceItem>> buildBudgetFinanceItem() async {
     logger.i("BEGIN - buildBudgetFinanceItem");
@@ -138,7 +138,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     transactionItems = await buildTransactionFinanceItem();
     logger.i("BEGIN - END - buildAmountTotalTransactions: " +
         amountTotalTransactions.toString());
-    return amountTotalTransactions.toString() + "đ";
+    return amountTotalTransactions.toString();
   }
   Future<List<FinanceItem>> buildTransactionFinanceItem() async {
     logger.i("BEGIN - buildTransactionFinanceItem");
@@ -149,7 +149,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
       amountTotalTransactions += BigDecimal.parse(trans.amount);
       String? categorySTR ="Other category";
       if(categorySelect.containsKey(trans.category)){
-        categorySTR = categorySelect![trans.category];
+        categorySTR = categorySelect[trans.category];
       }
       FinanceItem financeItem = FinanceItem(
         //type

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:qlct/components/rounded_input.dart';
 import 'package:qlct/firebase/auth_service.dart';
@@ -549,6 +550,10 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
                           controller: nameBudgetController,
                           colorFieldName: QLCTColors.mainPurpleColor),
                       MinimalInputField(
+                        keyboardType:TextInputType.number,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           validator: (value){
                             if( value == null || value.isEmpty){
                               return "Please enter a amount budget ";

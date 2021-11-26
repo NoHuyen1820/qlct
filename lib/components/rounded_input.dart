@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qlct/components/text_field_container.dart';
 import 'package:qlct/theme/constants.dart';
 
@@ -19,13 +20,15 @@ class RoundedInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFieldContainer(
       child: TextFormField(
-        validator: (value){
-          if( value == null || value.isEmpty){
-            return "Vui lòng nhập email";
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Please enter email";
           } else {
-            bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
-            if(!emailValid){
-              return " Email không hợp lệ";
+            bool emailValid = RegExp(
+                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                .hasMatch(value);
+            if (!emailValid) {
+              return " Your password isn't in the correct format";
             }
           }
           return null;
@@ -46,7 +49,6 @@ class RoundedInputField extends StatelessWidget {
 }
 
 class MinimalInputField extends StatelessWidget {
-
   final String fieldName;
   final String? hintText;
   final String? initValue;
@@ -55,20 +57,30 @@ class MinimalInputField extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
 
-  const MinimalInputField({
-    Key? key,
-    required this.fieldName,
-    this.hintText,
-    required this.colorFieldName,
-    this.onChange,
-    this.controller,
-    this.initValue, this.validator}) : super(key: key);
+  final TextInputType? keyboardType;
+
+  final List<TextInputFormatter>? inputFormatters;
+
+  const MinimalInputField(
+      {Key? key,
+      required this.fieldName,
+      this.hintText,
+      required this.colorFieldName,
+      this.onChange,
+      this.controller,
+      this.initValue,
+      this.validator,
+      this.keyboardType,
+      this.inputFormatters})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
       child: TextFormField(
+        keyboardType: keyboardType,
+        inputFormatters: inputFormatters,
         validator: validator,
         controller: controller,
         decoration: InputDecoration(
@@ -80,6 +92,4 @@ class MinimalInputField extends StatelessWidget {
       ),
     );
   }
-
 }
-

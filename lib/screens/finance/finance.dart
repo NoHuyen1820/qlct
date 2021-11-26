@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qlct/theme/colors.dart';
-
+import 'package:intl/intl.dart';
 import '../root_app.dart';
 
 class FinanceOverviewFragment extends StatelessWidget {
@@ -48,9 +48,9 @@ class FinanceOverviewFragment extends StatelessWidget {
                 Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      amount,
+                      NumberFormat.currency(locale: 'vi').format(double.parse(amount)),
                       style: const TextStyle(
-                          fontSize: 44.0, color: QLCTColors.mainPurpleColor),
+                          fontSize: 30.0, color: QLCTColors.mainPurpleColor),
                     ))
               ],
             ),
@@ -138,11 +138,11 @@ class FinanceItem extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        amount,
+                        NumberFormat.currency(locale: 'vi').format(double.parse(amount)),
                         style: isNegative
-                            ? const TextStyle(fontSize: 20.0, color: QLCTColors.mainRedColor)
+                            ? const TextStyle(fontSize: 16.0, color: QLCTColors.mainRedColor)
                             : const TextStyle(
-                                fontSize: 20.0, color: RallyColors.buttonColor),
+                                fontSize: 16.0, color: RallyColors.buttonColor),
                       )
                     ],
                   )),
@@ -243,7 +243,7 @@ class BudgetCard extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                   ),
                 null == password ? Text(
-                  amount,
+                  NumberFormat.currency(locale: 'vi').format(double.parse(amount)),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.fade,
                   maxLines: 2,
@@ -341,12 +341,12 @@ class TransactionItem extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  amount,
+                  NumberFormat.currency(locale: 'vi').format(double.parse(amount)),
                   style: isNegative
                       ? const TextStyle(
-                          fontSize: 20.0, color: QLCTColors.mainRedColor)
+                          fontSize: 16.0, color: QLCTColors.mainRedColor)
                       : const TextStyle(
-                          fontSize: 20.0, color: RallyColors.buttonColor),
+                          fontSize: 16.0, color: RallyColors.buttonColor),
                 ),
                 const Divider(
                   height: 1,

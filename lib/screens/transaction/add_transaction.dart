@@ -181,7 +181,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                       return null;
                     },
                     controller: amountTransController,
-                    decoration:const InputDecoration.collapsed(hintText: "0đ") ,
+                    decoration:const InputDecoration.collapsed(hintText: "0 VND") ,
                     textAlign:TextAlign.center,
                     style: const TextStyle(
                       fontSize: 30,

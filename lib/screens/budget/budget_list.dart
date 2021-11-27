@@ -13,6 +13,8 @@ import 'package:qlct/screens/finance/finance.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/theme/colors.dart';
 
+import '../root_app.dart';
+
 class BudgetListScreen extends StatefulWidget {
   const BudgetListScreen({Key? key}) : super(key: key);
 
@@ -21,7 +23,6 @@ class BudgetListScreen extends StatefulWidget {
 }
 
 class _BudgetListScreenState extends State<BudgetListScreen> {
-  final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   var budgetService = BudgetService();
   final _auth = AuthService();
@@ -33,12 +34,12 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
   void initState() {
     _children = [];
     selectedBudgetType = "1";
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var isEmptyList = false;
 
     final addBudgetButton = Container(
       height: 80,
@@ -481,9 +482,8 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
         );
         await _budgetService.createBudget(budget);
         Navigator.of(context).pop();
-        setState(() {
-
-        });
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => const RootApp(currentIndex: 2)));
       }
       },
           child: Text(

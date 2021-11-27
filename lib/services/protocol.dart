@@ -22,7 +22,7 @@ class Protocol {
   }
 
   static Future<ResponseDTO> makePostRequest(
-      String url, String jsonBody) async {
+      String url, String? jsonBody) async {
     Map<String, String> headers = {"Content-type": "application/json"};
 
     Response response =

@@ -1,3 +1,4 @@
+import 'package:fluttericon/iconic_icons.dart';
 import 'package:qlct/screens/budget/budget_list.dart';
 import 'package:qlct/screens/overview/overview_screen.dart';
 import 'package:qlct/screens/profile/profile_screen.dart';
@@ -71,7 +72,7 @@ class _RootAppState extends State<RootApp> {
   Widget getFooter() {
     List<IconData> iconItems = [
       FontAwesomeIcons.calendar,
-      FontAwesomeIcons.table,
+      Iconic.list,
       FontAwesomeIcons.wallet,
       FontAwesomeIcons.user,
     ];

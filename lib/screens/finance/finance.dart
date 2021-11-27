@@ -1,10 +1,14 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qlct/services/budget_service/budget_service.dart';
+import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:intl/intl.dart';
 import '../root_app.dart';
@@ -73,18 +77,25 @@ class FinanceOverviewFragment extends StatelessWidget {
   }
 }
 
-class FinanceItem extends StatelessWidget {
+class FinanceItem extends StatelessWidget{
   final String? title;
   final String subtitle;
   final String amount;
   final int? type;
+  final String? itemNumber;
+  final int? kind;
 
-  const FinanceItem(
+  final BudgetService budgetService = BudgetService();
+  final TransactionService transactionService =TransactionService();
+
+  FinanceItem(
       {Key? key,
       required this.title,
       required this.subtitle,
       required this.amount,
-      this.type})
+      this.type,
+      this.itemNumber,
+      this.kind})
       : super(key: key);
 
   @override
@@ -163,11 +174,68 @@ class FinanceItem extends StatelessWidget {
         ),
       ),
       actionPane: const SlidableScrollActionPane(),
-      actions: const <Widget>[
+      actions:  <Widget>[
         IconSlideAction(
           caption: 'Remove',
           color: QLCTColors.mainRedColor,
           icon: FontAwesomeIcons.solidTrashAlt,
+          onTap: () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context ) => CupertinoAlertDialog(
+              title: const Text(
+                "Attention",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.red,
+                ),
+              ),
+              content: Column(
+                children: [
+                  Text(
+                    // TODO edit text title budget
+                    kind == 1 ? "" :"Are you sure delete this item?",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  ]
+              ),
+              actions:<Widget> [
+                CupertinoButton(
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(fontSize: 16, color: QLCTColors.mainRedColor),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                CupertinoButton(
+                    child: const Text(
+                      "Agree",
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    onPressed: () async {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Processing"))
+                      );
+                            if (kind == 1) {
+                             await budgetService.deleteBudget(itemNumber!);
+                            }
+                            if (kind == 2) {
+                              await transactionService
+                                  .deleteTransaction(itemNumber!);
+                            }
+                            Navigator.of(context).pop();
+                            Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => const RootApp(currentIndex: 0)));
+                    })
+              ],
+            )
+          ),
         )
       ],
     );
@@ -315,9 +383,9 @@ class TransactionItem extends StatelessWidget {
             Container(
                 margin: const EdgeInsets.only(right: 10.0),
                 child: isNegative
-                    ? const FaIcon(FontAwesome.down,
+                    ? const FaIcon(WebSymbols.updown_circle,
                         color: QLCTColors.mainRedColor)
-                    : const FaIcon(FontAwesome.up,
+                    : const FaIcon(WebSymbols.updown_circle,
                         color: RallyColors.buttonColor)),
             Expanded(
                 child: Wrap(

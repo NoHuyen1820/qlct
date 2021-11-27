@@ -153,315 +153,100 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
-              child: Column(
-                children: [
-                  const SizedBox(
-                      height: 20
-                  ),
-                  const Text(
-                    "NEW TRANSACTION",
-                    style: TextStyle(
-                        fontFamily: "Rubik-Bold",
-                        color: Colors.black87,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w300),
-                  ),
-                  const SizedBox(
-                    height: 20
-                  ),
-                  TextFormField(
-                    keyboardType:TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    validator:(value){
-                      if( value ==null || value.isEmpty){
-                        return "Please enter amount!";
-                      }
-                      return null;
-                    },
-                    controller: amountTransController,
-                    decoration:const InputDecoration.collapsed(hintText: "0 VND") ,
-                    textAlign:TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontFamily: "Rubik-Bold",
-                      color: Colors.black,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                        height: 20
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        radioCustom("INCOME", "0", QLCTColors.mainGreenColor),
-                        radioCustom("EXPENSE", "1", QLCTColors.mainRedColor),
+                    const Text(
+                      "New Transaction",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 35.0,
+                          decorationStyle: TextDecorationStyle.wavy),
+                    ),
+                    const SizedBox(
+                      height: 10
+                    ),
+                    TextFormField(
+                      keyboardType:TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
                       ],
+                      validator:(value){
+                        if( value ==null || value.isEmpty){
+                          return "Please enter amount!";
+                        }
+                        return null;
+                      },
+                      controller: amountTransController,
+                      decoration:const InputDecoration.collapsed(hintText: "0 VND") ,
+                      textAlign:TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontFamily: "Rubik-Bold",
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: RallyColors.gray60,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const SizedBox(height:12),
-                          Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: size.width /5,
-                                child: const Text("Category",
-                                style:TextStyle(
-                                  fontFamily: "Rubik-Bold",
-                                  fontSize:18,
-                                  color: Colors.black87,
-                                )),
-                              ),
-                              Expanded(
-                                child: DropdownButtonHideUnderline(
-                                    child: ButtonTheme(
-                                      buttonColor: Colors.black,
-                                      alignedDropdown:true,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          decoration:BoxDecoration(
-                                              color: Colors.white,
-                                            borderRadius:BorderRadius.circular(10.0)
-                                          ),
-                                          child: DropdownButton<String>(
-                                            value: _mycategory,
-                                              items:categoryOptions.map((description, value) {
-                                                return MapEntry(
-                                                    description,
-                                                    DropdownMenuItem(
-                                                      value: value,
-                                                      child: Text(description),
-                                                    ));
-                                              }).values
-                                                  .toList(),
-                                            iconSize: 30,
-                                            icon: null,
-                                            style: const TextStyle(
-                                              color: Colors.black87,
-                                              fontSize: 18,
-                                            ),
-                                            // hint: const Text("Category"),
-                                            onChanged: (valueNew)  {
-                                            setState(() {
-                                               _mycategory = valueNew;
-                                              // _getCategoryList();
-                                            });
-                                            }
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                )
-                                ,)
-                            ]
-                          ),
-                          const SizedBox(height:12),
-                          Row(
+                          radioCustom("INCOME", "0", QLCTColors.mainGreenColor),
+                          radioCustom("EXPENSE", "1", QLCTColors.mainRedColor),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: RallyColors.gray60,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            const SizedBox(height:12),
+                            Row(
                               children: <Widget>[
                                 SizedBox(
                                   width: size.width /5,
-                                  child: const Text("Budget",
-                                      style:TextStyle(
-                                        fontSize:18,
-                                        fontFamily: "Rubik-Bold",
-                                        color: Colors.black87,
-                                      )),
+                                  child: const Text("Category",
+                                  style:TextStyle(
+                                    fontFamily: "Rubik-Bold",
+                                    fontSize:18,
+                                    color: Colors.black87,
+                                  )),
                                 ),
                                 Expanded(
                                   child: DropdownButtonHideUnderline(
-                                    child: ButtonTheme(
-                                      buttonColor: Colors.black,
-                                      alignedDropdown:true,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          decoration:BoxDecoration(
-                                              color: Colors.white,
+                                      child: ButtonTheme(
+                                        buttonColor: Colors.black,
+                                        alignedDropdown:true,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration:BoxDecoration(
+                                                color: Colors.white,
                                               borderRadius:BorderRadius.circular(10.0)
-                                          ),
-                                          child: FutureBuilder(
-                                            future: _getBudgetList(),
-                                            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                                              if (snapshot.hasData) {
-                                                return DropdownButtonFormField<String>(
-                                                    validator: (value) =>
-                                                    value == "0000000"
-                                                        ? 'Please select budget!'
-                                                        : null,
-                                                value: _budget,
-                                                items: mapBudgetCodes
-                                                    .map((code, name) {
-                                                      return MapEntry(
-                                                          code,
-                                                          DropdownMenuItem(
-                                                            value: code,
-                                                            child: Text(name),
-                                                          ));
-                                                    }).values.toList(),
-                                                    iconSize: 30,
-                                                    icon: null,
-                                                    style: const TextStyle(
-                                                      color: Colors.black87,
-                                                      fontSize: 18,
-                                                    ),
-                                                    // hint: const Text("Category"),
-                                                    onChanged: (valueNew)  {
-                                                      setState(() {
-                                                        _budget = valueNew!;
-                                                        // _getBudgetList();
-                                                      });
-                                                    }
-                                                );
-                                              } else {
-                                                return const Center(child: CircularProgressIndicator());
-                                              }
-                                            },
-
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  ,)
-                              ]
-                          ),
-                          const SizedBox(height:12),
-                          //Note
-                          Row(
-                              children: <Widget>[
-                                SizedBox(
-                                  width: size.width /5,
-                                  child: const Text("Note",
-                                      style:TextStyle(
-                                        fontSize:18,
-                                        fontFamily: "Rubik-Bold",
-                                        color: Colors.black87,
-                                      )),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                      child: Container(
-                                        decoration:const BoxDecoration(
-                                            color: Colors.white,
-                                        ),
-                                        child: TextFormField(
-                                          validator: (value){
-                                            if(value!.length > 30)
-                                              {
-                                                return "Note is less than or equal to 30 characters";
-                                              }
-                                            return null;
-                                          },
-                                          controller: noteController,
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.black87,
                                             ),
-                                          ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ]
-                          ),
-                          const SizedBox(height:12),
-                          //Date
-                          // Row(
-                          //   children: [
-                          //     SizedBox(
-                          //       width: size.width /5,
-                          //       child: const Text("Date",
-                          //           style:TextStyle(
-                          //             fontSize:18,
-                          //             fontFamily: "Rubik-Bold",
-                          //             color: Colors.black87,
-                          //           )),
-                          //     ),
-                          //     Expanded(
-                          //       child: Padding(
-                          //         padding: const EdgeInsets.all(8.0),
-                          //         child: Container(
-                          //           decoration: BoxDecoration(
-                          //               color: Colors.white,
-                          //               borderRadius: BorderRadius.circular(10.0)),
-                          //           child: TextButton(
-                          //             onPressed: () {
-                          //               DatePicker.showDatePicker(context,
-                          //                   showTitleActions: true,
-                          //                   minTime: DateTime(1900, 3, 5),
-                          //                   maxTime: DateTime(2025, 1, 1),
-                          //                   onChanged: (date) {},
-                          //                   onConfirm: (date) {
-                          //                     String formatDate = DateFormat.yMMMMd('en-US').format(date);
-                          //                     _date = formatDate;
-                          //                     _dateParam = QLCTUtils.dateTimeToString(date, "000000") as DateTime;
-                          //                     setState(() {});
-                          //                   },
-                          //                   currentTime: DateTime.now(),
-                          //                   locale: LocaleType.en);
-                          //               setState(() {});
-                          //             },
-                          //             child: Text(
-                          //               " $_date",
-                          //               style: const TextStyle(
-                          //                 color:Colors.black87,
-                          //                 fontSize: 17,
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-                          // const SizedBox(height:12),
-                          //Make recurring
-                          Row(
-                              children: <Widget>[
-                                SizedBox(
-                                  width: size.width /5,
-                                  child: const Text("Make recurring",
-                                      style:TextStyle(
-                                        fontSize:18,
-                                        fontFamily: "Rubik-Bold",
-                                        color: Colors.black87,
-                                      )),
-                                ),
-                                Expanded(
-                                  child: DropdownButtonHideUnderline(
-                                    child: ButtonTheme(
-                                      buttonColor: Colors.black,
-                                      alignedDropdown:true,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          decoration:BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:BorderRadius.circular(10.0)
-                                          ),
-                                          child: DropdownButton<String>(
-                                              value: _recurring,
-                                              items: recurringOptions.map((description, value){
-                                                return MapEntry(description,
-                                                    DropdownMenuItem(
-                                                  value: value,
-                                                  child: Text(description),
-                                                ));
-                                              }).values.toList(),
+                                            child: DropdownButton<String>(
+                                              value: _mycategory,
+                                                items:categoryOptions.map((description, value) {
+                                                  return MapEntry(
+                                                      description,
+                                                      DropdownMenuItem(
+                                                        value: value,
+                                                        child: Text(description),
+                                                      ));
+                                                }).values
+                                                    .toList(),
                                               iconSize: 30,
                                               icon: null,
                                               style: const TextStyle(
@@ -470,29 +255,246 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                               ),
                                               // hint: const Text("Category"),
                                               onChanged: (valueNew)  {
-                                                setState(() {
-                                                  _recurring = valueNew;
-                                                  //_getRecurringList();
-                                                });
+                                              setState(() {
+                                                 _mycategory = valueNew;
+                                                // _getCategoryList();
+                                              });
                                               }
+                                            ),
                                           ),
+                                        ),
+                                      ),
+                                  )
+                                  ,)
+                              ]
+                            ),
+                            const SizedBox(height:12),
+                            Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: size.width /5,
+                                    child: const Text("Budget",
+                                        style:TextStyle(
+                                          fontSize:18,
+                                          fontFamily: "Rubik-Bold",
+                                          color: Colors.black87,
+                                        )),
+                                  ),
+                                  Expanded(
+                                    child: DropdownButtonHideUnderline(
+                                      child: ButtonTheme(
+                                        buttonColor: Colors.black,
+                                        alignedDropdown:true,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration:BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:BorderRadius.circular(10.0)
+                                            ),
+                                            child: FutureBuilder(
+                                              future: _getBudgetList(),
+                                              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                                                if (snapshot.hasData) {
+                                                  return DropdownButtonFormField<String>(
+                                                      validator: (value) =>
+                                                      value == "0000000"
+                                                          ? 'Please select budget!'
+                                                          : null,
+                                                  value: _budget,
+                                                  items: mapBudgetCodes
+                                                      .map((code, name) {
+                                                        return MapEntry(
+                                                            code,
+                                                            DropdownMenuItem(
+                                                              value: code,
+                                                              child: Text(name),
+                                                            ));
+                                                      }).values.toList(),
+                                                      iconSize: 30,
+                                                      icon: null,
+                                                      style: const TextStyle(
+                                                        color: Colors.black87,
+                                                        fontSize: 18,
+                                                      ),
+                                                      // hint: const Text("Category"),
+                                                      onChanged: (valueNew)  {
+                                                        setState(() {
+                                                          _budget = valueNew!;
+                                                          // _getBudgetList();
+                                                        });
+                                                      }
+                                                  );
+                                                } else {
+                                                  return const Center(child: CircularProgressIndicator());
+                                                }
+                                              },
+
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    ,)
+                                ]
+                            ),
+                            const SizedBox(height:12),
+                            //Note
+                            Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: size.width /5,
+                                    child: const Text("Note",
+                                        style:TextStyle(
+                                          fontSize:18,
+                                          fontFamily: "Rubik-Bold",
+                                          color: Colors.black87,
+                                        )),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SizedBox(
+                                        child: Container(
+                                          decoration:const BoxDecoration(
+                                              color: Colors.white,
+                                          ),
+                                          child: TextFormField(
+                                            validator: (value){
+                                              if(value!.length > 30)
+                                                {
+                                                  return "Note is less than or equal to 30 characters";
+                                                }
+                                              return null;
+                                            },
+                                            controller: noteController,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
                                         ),
                                       ),
                                     ),
                                   )
-                                  ,)
-                              ]
-                          ),
-                          const SizedBox(height:18),
-                          buttonCustom("SAVE", QLCTColors.mainPurpleColor),
-                        ],
+                                ]
+                            ),
+                            const SizedBox(height:12),
+                            //Date
+                            // Row(
+                            //   children: [
+                            //     SizedBox(
+                            //       width: size.width /5,
+                            //       child: const Text("Date",
+                            //           style:TextStyle(
+                            //             fontSize:18,
+                            //             fontFamily: "Rubik-Bold",
+                            //             color: Colors.black87,
+                            //           )),
+                            //     ),
+                            //     Expanded(
+                            //       child: Padding(
+                            //         padding: const EdgeInsets.all(8.0),
+                            //         child: Container(
+                            //           decoration: BoxDecoration(
+                            //               color: Colors.white,
+                            //               borderRadius: BorderRadius.circular(10.0)),
+                            //           child: TextButton(
+                            //             onPressed: () {
+                            //               DatePicker.showDatePicker(context,
+                            //                   showTitleActions: true,
+                            //                   minTime: DateTime(1900, 3, 5),
+                            //                   maxTime: DateTime(2025, 1, 1),
+                            //                   onChanged: (date) {},
+                            //                   onConfirm: (date) {
+                            //                     String formatDate = DateFormat.yMMMMd('en-US').format(date);
+                            //                     _date = formatDate;
+                            //                     _dateParam = QLCTUtils.dateTimeToString(date, "000000") as DateTime;
+                            //                     setState(() {});
+                            //                   },
+                            //                   currentTime: DateTime.now(),
+                            //                   locale: LocaleType.en);
+                            //               setState(() {});
+                            //             },
+                            //             child: Text(
+                            //               " $_date",
+                            //               style: const TextStyle(
+                            //                 color:Colors.black87,
+                            //                 fontSize: 17,
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // const SizedBox(height:12),
+                            //Make recurring
+                            Row(
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: size.width /5,
+                                    child: const Text("Make recurring",
+                                        style:TextStyle(
+                                          fontSize:18,
+                                          fontFamily: "Rubik-Bold",
+                                          color: Colors.black87,
+                                        )),
+                                  ),
+                                  Expanded(
+                                    child: DropdownButtonHideUnderline(
+                                      child: ButtonTheme(
+                                        buttonColor: Colors.black,
+                                        alignedDropdown:true,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration:BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:BorderRadius.circular(10.0)
+                                            ),
+                                            child: DropdownButton<String>(
+                                                value: _recurring,
+                                                items: recurringOptions.map((description, value){
+                                                  return MapEntry(description,
+                                                      DropdownMenuItem(
+                                                    value: value,
+                                                    child: Text(description),
+                                                  ));
+                                                }).values.toList(),
+                                                iconSize: 30,
+                                                icon: null,
+                                                style: const TextStyle(
+                                                  color: Colors.black87,
+                                                  fontSize: 18,
+                                                ),
+                                                // hint: const Text("Category"),
+                                                onChanged: (valueNew)  {
+                                                  setState(() {
+                                                    _recurring = valueNew;
+                                                    //_getRecurringList();
+                                                  });
+                                                }
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    ,)
+                                ]
+                            ),
+                            const SizedBox(height:18),
+                            buttonCustom("SAVE", QLCTColors.mainPurpleColor),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                ],
+                    const SizedBox(
+                      height: 30,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

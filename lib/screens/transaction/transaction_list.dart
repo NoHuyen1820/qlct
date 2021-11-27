@@ -103,302 +103,303 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
       child: SingleChildScrollView(
         child: Container(
           color: const Color(0xfffcfcfc),
-          child: Column(
-            children: [
-              const Text(
-                "List Transaction",
-                style: TextStyle(
-                    fontFamily: "Rubik-Bold",
-                    color: Colors.black,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.w700,
-                    decorationStyle: TextDecorationStyle.wavy),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Form(
-                  child: Column(
-                children: [
-                  // From Date button
-                  Container(
-                    color: RallyColors.gray60,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: size.width / 3,
-                            child: const Padding(
-                              padding: EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                "From Date",
-                                style: TextStyle(
-                                  fontSize: 17.0,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: TextButton(
-                                onPressed: () async {
-                                  await DatePicker.showDatePicker(context,
-                                      showTitleActions: true,
-                                      minTime: DateTime(2018, 3, 5),
-                                      maxTime: DateTime(2025, 1, 1),
-                                      onChanged: (date) {},
-                                      onConfirm: (date) {
-                                        String formatDate = DateFormat.yMMMMd('en-US').format(date);
-                                        _fromDate = formatDate;
-                                    _fromDateParam = QLCTUtils.dateTimeToString(date, "000000");
-                                    setState(() {});
-                                  },
-                                      currentTime: DateTime.now(),
-                                      locale: LocaleType.en);
-                                  // setState(() {});
-                                },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                const Text(
+                  "List Transaction",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 35.0,
+                      decorationStyle: TextDecorationStyle.wavy),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+                Form(
+                    child: Column(
+                  children: [
+                    // From Date button
+                    Container(
+                      color: RallyColors.gray60,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: size.width / 3,
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 8.0),
                                 child: Text(
-                                  " $_fromDate",
-                                  style: const TextStyle(
-                                    color:Colors.black87,
-                                    fontSize: 17,
+                                  "From Date",
+                                  style: TextStyle(
+                                    fontSize: 17.0,
+                                    color: Colors.black87,
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // To Date button
-                  Container(
-                    color: RallyColors.gray60,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: size.width / 3,
-                            child: const Padding(
-                              padding: EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                "To Date",
-                                style: TextStyle(
-                                  fontSize: 17.0,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: TextButton(
-                                onPressed: () async {
-                                  await DatePicker.showDatePicker(context,
-                                      showTitleActions: true,
-                                      minTime: DateTime(2018, 3, 5),
-                                      maxTime: DateTime(2025, 1, 1),
-                                      onChanged: (date) {},
-                                      onConfirm: (date) {
-                                    String formatDate = DateFormat.yMMMMd('en-US').format(date);
-                                    _toDate = formatDate;
-                                    _toDateParam = QLCTUtils.dateTimeToString(date, "235959");
-                                    setState(() {
-                                      _toDate = formatDate;
-                                    });
-                                  },
-                                      currentTime: DateTime.now(),
-                                      locale: LocaleType.en);
-                                  // setState(() {});
-                                },
-                                child: Text(
-                                  " $_toDate",
-                                  style: const TextStyle(
-                                    color:Colors.black87,
-                                    fontSize: 17,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // button search
-                  // Container(
-                  //     color: RallyColors.gray60,
-                  //     child: buttonCustom("Search", QLCTColors.mainPurpleColor)),
-                ],
-              )),
-              // Overview report
-              const SizedBox(
-                height: 10.0,
-              ),
-              FutureBuilder(
-                future: buildTransactionItem(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  if (snapshot.hasData) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Wrap(
-                            spacing: 20.0,
-                            children: [
-                              Container(
-                                width: (size.width - 60) / 2,
-                                height: 170,
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 16.0),
                                 decoration: BoxDecoration(
-                                  color:QLCTColors.mainGreenColor,
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: QLCTColors.mainGreenColor.withOpacity(0.8),
-                                      spreadRadius: 4,
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 3),
-                                    )
-                                  ],),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 25, right: 25, top: 20, bottom: 20),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white),
-                                        child: const Center(
-                                            child: Icon(
-                                              FontAwesomeIcons.arrowLeft,
-                                              color: QLCTColors.mainGreenColor,
-                                            )),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "Total Income",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 15,
-                                                color: Colors.white),
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            _totalIncome,
-                                            style: const TextStyle(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                child: TextButton(
+                                  onPressed: () async {
+                                    await DatePicker.showDatePicker(context,
+                                        showTitleActions: true,
+                                        minTime: DateTime(2018, 3, 5),
+                                        maxTime: DateTime(2025, 1, 1),
+                                        onChanged: (date) {},
+                                        onConfirm: (date) {
+                                          String formatDate = DateFormat.yMMMMd('en-US').format(date);
+                                          _fromDate = formatDate;
+                                      _fromDateParam = QLCTUtils.dateTimeToString(date, "000000");
+                                      setState(() {});
+                                    },
+                                        currentTime: DateTime.now(),
+                                        locale: LocaleType.en);
+                                    // setState(() {});
+                                  },
+                                  child: Text(
+                                    " $_fromDate",
+                                    style: const TextStyle(
+                                      color:Colors.black87,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // To Date button
+                    Container(
+                      color: RallyColors.gray60,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: size.width / 3,
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 8.0),
+                                child: Text(
+                                  "To Date",
+                                  style: TextStyle(
+                                    fontSize: 17.0,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                child: TextButton(
+                                  onPressed: () async {
+                                    await DatePicker.showDatePicker(context,
+                                        showTitleActions: true,
+                                        minTime: DateTime(2018, 3, 5),
+                                        maxTime: DateTime(2025, 1, 1),
+                                        onChanged: (date) {},
+                                        onConfirm: (date) {
+                                      String formatDate = DateFormat.yMMMMd('en-US').format(date);
+                                      _toDate = formatDate;
+                                      _toDateParam = QLCTUtils.dateTimeToString(date, "235959");
+                                      setState(() {
+                                        _toDate = formatDate;
+                                      });
+                                    },
+                                        currentTime: DateTime.now(),
+                                        locale: LocaleType.en);
+                                    // setState(() {});
+                                  },
+                                  child: Text(
+                                    " $_toDate",
+                                    style: const TextStyle(
+                                      color:Colors.black87,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // button search
+                    // Container(
+                    //     color: RallyColors.gray60,
+                    //     child: buttonCustom("Search", QLCTColors.mainPurpleColor)),
+                  ],
+                )),
+                // Overview report
+                const SizedBox(
+                  height: 10.0,
+                ),
+                FutureBuilder(
+                  future: buildTransactionItem(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Wrap(
+                              spacing: 20.0,
+                              children: [
+                                Container(
+                                  width: (size.width - 60) / 2,
+                                  height: 170,
+                                  decoration: BoxDecoration(
+                                    color:QLCTColors.mainGreenColor,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: QLCTColors.mainGreenColor.withOpacity(0.8),
+                                        spreadRadius: 4,
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 3),
+                                      )
+                                    ],),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 25, right: 25, top: 20, bottom: 20),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          width: 40,
+                                          height: 40,
+                                          decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white),
+                                          child: const Center(
+                                              child: Icon(
+                                                FontAwesomeIcons.arrowLeft,
+                                                color: QLCTColors.mainGreenColor,
+                                              )),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              "Total Income",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 15,
+                                                  color: Colors.white),
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                              _totalIncome,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                  color: Colors.white
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: (size.width - 60) / 2,
+                                  height: 170,
+                                  decoration: BoxDecoration(
+                                    color: QLCTColors.mainRedColor,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: QLCTColors.mainRedColor.withOpacity(0.8),
+                                        spreadRadius: 4,
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 3),
+                                      )
+                                    ],),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 25, right: 25, top: 20, bottom: 20),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          width: 40,
+                                          height: 40,
+                                          decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.white),
+                                          child: const Center(
+                                              child: Icon(
+                                                FontAwesomeIcons.arrowRight,
+                                                color: QLCTColors.mainRedColor,
+                                              )),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              "Total Expense",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 15,
+                                                  color: Colors.white),
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Text(
+                                              _totalExpense,
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
-                                                color: Colors.white
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
+                                                color: Colors.white,
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                width: (size.width - 60) / 2,
-                                height: 170,
-                                decoration: BoxDecoration(
-                                  color: QLCTColors.mainRedColor,
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: QLCTColors.mainRedColor.withOpacity(0.8),
-                                      spreadRadius: 4,
-                                      blurRadius: 10,
-                                      offset: const Offset(0, 3),
-                                    )
-                                  ],),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 25, right: 25, top: 20, bottom: 20),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        width: 40,
-                                        height: 40,
-                                        decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white),
-                                        child: const Center(
-                                            child: Icon(
-                                              FontAwesomeIcons.arrowRight,
-                                              color: QLCTColors.mainRedColor,
-                                            )),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "Total Expense",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 15,
-                                                color: Colors.white),
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Text(
-                                            _totalExpense,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          TransactionFragment(
-                            transactionItems: transactionItems,
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                },
-              )
-            ],
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            TransactionFragment(
+                              transactionItems: transactionItems,
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

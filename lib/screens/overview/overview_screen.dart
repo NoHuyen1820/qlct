@@ -122,7 +122,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
       FinanceItem f = FinanceItem(
           title: b.name.toString(),
           subtitle: b.createdAt.toString().substring(0, 10),
-          amount: b.amount);
+          amount: b.amount,
+          kind: 1,
+          itemNumber: b.budgetCode,);
       budgetItems.add(f);
     }
     logger.i(budgetItems.length.toString());
@@ -152,11 +154,12 @@ class _OverviewScreenState extends State<OverviewScreen> {
         categorySTR = categorySelect[trans.category];
       }
       FinanceItem financeItem = FinanceItem(
-        //type
         title: categorySTR,
         subtitle: trans.createdAt.toString().substring(0, 10),
         amount: trans.amount.toString(),
         type: trans.type!.toInt(),
+        kind: 2,
+        itemNumber: trans.transactionNumber,
       );
       transactionItems.add(financeItem);
     }

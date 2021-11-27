@@ -59,6 +59,7 @@ class TransactionService {
     log("END- TransactionService:getTransactionListByDate");
     return transactions;
   }
+
   createTransaction(Transaction transaction) async {
     log("BEGIN - TransactionService: createTransaction");
     String url = Hosting.createTransaction;
@@ -69,5 +70,19 @@ class TransactionService {
     dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]
     log(data.runtimeType.toString());
     log("END - TransactionService: createTransaction");
+  }
+
+  deleteTransaction(String transactionNumber) async {
+    log("BEGIN - TransactionService: deleteTransaction");
+    String url = Hosting.deleteTransaction;
+    String param = "?transactionNumber=" + transactionNumber;
+    url += param;
+    Future<ResponseDTO> responseFu = Protocol.makePostRequest(url, null);
+    ResponseDTO responseDTO = await responseFu;
+    dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]
+    log(data.runtimeType.toString());
+    log("END - TransactionService: deleteTransaction");
+
+
   }
 }

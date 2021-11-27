@@ -66,4 +66,18 @@ class BudgetService {
     log(data.runtimeType.toString());
     log("END - BudgetService: createBudget");
   }
+
+  deleteBudget(String budgetCode) async{
+    log("BEGIN - BudgetService: deleteBudget");
+    String url = Hosting.deleteBudget;
+    String param = "?budgetCode=" + budgetCode;
+    url += param;
+    Future<ResponseDTO> responseFu = Protocol.makePostRequest(url, null);
+    ResponseDTO responseDTO = await responseFu;
+    dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]
+    log(data.runtimeType.toString());
+    log("END - BudgetService: deleteBudget");
+
+
+  }
 }

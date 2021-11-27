@@ -40,6 +40,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   String _toDateParam = QLCTUtils.dateTimeToString(DateTime.now(), "235959");
   String _totalIncome = "0.0";
   String _totalExpense = "0.0";
+  final _formKey = GlobalKey<FormState>();
 
   List<TransactionItem> transactionItems = [];
   List<String> _budgetCodes = [];
@@ -116,7 +117,8 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
               const SizedBox(
                 height: 10.0,
               ),
-              Form(child: Column(
+              Form(
+                  child: Column(
                 children: [
                   // From Date button
                   Container(
@@ -310,7 +312,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                             _totalIncome,
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 20,
+                                                fontSize: 16,
                                                 color: Colors.white
                                             ),
                                           )
@@ -370,7 +372,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                             _totalExpense,
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                              fontSize: 16,
                                               color: Colors.white,
                                             ),
                                           )
@@ -420,7 +422,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
       : amountTotalExpense += BigDecimal.parse(trans.amount);
       String? categorySTR ="Other category";
       if(categorySelect.containsKey(trans.category)){
-        categorySTR = categorySelect![trans.category];
+        categorySTR = categorySelect[trans.category];
       }
       TransactionItem transactionItem = TransactionItem(
         title: categorySTR,

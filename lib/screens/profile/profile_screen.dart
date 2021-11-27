@@ -90,17 +90,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   top: 60, right: 20, left: 20, bottom: 25),
               child: Column(
                 children: [
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const [
                       Text(
                         "Profile",
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: black),
+                            color: Colors.black,
+                            fontSize: 35.0,
+                            decorationStyle: TextDecorationStyle.wavy),
                       ),
-                      FaIcon(FontAwesomeIcons.font)
                     ],
                   ),
                   const SizedBox(
@@ -127,6 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 top: 16,
                                 left: 13,
                                 child: Container(
+                                  alignment: Alignment.center,
                                   width: 85,
                                   height: 85,
                                   decoration: const BoxDecoration(
@@ -141,31 +141,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
-                      Container(
-                        width: (size.width - 40) * 0.6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Abbie Wilson",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: black),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Credit score: 73.50",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: black.withOpacity(0.4)),
-                            ),
-                          ],
-                        ),
-                      )
+                      // Container(
+                      //   width: (size.width - 40) * 0.6,
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       const Text(
+                      //         "Abbie Wilson",
+                      //         style: TextStyle(
+                      //             fontSize: 20,
+                      //             fontWeight: FontWeight.bold,
+                      //             color: black),
+                      //       ),
+                      //       const SizedBox(
+                      //         height: 10,
+                      //       ),
+                      //       Text(
+                      //         "Credit score: 73.50",
+                      //         style: TextStyle(
+                      //             fontSize: 14,
+                      //             fontWeight: FontWeight.w500,
+                      //             color: black.withOpacity(0.4)),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // )
                     ],
                   ),
                   const SizedBox(

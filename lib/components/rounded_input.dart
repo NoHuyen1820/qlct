@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:qlct/components/text_field_container.dart';
 import 'package:qlct/theme/constants.dart';
 
-class RoundedInputField extends StatelessWidget {
+class RoundedInputEmailField extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final ValueChanged<String> onChange;
   final TextEditingController controller;
-  const RoundedInputField({
+  const RoundedInputEmailField({
     Key? key,
     this.hintText = "",
     this.icon = Icons.person,
@@ -30,6 +30,44 @@ class RoundedInputField extends StatelessWidget {
             if (!emailValid) {
               return " Your password isn't in the correct format";
             }
+          }
+          return null;
+        },
+        controller: controller,
+        onChanged: onChange,
+        decoration: InputDecoration(
+          icon: Icon(
+            icon,
+            color: kPrimaryColor,
+          ),
+          hintText: hintText,
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedInputNameField extends StatelessWidget {
+  final String hintText;
+  final IconData icon;
+  final ValueChanged<String> onChange;
+  final TextEditingController controller;
+  const RoundedInputNameField({
+    Key? key,
+    this.hintText = "",
+    this.icon = Icons.person,
+    required this.onChange,
+    required this.controller,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldContainer(
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Please enter your full name!";
           }
           return null;
         },

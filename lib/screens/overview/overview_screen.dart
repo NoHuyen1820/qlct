@@ -28,6 +28,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
   var transactionService = TransactionService();
   var authService = AuthService();
   late String _userCode;
+  List<String> _budgetCodes =[];
 
   @override
   void initState() {
@@ -155,8 +156,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
   }
   Future<List<FinanceItem>> buildTransactionFinanceItem() async {
     logger.i("BEGIN - buildTransactionFinanceItem");
+    await getBudgetCodes();
     Future<List<Transaction>> transactionFu =
-        transactionService.getAllTransaction();
+        transactionService.getTransactionMultiBudgetCode(_budgetCodes);
     transactions = await transactionFu;
     for (Transaction trans in transactions) {
       amountTotalTransactions += BigDecimal.parse(trans.amount);
@@ -177,5 +179,18 @@ class _OverviewScreenState extends State<OverviewScreen> {
     logger.i(transactionItems.length.toString());
     logger.i("END - buildTransactionFinanceItem");
     return transactionItems;
+  }
+
+  Future<List<String>> getBudgetCodes() async {
+    Future<List<Budget>> budgetFu = budgetService.getAllBudget(_userCode);
+    List<Budget> budgets = await budgetFu;
+    _budgetCodes = [];
+    for (Budget b in budgets) {
+      var budgetCode = b.budgetCode;
+      if (budgetCode != null) {
+        _budgetCodes.add(budgetCode);
+      }
+    }
+    return _budgetCodes;
   }
 }

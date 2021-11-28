@@ -42,7 +42,7 @@ class _LoginState extends State<Body> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                 ),
                 SizedBox(height: size.height * 0.03),
-                RoundedInputField(
+                RoundedInputEmailField(
                   controller: emailController,
                   hintText: "Email",
                   onChange: (value) {},

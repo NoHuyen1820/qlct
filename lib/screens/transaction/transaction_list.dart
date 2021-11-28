@@ -40,7 +40,6 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   String _toDateParam = QLCTUtils.dateTimeToString(DateTime.now(), "235959");
   String _totalIncome = "0.0";
   String _totalExpense = "0.0";
-  final _formKey = GlobalKey<FormState>();
 
   List<TransactionItem> transactionItems = [];
   List<String> _budgetCodes = [];
@@ -50,49 +49,6 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   void initState() {
     _userCode = authService.getCurrentUID();
     super.initState();
-  }
-
-  Widget buttonCustom(String content, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
-      margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(30.0),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.5),
-            spreadRadius: 4,
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          )
-        ],
-      ),
-      child: Center(
-        child: TextButton(
-          onPressed: () async {
-            // TODO - getListTransaction
-            // TODO -Update UI
-            _budgetCodes = await getBudgetCodes();
-            transactionService.getTransactionListByDate(_fromDateParam, _toDateParam, _budgetCodes);
-
-
-
-            },
-          child: Text(
-            content,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 17,
-              letterSpacing: 0.0,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   @override
@@ -212,7 +168,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                     await DatePicker.showDatePicker(context,
                                         showTitleActions: true,
                                         minTime: DateTime(2018, 3, 5),
-                                        maxTime: DateTime(2025, 1, 1),
+                                        maxTime: DateTime.now(),
                                         onChanged: (date) {},
                                         onConfirm: (date) {
                                       String formatDate = DateFormat.yMMMMd('en-US').format(date);

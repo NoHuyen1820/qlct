@@ -29,6 +29,34 @@ class TransactionService {
     return transactions;
   }
 
+  Future<List<Transaction>> getTransactionMultiBudgetCode(List<String> budgetCodes) async {
+    log("BEGIN - TransactionService:getTransactionMultiBudgetCode");
+    String url = Hosting.getAllTransactionByMultiBudgetCode;
+    Transaction transaction = Transaction(
+      amount: '20000',
+      budgetCodes: budgetCodes,
+    );
+    String jsonBody = jsonEncode(transaction);
+    log(jsonBody);
+    Future<ResponseDTO> responseFu = Protocol.makePostRequest(url, jsonBody);
+    ResponseDTO responseDTO = await responseFu;
+    dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]
+    log(data.runtimeType.toString());
+    List<Transaction> transactions = [];
+    for (dynamic trans in data) {
+      try {
+        var validMap = jsonDecode(jsonEncode(trans)) as Map<String, dynamic>;
+        Transaction transaction = Transaction.fromJson(validMap);
+        transactions.add(transaction);
+      } catch (e) {
+        break;
+      }
+    }
+    log("Length of transaction list by budget code: " + transactions.length.toString());
+    log("END- TransactionService:getTransactionMultiBudgetCode");
+    return transactions;
+  }
+
   Future<List<Transaction>> getTransactionListByDate(
       String fromDate, String toDate, List<String> budgetCodes) async {
     log("BEGIN - TransactionService:getTransactionListByDate");

@@ -85,6 +85,16 @@ class QLCTColors {
   static const Color mainYellowColor = Color(0xffffc800);
   static const Color mainGreenLightColor = Color(0xff68eebe);
 
+  static const Color mainARallyColor = Color(0xFFFFDC78);
+  static const Color mainBRallyColor = Color(0xFFFF6951);
+  static const Color mainCRallyColor = Color(0xFFFFD7D0);
+  static const Color mainDRallyColor = Color(0xFFFFAC12);
+
+  static const Color mainERallyColor = Color(0xFFB2F2FF);
+  static const Color mainFRallyColor = Color(0xFFB15DFF);
+  static const Color mainGRallyColor = Color(0xFF72DEFF);
+  static const Color mainHRallyColor = Color(0xFF0082FB);
+
   static const Color whiteColor = Color(0xFBFEFFFF);
 
 

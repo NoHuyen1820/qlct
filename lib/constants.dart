@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qlct/theme/colors.dart';
 
 const kPrimaryColor = Color(0xFF6F35A5);
 const kPrimaryLightColor = Color(0xFFF1E6FF);
@@ -47,22 +48,36 @@ const Map<String, String> categoryOptions = {
 };
 
 const Map<int, String> categorySelect = {
+  0:"Electricity Bill",
   1:"Water Bill",
+  2:"House Rental",
+  3:"Internet Bill",
+  4:"Phone Bill",
+  5:"Food & Beverage",
+  6:"Sporting",
+  7:"Gaming",
   8:"Gift & Charity",
   9:"Salary",
-  4:"Phone Bill",
-  12:"Pension",
-  7:"Gaming",
-  5:"Food & Beverage",
-  11:"Saving",
-  0:"Electricity Bill",
-  6:"Sporting",
-  3:"Internet Bill",
-  2:"House Rental",
   10:"Investment",
+  11:"Saving",
+  12:"Pension",
 };
 
-
+const Map<int, Color> categoryColors = {
+  0:QLCTColors.mainBlueColor,
+  1:QLCTColors.mainPurpleColor,
+  2:QLCTColors.mainERallyColor,
+  3:QLCTColors.mainDRallyColor,
+  4:QLCTColors.mainPinkColor,
+  5:QLCTColors.mainGreenLightColor,
+  6:QLCTColors.mainYellowColor,
+  7:QLCTColors.mainGreenColor,
+  8:QLCTColors.mainARallyColor,
+  9:QLCTColors.mainRedColor,
+  10:QLCTColors.mainFRallyColor,
+  11:QLCTColors.mainCRallyColor,
+  12:QLCTColors.mainBRallyColor,
+};
 
 
 const Map<String, String> recurringOptions = {

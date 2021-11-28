@@ -272,8 +272,9 @@ class PieFinanceChartState extends State<PieFinanceChart> {
     Map<int, PieSectionData> map = <int, PieSectionData>{};
   List<PieSectionData> processingData(List<Transaction> transactions) {
     map = <int, PieSectionData>{};
+    double sum = 0.0;
     for (Transaction trans in transactions) {
-
+      sum += double.parse(trans.amount);
       if (map.containsKey(trans.category)) {
         PieSectionData p = map[trans.category]!;
         p.percent += double.parse(trans.amount);
@@ -289,6 +290,9 @@ class PieFinanceChartState extends State<PieFinanceChart> {
 
     }
     map.forEach((key, value) => data.add(value));
+    for (PieSectionData d in data) {
+      d.name = ((d.percent/sum)*100).toStringAsFixed(1) + "%";
+    }
     return data;
   }
 

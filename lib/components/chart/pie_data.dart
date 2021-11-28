@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 class PieSectionData {
-  final String name; // category
+  String name; // category
   double percent; // sum amount
   final Color color; // color
   PieSectionData(

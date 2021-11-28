@@ -55,7 +55,17 @@ class _OverviewScreenState extends State<OverviewScreen> {
               const SizedBox(
                 height: 5.0,
               ),
-              const PieFinanceChart(),
+              FutureBuilder(
+                future: buildAmountTotalTransactions(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    return PieFinanceChart(transactions: transactions);
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
               const SizedBox(
                 height: 20.0,
               ),
@@ -134,6 +144,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
 
   // Call transactionService get all transactions
   // and add into transactionItems
+  List<Transaction> transactions = [];
   List<FinanceItem> transactionItems = [];
   BigDecimal amountTotalTransactions = BigDecimal.parse("0.0");
   Future<String> buildAmountTotalTransactions() async {
@@ -146,7 +157,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     logger.i("BEGIN - buildTransactionFinanceItem");
     Future<List<Transaction>> transactionFu =
         transactionService.getAllTransaction();
-    List<Transaction> transactions = await transactionFu;
+    transactions = await transactionFu;
     for (Transaction trans in transactions) {
       amountTotalTransactions += BigDecimal.parse(trans.amount);
       String? categorySTR ="Other category";

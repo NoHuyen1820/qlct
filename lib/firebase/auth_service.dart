@@ -8,7 +8,7 @@ class AuthService {
     if (user == null) {
       return null;
     }
-    return UserNew(user.uid, user.email);
+    return UserNew(user.uid, user.email, user.displayName);
   }
 
   Stream<UserNew?>? get user {
@@ -37,9 +37,12 @@ class AuthService {
   Future<UserNew?> createUserWithEmailAndPasswordLocal(
     String email,
     String password,
+    String displayName,
   ) async {
     final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
+    credential.user!.updateDisplayName(displayName);
+    credential.user!.reload();
     return _userFromFirebase(credential.user);
   }
 

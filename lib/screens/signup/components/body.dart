@@ -23,6 +23,7 @@ class _SignUpState extends State<Body> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController displayNameController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
   // bool _isHidePassword = true;
@@ -48,10 +49,15 @@ class _SignUpState extends State<Body> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                 ),
                 SizedBox(height: size.height * 0.03),
-                RoundedInputField(
+                RoundedInputEmailField(
                   hintText: "Email",
                   onChange: (value) {},
                   controller: emailController,
+                ),
+                RoundedInputNameField(
+                  hintText: "Full name",
+                  onChange: (value) {},
+                  controller: displayNameController,
                 ),
                 RoundedPasswordField(
                   hintText: "Password",
@@ -90,7 +96,7 @@ class _SignUpState extends State<Body> {
                           const SnackBar(content: Text("Processing")));
 
                         await authService.createUserWithEmailAndPasswordLocal(
-                            emailController.text, passwordController.text);
+                            emailController.text, passwordController.text,displayNameController.text);
 
                         Navigator.pop(context);
                     }

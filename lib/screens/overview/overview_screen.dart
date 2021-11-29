@@ -161,6 +161,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     Future<List<Transaction>> transactionFu =
         transactionService.getTransactionMultiBudgetCode(_budgetCodes);
     transactions = await transactionFu;
+    transactions = [];
     for (Transaction trans in transactions) {
       amountTotalTransactions += BigDecimal.parse(trans.amount);
       String? categorySTR ="Other category";

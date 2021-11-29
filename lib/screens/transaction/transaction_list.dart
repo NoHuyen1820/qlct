@@ -374,6 +374,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
     Future<List<Transaction>> transactionFu =
         transactionService.getTransactionListByDate(_fromDateParam, _toDateParam, _budgetCodes);
     List<Transaction> transactions = await transactionFu;
+    transactionItems = [];
     for (Transaction trans in transactions) {
       trans.type == 0 ? amountTotalIncome += BigDecimal.parse(trans.amount)
       : amountTotalExpense += BigDecimal.parse(trans.amount);

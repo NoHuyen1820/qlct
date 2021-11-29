@@ -96,7 +96,7 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
         child: Stack(
           children: <Widget>[
             Container(
-              height: size.height * .45,
+              height: size.height * .35,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.bottomLeft,
@@ -110,8 +110,8 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 70.0,
+                  SizedBox(
+                    height: size.height * .08,
                   ),
                   Wrap(
                     direction: Axis.vertical,
@@ -128,7 +128,7 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                                 style: TextStyle(
                                     fontFamily: "Rubik-Bold",
                                     color: Colors.white,
-                                    fontSize: 35,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.w700))
                           ])),
                       RichText(
@@ -142,14 +142,14 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                                 style: TextStyle(
                                     fontFamily: "Rubik-Bold",
                                     color: Colors.white,
-                                    fontSize: 25,
+                                    fontSize: 23,
                                     fontWeight: FontWeight.w700)),
                             TextSpan(
                                 text: "financial management",
                                 style: TextStyle(
                                   fontFamily: "Rubik-Medium",
                                   color: Colors.white,
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   // fontWeight: FontWeight.bold
                                 )),
                           ])),
@@ -164,7 +164,7 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                                 style: TextStyle(
                                   fontFamily: "Rubik-Medium",
                                   color: Colors.white,
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   // fontWeight: FontWeight.bold
                                 )),
                             TextSpan(
@@ -172,7 +172,7 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                                 style: TextStyle(
                                     fontFamily: "Rubik-Bold",
                                     color: Colors.white,
-                                    fontSize: 25,
+                                    fontSize: 23,
                                     fontWeight: FontWeight.w700)),
                           ])),
                     ],
@@ -190,8 +190,8 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                         if (bcs.isEmpty) {
                           return Expanded(
                               child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 180, left: 20.0, right: 20.0),
+                            padding: EdgeInsets.only(
+                                top: size.height * .09, left: 20.0, right: 20.0),
                             child: Center(
                               child: Column(children: [
                                 Row(

@@ -27,17 +27,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget buttonCustom(String content, Color color) {
     final authService = Provider.of<AuthService>(context);
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 32.0),
       margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
       decoration: BoxDecoration(
         border: Border.all(color: QLCTColors.mainRedColor),
         color: color,
         borderRadius: const BorderRadius.all(
-          Radius.circular(15.0),
+          Radius.circular(12.0),
         ),
       ),
       child: Center(
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           child: TextButton(
             onPressed: () async {
@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               content,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 17,
+                fontSize: 15,
                 letterSpacing: 0.0,
                 color: QLCTColors.mainRedColor,
               ),
@@ -171,14 +171,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   SvgPicture.asset(
                     "assets/images/ui_profile.svg",
-                    height: size.height * 0.20,
+                    height: size.height * 0.15,
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(
-            height: 50,
+          SizedBox(
+            height: size.height * 0.07,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),

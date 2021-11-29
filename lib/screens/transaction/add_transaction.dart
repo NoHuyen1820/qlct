@@ -515,7 +515,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
     return mapBudgetCodes;
     }
 
-  String? _recurring = "01";
+  String? _recurring = "00";
 
   String? _mycategory ="1";
 }

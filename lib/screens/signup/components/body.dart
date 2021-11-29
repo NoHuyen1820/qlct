@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qlct/Screens/Login/login_screen.dart';
 import 'package:qlct/Screens/Signup/components/background.dart';
-import 'package:qlct/Screens/Signup/components/or_divider.dart';
-import 'package:qlct/Screens/Signup/components/social_icon.dart';
 import 'package:qlct/components/already_have_an_account_check.dart';
 import 'package:qlct/components/rounded_button.dart';
 import 'package:qlct/components/rounded_input.dart';
@@ -30,7 +28,7 @@ class _SignUpState extends State<Body> {
 
   @override
   void initState() {
-
+    super.initState();
   }
 
   @override
@@ -88,7 +86,7 @@ class _SignUpState extends State<Body> {
                   controller: confirmPasswordController,
                 ),
                 RoundedButton(
-                  text: "SIGN UP",
+                  text: "Sign Up",
                   press: () async {
                      if (_formKey.currentState!.validate()) {
                        // call check validate
@@ -115,24 +113,24 @@ class _SignUpState extends State<Body> {
               );
             },
           ),
-          OrDivider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // SocalIcon(
-              //   iconSrc: "assets/icons/facebook.svg",
-              //   press: () {},
-              // ),
-              // SocalIcon(
-              //   iconSrc: "assets/icons/twitter.svg",
-              //   press: () {},
-              // ),
-              SocalIcon(
-                iconSrc: "assets/icons/google-plus.svg",
-                press: () {},
-              ),
-            ],
-          )
+          // OrDivider(),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: <Widget>[
+          //     // SocalIcon(
+          //     //   iconSrc: "assets/icons/facebook.svg",
+          //     //   press: () {},
+          //     // ),
+          //     // SocalIcon(
+          //     //   iconSrc: "assets/icons/twitter.svg",
+          //     //   press: () {},
+          //     // ),
+          //     SocalIcon(
+          //       iconSrc: "assets/icons/google-plus.svg",
+          //       press: () {},
+          //     ),
+          //   ],
+          // )
         ],
       ),
     );

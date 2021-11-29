@@ -1,4 +1,4 @@
-import 'package:adaptive_dialog/adaptive_dialog.dart';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -193,7 +193,10 @@ class FinanceItem extends StatelessWidget{
                 children: [
                   Text(
                     // TODO edit text title budget
-                    kind == 1 ? "" :"Are you sure delete this item?",
+                    kind == 1 ? "If you delete this budget, "
+                        "all related records will also be deleted. Deleted data will not be recovered. "
+                        "Do you really want to delete it?"
+                        :"Are you sure delete this item?",
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black87,

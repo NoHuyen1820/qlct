@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              "Ứng dụng quản lí tài chính cá nhân",
+              "Money Management",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             SizedBox(
@@ -32,7 +32,7 @@ class Body extends StatelessWidget {
               height: size.height * 0.05,
             ),
             RoundedButton(
-              text: "Đăng nhập",
+              text: "Sign In",
               press: () {
                 Navigator.push(
                   context,
@@ -45,7 +45,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "Đăng kí",
+              text: "Sign Up",
               press: () {
                 Navigator.push(
                   context,

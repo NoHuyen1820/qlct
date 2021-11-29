@@ -38,7 +38,7 @@ class _LoginState extends State<Body> {
               key: _formKey,
               child: Column(children: <Widget>[
                 const Text(
-                  "Đăng nhập",
+                  "SIGN IN",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -49,17 +49,17 @@ class _LoginState extends State<Body> {
                 ),
                 RoundedPasswordField(
                   controller: passwordController,
-                  hintText: "Mật Khẩu",
+                  hintText: "Password",
                   onChange: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Vui lòng nhập mật khẩu";
+                      return "Please enter password!";
                     }
                     return null;
                   },
                 ),
                 RoundedButton(
-                  text: "Đăng nhập",
+                  text: "Sign In",
                   press: () async {
                     if (_formKey.currentState!.validate()) {
                       UserNew? user =

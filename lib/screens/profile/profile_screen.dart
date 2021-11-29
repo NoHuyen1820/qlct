@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -40,11 +41,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: SizedBox(
           width: double.infinity,
           child: TextButton(
-            onPressed: () async {
-              await authService.signOut();
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const LoginScreen()));
-            },
+            onPressed: () => showDialog<String>(
+              context: context,
+              builder: (BuildContext context ) => CupertinoAlertDialog(
+                title: const Text(
+                  "Attention",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.red,
+                  ),
+                ),
+                content: Column(
+                    children: const [
+                      Text(
+                        "Are you sure sign out of the app?",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ]
+                ),
+                actions:<Widget> [
+                  CupertinoButton(
+                    child: const Text(
+                      "Cancel",
+                      style: TextStyle(fontSize: 16, color: QLCTColors.mainRedColor),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  CupertinoButton(
+                      child: const Text(
+                        "Yes",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    onPressed: () async {
+                      await authService.signOut();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
+                    })
+                ],
+              )
+          ),
+            // onPressed: () async {
+            //   await authService.signOut();
+            //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+            //       builder: (context) => const LoginScreen()));
+            // },
             child: Text(
               content,
               textAlign: TextAlign.center,

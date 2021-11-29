@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qlct/theme/constants.dart';
+import 'package:qlct/theme/colors.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
@@ -9,8 +9,8 @@ class RoundedButton extends StatelessWidget {
     Key? key,
     this.text = "",
     this.press,
-    this.color = kPrimaryColor,
-    this.textColor = kPrimaryWhiteColor,
+    this.color = QLCTColors.mainPurpleColor,
+    this.textColor = QLCTColors.whiteColor,
   }) : super(key: key);
 
   @override

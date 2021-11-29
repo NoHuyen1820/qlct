@@ -128,6 +128,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     Future<List<Budget>> budgetFu = budgetService.getAllBudget(_userCode);
     List<Budget> budgets = await budgetFu;
     budgetItems = [];
+    amountTotalBudgets = BigDecimal.parse("0.0");
     for (Budget b in budgets) {
       amountTotalBudgets += BigDecimal.parse(b.amount);
       logger.i("amount" + b.amount);
@@ -161,7 +162,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
     Future<List<Transaction>> transactionFu =
         transactionService.getTransactionMultiBudgetCode(_budgetCodes);
     transactions = await transactionFu;
-    transactions = [];
+    transactionItems = [];
+    amountTotalTransactions = BigDecimal.parse("0.0");
     for (Transaction trans in transactions) {
       amountTotalTransactions += BigDecimal.parse(trans.amount);
       String? categorySTR ="Other category";

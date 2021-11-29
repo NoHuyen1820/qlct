@@ -127,6 +127,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     logger.i("BEGIN - buildBudgetFinanceItem");
     Future<List<Budget>> budgetFu = budgetService.getAllBudget(_userCode);
     List<Budget> budgets = await budgetFu;
+    budgetItems = [];
     for (Budget b in budgets) {
       amountTotalBudgets += BigDecimal.parse(b.amount);
       logger.i("amount" + b.amount);

@@ -32,6 +32,7 @@ const Map<String, String> budgetOptions = {
 
 
 const Map<String, String> categoryOptions = {
+  "waterAndBill":"1",
   "Water Bill":"1",
   "Gift & Charity":"8",
   "Salary":"9",
@@ -46,6 +47,23 @@ const Map<String, String> categoryOptions = {
   "House Rental":"2",
   "Investment":"10",
 };
+
+const Map<String, String> categorySelectFinal = {
+  "waterBill":"1",
+  "giftAndCharity":"8",
+  "salary":"9",
+  "phoneBill":"4",
+  "pension":"12",
+  "gaming":"7",
+  "foodAndBeverage":"5",
+  "saving":"11",
+  "electricity Bill":"0",
+  "sporting":"6",
+  "internetBill":"3",
+  "houseRental":"2",
+  "investment":"10",
+};
+
 
 const Map<int, String> categorySelect = {
   0:"Electricity Bill",

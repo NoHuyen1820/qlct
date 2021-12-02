@@ -8,6 +8,7 @@ import 'package:qlct/model/transaction.dart';
 import 'package:qlct/screens/finance/finance.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../constants.dart';
 
@@ -46,9 +47,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const Text(
-                "Overview",
-                style: TextStyle(
+              Text(
+                AppLocalizations.of(context)!.overview,
+                style: const TextStyle(
                     color: Colors.black,
                     fontSize: 35.0,
                     decorationStyle: TextDecorationStyle.wavy),
@@ -78,7 +79,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   if (snapshot.hasData) {
                     return FinanceOverviewFragment(
-                      title: 'BUDGET',
+                      title: AppLocalizations.of(context)!.budget,
                       amount: snapshot.data[0].toString(),
                       items: budgetItems,
                       indexPage: 2,
@@ -96,7 +97,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                   if (snapshot.hasData) {
                     return FinanceOverviewFragment(
-                      title: 'TRANSACTION',
+                      title: AppLocalizations.of(context)!.transaction,
                       amount: snapshot.data[0].toString(),
                       items: transactionItems,
                       indexPage: 1,

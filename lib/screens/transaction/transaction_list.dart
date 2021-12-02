@@ -17,6 +17,8 @@ import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:qlct/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class TransactionListScreen extends StatefulWidget {
   const TransactionListScreen({Key? key}) : super(key: key);
@@ -63,9 +65,9 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const Text(
-                  "List Transaction",
-                  style: TextStyle(
+                 Text(
+                   AppLocalizations.of(context)!.listTransaction,
+                  style: const TextStyle(
                       color: Colors.black,
                       fontSize: 35.0,
                       decorationStyle: TextDecorationStyle.wavy),
@@ -86,11 +88,11 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                           children: [
                             SizedBox(
                               width: size.width / 3,
-                              child: const Padding(
-                                padding: EdgeInsets.only(left: 8.0),
+                              child:  Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
                                 child: Text(
-                                  "From Date",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.fromDate,
+                                  style: const TextStyle(
                                     fontSize: 17.0,
                                     color: Colors.black87,
                                   ),
@@ -118,7 +120,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                       setState(() {});
                                     },
                                         currentTime: DateTime.now(),
-                                        locale: LocaleType.en);
+                                        locale: LocaleType.vi);
                                     // setState(() {});
                                   },
                                   child: Text(
@@ -145,11 +147,11 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                           children: [
                             SizedBox(
                               width: size.width / 3,
-                              child: const Padding(
+                              child:  Padding(
                                 padding: EdgeInsets.only(left: 8.0),
                                 child: Text(
-                                  "To Date",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.toDate,
+                                  style: const TextStyle(
                                     fontSize: 17.0,
                                     color: Colors.black87,
                                   ),
@@ -179,7 +181,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                       });
                                     },
                                         currentTime: DateTime.now(),
-                                        locale: LocaleType.en);
+                                        locale: LocaleType.vi);
                                     // setState(() {});
                                   },
                                   child: Text(
@@ -254,9 +256,9 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            const Text(
-                                              "Total Income",
-                                              style: TextStyle(
+                                             Text(
+                                              AppLocalizations.of(context)!.totalIncome,
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 15,
                                                   color: Colors.white),
@@ -314,9 +316,9 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            const Text(
-                                              "Total Expense",
-                                              style: TextStyle(
+                                             Text(
+                                              AppLocalizations.of(context)!.totalExpense,
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 15,
                                                   color: Colors.white),

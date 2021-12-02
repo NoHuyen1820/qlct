@@ -7,6 +7,8 @@ import 'package:qlct/screens/login/login_screen.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -44,18 +46,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () => showDialog<String>(
               context: context,
               builder: (BuildContext context ) => CupertinoAlertDialog(
-                title: const Text(
-                  "Attention",
-                  style: TextStyle(
+                title: Text(
+                  AppLocalizations.of(context)!.attention,
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.red,
                   ),
                 ),
                 content: Column(
-                    children: const [
+                    children:  [
                       Text(
-                        "Are you sure sign out of the app?",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.contentSignOut,
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black87,
                         ),
@@ -64,18 +66,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 actions:<Widget> [
                   CupertinoButton(
-                    child: const Text(
-                      "Cancel",
-                      style: TextStyle(fontSize: 16, color: QLCTColors.mainRedColor),
+                    child: Text(
+                      AppLocalizations.of(context)!.cancel,
+                      style: const TextStyle(fontSize: 16, color: QLCTColors.mainRedColor),
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                   ),
                   CupertinoButton(
-                      child: const Text(
-                        "Yes",
-                        style: TextStyle(
+                      child:  Text(
+                        AppLocalizations.of(context)!.yes,
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
@@ -136,10 +138,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children:  [
                       Text(
-                        "Profile",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.profile,
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 35.0,
                             decorationStyle: TextDecorationStyle.wavy),
@@ -192,7 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Text(
                               _auth.getCurrentUser()!.displayName != null ?
-                              _auth.getCurrentUser()!.displayName! : "Default name",
+                              _auth.getCurrentUser()!.displayName! : AppLocalizations.of(context)!.defaultName,
                               style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -241,7 +243,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Text(
                   _auth.getCurrentUser()!.email != null ?
-                  _auth.getCurrentUser()!.email! : "No email",
+                  _auth.getCurrentUser()!.email! : AppLocalizations.of(context)!.noEmail,
                   style: const TextStyle(
                       fontSize: 17, fontWeight: FontWeight.bold, color: black),
                 ),
@@ -282,7 +284,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 //   decoration: InputDecoration(
                 //       hintText: "Password", border: InputBorder.none),
                 // ),
-                buttonCustom("SIGN OUT", Colors.transparent),
+                buttonCustom(AppLocalizations.of(context)!.signOut, Colors.transparent),
               ],
             ),
           )

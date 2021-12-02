@@ -7,6 +7,7 @@ import 'package:qlct/components/rounded_input.dart';
 import 'package:qlct/components/rounded_password_field.dart';
 import 'package:qlct/firebase/auth_service.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -42,9 +43,9 @@ class _SignUpState extends State<Body> {
           Form(
               key: _formKey,
               child: Column(children: <Widget>[
-                const Text(
-                  "SIGN UP",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                 Text(
+                  AppLocalizations.of(context)!.buttonSignUp,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                 ),
                 SizedBox(height: size.height * 0.03),
                 RoundedInputEmailField(
@@ -53,32 +54,32 @@ class _SignUpState extends State<Body> {
                   controller: emailController,
                 ),
                 RoundedInputNameField(
-                  hintText: "Full name",
+                  hintText: AppLocalizations.of(context)!.buttonFullName,
                   onChange: (value) {},
                   controller: displayNameController,
                 ),
                 RoundedPasswordField(
-                  hintText: "Password",
+                  hintText: AppLocalizations.of(context)!.buttonHinPass,
                   onChange: (value) {},
                   controller: passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter the password!";
+                      return AppLocalizations.of(context)!.validPassOne;
                     } else {
-                      if (value.length < 6) return "Password must be at least 6 characters";
+                      if (value.length < 6) return AppLocalizations.of(context)!.validPassTwo;
                     }
                     return null;
                   },
                 ),
                 RoundedPasswordField(
-                  hintText: "Confirm password",
+                  hintText: AppLocalizations.of(context)!.buttonConfirmPass,
                   onChange: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please re-enter your password";
+                      return AppLocalizations.of(context)!.validPassThree;
                     } else {
                       if (value != passwordController.text) {
-                        return "Password and confirm password do not match";
+                        return AppLocalizations.of(context)!.validPassFour;
                       }
                     }
                     return null;
@@ -86,7 +87,7 @@ class _SignUpState extends State<Body> {
                   controller: confirmPasswordController,
                 ),
                 RoundedButton(
-                  text: "Sign Up",
+                  text: AppLocalizations.of(context)!.buttonSignUp,
                   press: () async {
                      if (_formKey.currentState!.validate()) {
                        // call check validate
@@ -113,24 +114,6 @@ class _SignUpState extends State<Body> {
               );
             },
           ),
-          // OrDivider(),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     // SocalIcon(
-          //     //   iconSrc: "assets/icons/facebook.svg",
-          //     //   press: () {},
-          //     // ),
-          //     // SocalIcon(
-          //     //   iconSrc: "assets/icons/twitter.svg",
-          //     //   press: () {},
-          //     // ),
-          //     SocalIcon(
-          //       iconSrc: "assets/icons/google-plus.svg",
-          //       press: () {},
-          //     ),
-          //   ],
-          // )
         ],
       ),
     );

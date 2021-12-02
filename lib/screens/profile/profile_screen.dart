@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:qlct/firebase/auth_service.dart';
+import 'package:qlct/notifications.dart';
+import 'package:qlct/provider/notify_provider.dart';
 import 'package:qlct/screens/login/login_screen.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +29,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // TextEditingController dateOfBirth = TextEditingController(text: "04-19-1992");
   // TextEditingController password = TextEditingController(text: "123456");
   final _auth = AuthService();
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    setState(() {
+      _isLoading = true;
+    });
+    Provider.of<NotifyProvider>(context, listen: false)
+    .fetch()
+    .then((_) {
+      setState(() {_isLoading = false;});
+    });
+    super.initState();
+  }
 
   Widget buttonCustom(String content, Color color) {
     final authService = Provider.of<AuthService>(context);
@@ -118,6 +135,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget getBody() {
     var size = MediaQuery.of(context).size;
+    var scheduleData = Provider.of<NotifyProvider>(context);
+    var fetchedSchedules = scheduleData.schedules;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,43 +267,92 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fontSize: 17, fontWeight: FontWeight.bold, color: black),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
-                // Text(
-                //   "Date of birth",
-                //   style: TextStyle(
-                //       fontWeight: FontWeight.w500,
-                //       fontSize: 13,
-                //       color: Color(0xff67727d)),
-                // ),
-                // TextField(
-                //   controller: dateOfBirth,
-                //   cursorColor: black,
-                //   style: TextStyle(
-                //       fontSize: 17, fontWeight: FontWeight.bold, color: black),
-                //   decoration: InputDecoration(
-                //       hintText: "Date of birth", border: InputBorder.none),
-                // ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // const Text(
-                //   "Date of birth",
-                //   style: TextStyle(
-                //       fontWeight: FontWeight.w500,
-                //       fontSize: 13,
-                //       color: Color(0xff67727d)),
-                // ),
-                // TextField(
-                //   obscureText: true,
-                //   controller: password,
-                //   cursorColor: black,
-                //   style: TextStyle(
-                //       fontSize: 17, fontWeight: FontWeight.bold, color: black),
-                //   decoration: InputDecoration(
-                //       hintText: "Password", border: InputBorder.none),
-                // ),
-                buttonCustom(AppLocalizations.of(context)!.signOut, Colors.transparent),
+                _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("List schedule:",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                              color: Color(0xff67727d)),
+                        ),
+                        ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: fetchedSchedules.length,
+                            itemBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 4, vertical: 2),
+                              child: Card(
+                                elevation: 5,
+                                child: ListTile(
+                                  title: Text(fetchedSchedules[index].name),
+                                  // subtitle: Text(fetchedSchedules[index].periodic),
+                                  trailing: IconButton(
+                                    onPressed: () => showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            CupertinoAlertDialog(
+                                              title: const Text(
+                                                "Attention",
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: QLCTColors.mainRedColor,
+                                                ),
+                                              ),
+                                              content: Column(children: const [
+                                                Text(
+                                                  "Are you sure delete this schedule?",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.black87,
+                                                  ),
+                                                ),
+                                              ]),
+                                              actions: <Widget>[
+                                                CupertinoButton(
+                                                  child: const Text(
+                                                    "Cancel",
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color:
+                                                            QLCTColors.mainRedColor),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                                CupertinoButton(
+                                                    child: const Text(
+                                                      "Yes",
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                      ),
+                                                    ),
+                                                    onPressed: () async {
+                                                      await cancelScheduleNotificationById(fetchedSchedules[index].id);
+                                                      await scheduleData.fetch();
+                                                      Navigator.of(context).pop();
+                                                    })
+                                              ],
+                                            )),
+                                    icon: const Icon(
+                                      Typicons.trash,
+                                      color: QLCTColors.mainRedColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                buttonCustom("SIGN OUT", Colors.transparent),
               ],
             ),
           )

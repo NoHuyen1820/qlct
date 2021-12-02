@@ -99,8 +99,13 @@ const Map<int, Color> categoryColors = {
 
 
 const Map<String, String> recurringOptions = {
-  "Never repeat":"00",
-  "Everyday":"01",
-  "Every week":"07",
-  "Every month":"30",
+  "Never repeat":noneScheduleNotify,
+  "Everyday":dayScheduleNotify,
+  "Every week":weekScheduleNotify,
+  "Every month":monthScheduleNotify,
 };
+
+const noneScheduleNotify = "NONE";
+const dayScheduleNotify = "DAY";
+const weekScheduleNotify = "WEEK";
+const monthScheduleNotify = "MONTH";

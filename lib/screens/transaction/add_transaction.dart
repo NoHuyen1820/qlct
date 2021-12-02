@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:qlct/firebase/auth_service.dart';
 import 'package:qlct/model/budget.dart';
 import 'package:qlct/model/transaction.dart';
+import 'package:qlct/provider/notify_provider.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../constants.dart';
+import '../../notifications.dart';
+import '../../utils.dart';
 import '../root_app.dart';
 
 class AddTransactionScreen extends StatefulWidget{
@@ -32,6 +36,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
   String selectedTransType = "1";
 
   Widget buttonCustom(String content, Color color) {
+    var scheduleData = Provider.of<NotifyProvider>(context);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
       margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
@@ -65,6 +70,24 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
               );
 
               await transService.createTransaction(transaction);
+              int id = createUniqueId();
+              switch (_recurring) {
+                case dayScheduleNotify:
+                  createReminderNotificationByDay(id, categorySelect[int.parse(_mycategory!)]!,
+                      NotificationDateTime(dateTime: DateTime.now()));
+                  break;
+                case weekScheduleNotify:
+                  createReminderNotificationByWeek(id, categorySelect[int.parse(_mycategory!)]!,
+                      NotificationDateTime(
+                      dateTime: DateTime.now()));
+                  break;
+                case monthScheduleNotify:
+                  createReminderNotificationByMonth(id, categorySelect[int.parse(_mycategory!)]!,
+                      NotificationDateTime(
+                      dateTime: DateTime.now()));
+                  break;
+              }
+              await scheduleData.fetch();
               // Navigator.of(context).pushReplacement(MaterialPageRoute(
               //     builder: (context) => const RootApp(currentIndex: 1))).then((value) => setState(() {}));
               Navigator.push(context, MaterialPageRoute(
@@ -515,7 +538,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
     return mapBudgetCodes;
     }
 
-  String? _recurring = "00";
+  String? _recurring = noneScheduleNotify;
 
   String? _mycategory ="1";
 }

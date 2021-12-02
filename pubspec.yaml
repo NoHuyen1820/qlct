@@ -73,6 +73,7 @@ dependencies:
   passwordfield: ^0.1.0
   adaptive_dialog: ^1.2.0
   json_annotation: ^4.3.0
+  awesome_notifications: ^0.6.18+2
 
 dev_dependencies:
   flutter_test:

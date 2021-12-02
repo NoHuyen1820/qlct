@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 class QLCTUtils {
   // convert int to String
   static String intToString(int integer) {
@@ -30,5 +33,77 @@ class QLCTUtils {
   }
 }
 
+int createUniqueId() {
+  return DateTime.now().millisecondsSinceEpoch.remainder(100000);
+}
 
+class NotificationWeekAndTime {
+  late int day;
+  final int dayOfTheWeek;
+  final TimeOfDay timeOfDay;
 
+  NotificationWeekAndTime({
+    required this.dayOfTheWeek,
+    required this.timeOfDay,
+});
+}
+
+Future<NotificationWeekAndTime?> pickSchedule(
+  BuildContext context,
+) async {
+  List<String> weekdays = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
+  TimeOfDay? timeOfDay;
+  DateTime now = DateTime.now();
+  int? selectedDay;
+
+  await showDialog(context: context, builder: (context) {
+    return CupertinoAlertDialog(
+      title: const Text(
+        'I want to be reminded every:',
+        textAlign: TextAlign.center,
+      ),
+      content: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 3,
+        children: [
+          for (int index = 0; index < weekdays.length; index++)
+            ElevatedButton(
+                onPressed: () {
+                  selectedDay = index + 1;
+                  Navigator.pop(context);
+                },
+                child: Text(weekdays[index]))
+        ],
+      ),
+    );
+  });
+}
+
+class NotificationDateTime {
+  final DateTime dateTime;
+  NotificationDateTime({
+    required this.dateTime,
+  });
+}
+
+class NotificationWeek {
+  final int dayOfTheWeek;
+  NotificationWeek({
+    required this.dayOfTheWeek,
+  });
+}
+
+class NotificationMonth {
+  final int dayOfTheMonth;
+  NotificationMonth({
+    required this.dayOfTheMonth,
+  });
+}

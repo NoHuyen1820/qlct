@@ -1,3 +1,5 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:fluttericon/iconic_icons.dart';
 import 'package:qlct/screens/budget/budget_list.dart';
 import 'package:qlct/screens/overview/overview_screen.dart';
@@ -34,6 +36,51 @@ class _RootAppState extends State<RootApp> {
     // TODO: implement initState
     pageIndex = widget.currentIndex;
     super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        showDialog(context: context, builder: (context) => CupertinoAlertDialog(
+          title: const Text('Allow notifications'),
+          content: const Text('Our app would like to send you notifications'),
+          actions: [
+            TextButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                    'Don\'t allow',
+                  style: TextStyle(color: Colors.grey),
+                )
+            ),
+            TextButton(
+                onPressed: (){
+                  AwesomeNotifications().requestPermissionToSendNotifications()
+                      .then((_) => Navigator.pop(context));
+                },
+                child: const Text(
+                  'Allow',
+                  style: TextStyle(
+                      color: QLCTColors.mainPurpleColor,
+                      fontWeight: FontWeight.bold),
+                )
+            ),
+          ],
+          )
+        );
+      }
+    });
+
+    AwesomeNotifications().createdStream.listen((ReceivedNotification noti) {
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   content: Text('Notification create on ${noti.channelKey}'),
+      // ));
+    });
+    AwesomeNotifications().actionStream.listen((event) {
+      // Navigator.push(context, MaterialPageRoute(
+      //     builder: (context) => const RootApp(currentIndex: 4)));
+      // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>
+      //     const RootApp(currentIndex: 2),
+      // ), (route) => false);
+    });
   }
 
   @override

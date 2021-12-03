@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:qlct/Screens/Login/login_screen.dart';
@@ -17,10 +18,14 @@ class Body extends StatelessWidget {
         child: SingleChildScrollView(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              height: size.height * 0.05,
+            ),
              Text(
              AppLocalizations.of(context)!.welcomeTitle ,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             SizedBox(
               height: size.height * 0.03,

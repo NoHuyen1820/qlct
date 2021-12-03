@@ -32,7 +32,6 @@ const Map<String, String> budgetOptions = {
 
 
 const Map<String, String> categoryOptions = {
-  "waterAndBill":"1",
   "Water Bill":"1",
   "Gift & Charity":"8",
   "Salary":"9",

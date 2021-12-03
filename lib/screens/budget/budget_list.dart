@@ -531,9 +531,9 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
                       MinimalInputField(
                           validator:(value){
                             if(value == null || value.isEmpty){
-                              return AppLocalizations.of(context)!.validName;
+                              return AppLocalizations.of(context)!.validNameBudget;
                             } if (value.length > 30){
-                              return "Field name is less than or equal to 30 characters";
+                              return AppLocalizations.of(context)!.validNote;
                             }
                           },
                           fieldName: AppLocalizations.of(context)!.name,

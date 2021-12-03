@@ -69,8 +69,8 @@ class FinanceOverviewFragment extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => RootApp(currentIndex: indexPage??0,)));
                   },
-                  child: const Text("SEE ALL",
-                      style: TextStyle(color: QLCTColors.mainPurpleColor)),
+                  child:  Text(AppLocalizations.of(context)!.seeAll,
+                      style: const TextStyle(color: QLCTColors.mainPurpleColor)),
                 ))
           ],
         ),

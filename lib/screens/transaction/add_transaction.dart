@@ -187,7 +187,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                           height: 20
                       ),
                       Text(
-                        AppLocalizations.of(context)!.createBudget,
+                        AppLocalizations.of(context)!.newTransaction,
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 35.0,
@@ -325,7 +325,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                                     return DropdownButtonFormField<String>(
                                                         validator: (value) =>
                                                         value == "0000000"
-                                                            ? AppLocalizations.of(context)!.validBudget
+                                                            ? 'Please select budget!'
                                                             : null,
                                                     value: _budget,
                                                     items: mapBudgetCodes
@@ -510,7 +510,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                   ]
                               ),
                               const SizedBox(height:18),
-                              buttonCustom(AppLocalizations.of(context)!.makeRecurring, QLCTColors.mainPurpleColor),
+                              buttonCustom(AppLocalizations.of(context)!.save, QLCTColors.mainPurpleColor),
                             ],
                           ),
                         ),

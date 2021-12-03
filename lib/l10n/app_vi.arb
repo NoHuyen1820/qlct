@@ -36,13 +36,13 @@
   "save": "Lưu",
   "editBudget":"CẬP NHẬT NGÂN SÁCH",
   "name": "TÊN",
-  "validName": "Vui lòng nhập tên ngân sách!",
+  "validNameBudget": "Vui lòng nhập tên ngân sách!",
   "amount": "SỐ TIỀN",
   "validAmount": " Vui lòng nhập số tiền!",
   "profile": "Thông Tin Cá Nhân",
   "defaultName": "Tên mặc định",
   "signOut": "Đăng xuất",
-  "helloGuy": "Xin chào bạn!",
+  "helloGuy": "Xin chào!",
   "better": "Quản lý tài chính bạn",
   "financialM": " tốt hơn",
   "wTh":"với ",
@@ -69,10 +69,9 @@
      "gaming":"Chơi game",
      "foodAndBeverage":"Thực phẩm & thức uống",
      "saving":"Tiết kiệm",
-     "electricity Bill":"Hoá đơn điện",
+     "electricityBill":"Hoá đơn điện",
      "sporting":"Thể thao",
      "internetBill":"Hoá đơn Internet ",
      "houseRental":"Thuê nhà",
-     "investment":"Đầu tư",
-
+     "investment":"Đầu tư"
 }

@@ -36,7 +36,7 @@
   "save": "Lưu",
   "editBudget":"EDITING BUDGET",
   "name": "NAME",
-  "validName": "Please enter a name budget",
+  "validNameBudget": "Please enter a name budget",
   "amount": "AMOUNT",
   "validAmount": " Please enter a amount !",
   "profile": "Profile",
@@ -69,10 +69,9 @@
   "gaming":"Gaming",
   "foodAndBeverage":"Food & Beverage",
   "saving":"Saving",
-  "electricity Bill":"Electricity Bill",
+  "electricityBill":"Electricity Bill",
   "sporting":"Sporting",
   "internetBill":"Internet Bill",
   "houseRental":"House Rental",
-  "investment":"Investment",
-
+  "investment":"Investment"
 }

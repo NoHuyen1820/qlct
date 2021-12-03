@@ -47,6 +47,23 @@ const Map<String, String> categoryOptions = {
   "Investment":"10",
 };
 
+const Map<String, String> categorySelectFinal = {
+  "waterBill":"1",
+  "giftAndCharity":"8",
+  "salary":"9",
+  "phoneBill":"4",
+  "pension":"12",
+  "gaming":"7",
+  "foodAndBeverage":"5",
+  "saving":"11",
+  "electricity Bill":"0",
+  "sporting":"6",
+  "internetBill":"3",
+  "houseRental":"2",
+  "investment":"10",
+};
+
+
 const Map<int, String> categorySelect = {
   0:"Electricity Bill",
   1:"Water Bill",

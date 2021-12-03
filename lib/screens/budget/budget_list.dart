@@ -12,7 +12,7 @@ import 'package:qlct/model/budget.dart';
 import 'package:qlct/screens/finance/finance.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/theme/colors.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../root_app.dart';
 
 class BudgetListScreen extends StatefulWidget {
@@ -118,35 +118,35 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                     spacing: 8.0,
                     children: [
                       RichText(
-                          text: const TextSpan(
-                              style: TextStyle(
+                          text:  TextSpan(
+                              style: const TextStyle(
                                 color: Colors.black87,
                               ),
                               children: [
                             TextSpan(
-                                text: "Hello guy!",
-                                style: TextStyle(
+                                text: AppLocalizations.of(context)!.helloGuy,
+                                style: const TextStyle(
                                     fontFamily: "Rubik-Bold",
                                     color: Colors.white,
                                     fontSize: 30,
                                     fontWeight: FontWeight.w700))
                           ])),
                       RichText(
-                          text: const TextSpan(
-                              style: TextStyle(
+                          text:  TextSpan(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                               children: [
                             TextSpan(
-                                text: "Better ",
-                                style: TextStyle(
+                                text:AppLocalizations.of(context)!.better,
+                                style: const TextStyle(
                                     fontFamily: "Rubik-Bold",
                                     color: Colors.white,
                                     fontSize: 23,
                                     fontWeight: FontWeight.w700)),
                             TextSpan(
-                                text: "financial management",
-                                style: TextStyle(
+                                text: AppLocalizations.of(context)!.financialM,
+                                style: const TextStyle(
                                   fontFamily: "Rubik-Medium",
                                   color: Colors.white,
                                   fontSize: 22,
@@ -154,22 +154,22 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                                 )),
                           ])),
                       RichText(
-                          text: const TextSpan(
-                              style: TextStyle(
+                          text: TextSpan(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                               children: [
                             TextSpan(
-                                text: "with",
-                                style: TextStyle(
+                                text: AppLocalizations.of(context)!.wTh,
+                                style: const TextStyle(
                                   fontFamily: "Rubik-Medium",
                                   color: Colors.white,
                                   fontSize: 22,
                                   // fontWeight: FontWeight.bold
                                 )),
                             TextSpan(
-                                text: " multiple budgets",
-                                style: TextStyle(
+                                text: AppLocalizations.of(context)!.multiple,
+                                style: const TextStyle(
                                     fontFamily: "Rubik-Bold",
                                     color: Colors.white,
                                     fontSize: 23,
@@ -220,13 +220,13 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                                 const SizedBox(
                                   height: 5.0,
                                 ),
-                                const Text(
-                                  "Create a budget\nthat fits you",
+                                Text(
+                                  AppLocalizations.of(context)!.createBudget + "\n" + AppLocalizations.of(context)!.thatYou,
                                   textAlign: TextAlign.center,
                                   overflow: TextOverflow.fade,
                                   maxLines: 2,
                                   softWrap: false,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: "Rubik-Bold",
                                     color: Colors.black87,
                                     fontWeight: FontWeight.w800,
@@ -236,26 +236,26 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                                 const SizedBox(
                                   height: 10.0,
                                 ),
-                                const Text(
-                                  "Continue customizing your budget",
+                                 Text(
+                                  AppLocalizations.of(context)!.con,
                                   textAlign: TextAlign.center,
                                   overflow: TextOverflow.visible,
                                   maxLines: 2,
                                   softWrap: false,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: "Rubik-Bold",
                                     color: Colors.black87,
                                     fontWeight: FontWeight.w300,
                                     fontSize: 17,
                                   ),
                                 ),
-                                const Text(
-                                  "by planning your income and expense.",
+                                Text(
+                                  AppLocalizations.of(context)!.byPlan,
                                   textAlign: TextAlign.center,
                                   overflow: TextOverflow.visible,
                                   maxLines: 2,
                                   softWrap: false,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontFamily: "Rubik-Bold",
                                     color: Colors.black87,
                                     fontWeight: FontWeight.w300,
@@ -472,7 +472,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
           onPressed: () async {
       if(_formKey.currentState!.validate()){
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Creating...")));
+            SnackBar(content: Text(AppLocalizations.of(context)!.processing)));
 
         Budget budget = Budget(
           name: nameBudgetController.text,
@@ -517,36 +517,26 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
               key: _formKey,
               child: Column(
                 children: [
-                  const Text(
-                    "EDITING BUDGET",
-                    style: TextStyle(
+                   Text(
+                    AppLocalizations.of(context)!.editBudget,
+                    style: const TextStyle(
                         fontFamily: "Rubik-Bold",
                         color: Colors.black87,
                         fontSize: 25,
                         fontWeight: FontWeight.w300),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       radioCustom("INCOME", "1", QLCTColors.mainGreenColor),
-                  //       radioCustom("EXPENSE", "2", QLCTColors.mainPinkColor),
-                  //     ],
-                  //   ),
-                  // ),
                   Form(
                       child: Column(
                     children: [
                       MinimalInputField(
                           validator:(value){
                             if(value == null || value.isEmpty){
-                              return "Please enter a name budget";
+                              return AppLocalizations.of(context)!.validNameBudget;
                             } if (value.length > 30){
-                              return "Field name is less than or equal to 30 characters";
+                              return AppLocalizations.of(context)!.validNote;
                             }
                           },
-                          fieldName: "NAME",
+                          fieldName: AppLocalizations.of(context)!.name,
                           controller: nameBudgetController,
                           colorFieldName: QLCTColors.mainPurpleColor),
                       MinimalInputField(
@@ -556,18 +546,18 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
                           ],
                           validator: (value){
                             if( value == null || value.isEmpty){
-                              return "Please enter a amount budget ";
+                              return AppLocalizations.of(context)!.validAmount;
                             }
                             return null;
                           },
-                          fieldName: "AMOUNT",
+                          fieldName: AppLocalizations.of(context)!.amount,
                           controller: amountBudgetController,
                           colorFieldName: QLCTColors.mainPurpleColor),
-                      MinimalInputField(
-                          fieldName: "PASSWORD",
-                          controller: passwordBudgetController,
-                          colorFieldName: QLCTColors.mainPurpleColor),
-                      buttonCustom("SAVE", QLCTColors.mainPurpleColor),
+                      // MinimalInputField(
+                      //     fieldName: "PASSWORD",
+                      //     controller: passwordBudgetController,
+                      //     colorFieldName: QLCTColors.mainPurpleColor),
+                      buttonCustom(AppLocalizations.of(context)!.save, QLCTColors.mainPurpleColor),
                     ],
                   )),
                 ],

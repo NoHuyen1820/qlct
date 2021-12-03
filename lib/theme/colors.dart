@@ -10,6 +10,7 @@ const Color red = Color(0xFFec5766);
 const Color green = Color(0xFF43aa8b);
 const Color blue = Color(0xFF28c2ff);
 const Color purple = Color(0xFF7b68ee);
+const Color purpleMain = Color(0xFFA06ECE);
 
 class RallyColors {
   static const List<Color> accountColors = <Color>[

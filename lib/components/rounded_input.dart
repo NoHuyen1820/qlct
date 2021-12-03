@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qlct/components/text_field_container.dart';
 import 'package:qlct/theme/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RoundedInputEmailField extends StatelessWidget {
   final String hintText;
@@ -22,13 +23,13 @@ class RoundedInputEmailField extends StatelessWidget {
       child: TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "Please enter email";
+            return AppLocalizations.of(context)!.validEmailOne;
           } else {
             bool emailValid = RegExp(
                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                 .hasMatch(value);
             if (!emailValid) {
-              return " Your password isn't in the correct format";
+              return AppLocalizations.of(context)!.validEmailTwo;
             }
           }
           return null;
@@ -67,7 +68,7 @@ class RoundedInputNameField extends StatelessWidget {
       child: TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "Please enter your full name!";
+            return AppLocalizations.of(context)!.validName;
           }
           return null;
         },

@@ -59,7 +59,7 @@
     "yes": "Đồng ý",
     "noEmail": "Email không tồn tại",
     "remove" : "Xoá",
-    "detailBudgetItem":"Nếu bạn xóa ngân sách này, tất cả các bản ghi liên quan cũng sẽ bị xóa. Dữ liệu đã xóa sẽ không được phục hồi. Bạn có thực sự muốn xóa nó không?",
+    "detailBudgetItem":"Nếu bạn xóa ngân sách này, tất cả các bản ghi liên quan sẽ bị xóa. Dữ liệu đã xóa sẽ không được phục hồi. Bạn có thực sự muốn xóa nó không?",
     "detailTrans":"Bạn có chắc chắn xóa giao dịch này không?",
     "waterBill":"Hoá đơn nước",
      "giftAndCharity":"Quà tặng và từ thiện",
@@ -73,5 +73,6 @@
      "sporting":"Thể thao",
      "internetBill":"Hoá đơn Internet ",
      "houseRental":"Thuê nhà",
-     "investment":"Đầu tư"
+     "investment":"Đầu tư",
+     "buttonDelete": "Xoá"
 }

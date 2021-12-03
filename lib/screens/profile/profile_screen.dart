@@ -352,7 +352,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                       ],
                     ),
-                buttonCustom("SIGN OUT", Colors.transparent),
+                buttonCustom(AppLocalizations.of(context)!.signOut, Colors.transparent),
               ],
             ),
           )

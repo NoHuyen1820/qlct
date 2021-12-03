@@ -15,6 +15,7 @@ import 'package:qlct/theme/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../root_app.dart';
 
+
 class BudgetListScreen extends StatefulWidget {
   const BudgetListScreen({Key? key}) : super(key: key);
 
@@ -475,7 +476,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
             SnackBar(content: Text(AppLocalizations.of(context)!.processing)));
 
         Budget budget = Budget(
-          name: nameBudgetController.text,
+          name: nameBudgetController.text ,
           amount: amountBudgetController.text,
           password: passwordBudgetController.text,
           userCode: _auth.getCurrentUID(),

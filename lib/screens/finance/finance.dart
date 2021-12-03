@@ -184,13 +184,6 @@ class FinanceItem extends StatelessWidget{
           onTap: () => showDialog<String>(
             context: context,
             builder: (BuildContext context ) => CupertinoAlertDialog(
-              title: Text(
-                AppLocalizations.of(context)!.attention,
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.red,
-                ),
-              ),
               content: Column(
                 children: [
                   Text(
@@ -208,7 +201,7 @@ class FinanceItem extends StatelessWidget{
                 CupertinoButton(
                   child: Text(
                     AppLocalizations.of(context)!.cancel,
-                    style: TextStyle(fontSize: 16, color: QLCTColors.mainRedColor),
+                    style: const TextStyle(fontSize: 16, color: Colors.black87),
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -216,8 +209,9 @@ class FinanceItem extends StatelessWidget{
                 ),
                 CupertinoButton(
                     child: Text(
-                      AppLocalizations.of(context)!.yes,
+                      AppLocalizations.of(context)!.buttonDelete,
                       style: const TextStyle(
+                        color: QLCTColors.mainRedColor,
                         fontSize: 16,
                       ),
                     ),

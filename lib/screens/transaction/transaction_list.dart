@@ -36,9 +36,9 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
   var authService= AuthService() ;
   String valueChooseMonth = listMonth.first;
   String valueChooseYear = listYear.first;
-  String _fromDate = DateFormat.yMMMMd('en-US').format(DateTime.now());
+  String _fromDate = DateFormat.yMMMMd('vi-VN').format(DateTime.now());
   String _fromDateParam = QLCTUtils.dateTimeToString(DateTime.now(), "000000");
-  String _toDate = DateFormat.yMMMMd('en-US').format(DateTime.now());
+  String _toDate = DateFormat.yMMMMd('vi-VN').format(DateTime.now());
   String _toDateParam = QLCTUtils.dateTimeToString(DateTime.now(), "235959");
   String _totalIncome = "0.0";
   String _totalExpense = "0.0";
@@ -111,10 +111,10 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                     await DatePicker.showDatePicker(context,
                                         showTitleActions: true,
                                         minTime: DateTime(2018, 3, 5),
-                                        maxTime: DateTime(2025, 1, 1),
+                                        maxTime: DateTime.now(),
                                         onChanged: (date) {},
                                         onConfirm: (date) {
-                                          String formatDate = DateFormat.yMMMMd('en-US').format(date);
+                                          String formatDate = DateFormat.yMMMMd('vi-VN').format(date);
                                           _fromDate = formatDate;
                                       _fromDateParam = QLCTUtils.dateTimeToString(date, "000000");
                                       setState(() {});
@@ -173,7 +173,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                         maxTime: DateTime.now(),
                                         onChanged: (date) {},
                                         onConfirm: (date) {
-                                      String formatDate = DateFormat.yMMMMd('en-US').format(date);
+                                      String formatDate = DateFormat.yMMMMd('vi-VN').format(date);
                                       _toDate = formatDate;
                                       _toDateParam = QLCTUtils.dateTimeToString(date, "235959");
                                       setState(() {

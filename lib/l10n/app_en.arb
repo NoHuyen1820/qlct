@@ -73,5 +73,6 @@
   "sporting":"Sporting",
   "internetBill":"Internet Bill",
   "houseRental":"House Rental",
-  "investment":"Investment"
+  "investment":"Investment",
+   "buttonDelete": "Delete"
 }

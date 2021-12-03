@@ -15,7 +15,7 @@ class Protocol {
       log(response.toString());
       log(response.body);
 
-      return ResponseDTO.fromJson(jsonDecode(response.body));
+       return ResponseDTO.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('Failed to get method');
     }
@@ -32,8 +32,7 @@ class Protocol {
     if (response.statusCode == 200) {
       log(response.toString());
       log(response.body);
-
-      return ResponseDTO.fromJson(jsonDecode(response.body));
+      return ResponseDTO.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('Failed to post method');
     }

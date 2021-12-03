@@ -63,13 +63,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () => showDialog<String>(
               context: context,
               builder: (BuildContext context ) => CupertinoAlertDialog(
-                title: Text(
-                  AppLocalizations.of(context)!.attention,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.red,
-                  ),
-                ),
                 content: Column(
                     children:  [
                       Text(
@@ -85,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CupertinoButton(
                     child: Text(
                       AppLocalizations.of(context)!.cancel,
-                      style: const TextStyle(fontSize: 16, color: QLCTColors.mainRedColor),
+                      style: const TextStyle(fontSize: 16, color: Colors.black87),
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -95,6 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child:  Text(
                         AppLocalizations.of(context)!.yes,
                         style: const TextStyle(
+                          color: QLCTColors.mainRedColor,
                           fontSize: 16,
                         ),
                       ),
@@ -320,8 +314,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     "Cancel",
                                                     style: TextStyle(
                                                         fontSize: 16,
-                                                        color:
-                                                            QLCTColors.mainRedColor),
+                                                        color:Colors.black87),
                                                   ),
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
@@ -331,6 +324,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                     child: const Text(
                                                       "Yes",
                                                       style: TextStyle(
+                                                        color:
+                                                        QLCTColors.mainRedColor,
                                                         fontSize: 16,
                                                       ),
                                                     ),
@@ -352,7 +347,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                       ],
                     ),
-                buttonCustom("SIGN OUT", Colors.transparent),
+                buttonCustom(AppLocalizations.of(context)!.signOut, Colors.transparent),
               ],
             ),
           )

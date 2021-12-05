@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qlct/screens/transaction/edit_transaction.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
@@ -348,18 +351,24 @@ class BudgetCard extends StatelessWidget {
 
 class TransactionItem extends StatelessWidget {
   final Icon? icon;
+  final String? transCode;
   final String? title;
   final String subtitle;
   final String amount;
+  final String? category;
   final int type;
+  final String? typeSTR;
+  final String? budget;
+  final String? note;
 
   const TransactionItem(
       {Key? key,
       this.icon,
+      required this.transCode,
       required this.title,
       required this.subtitle,
       required this.amount,
-      required this.type})
+      required this.type, this.budget, this.note, this.category, this.typeSTR})
       : super(key: key);
 
   @override
@@ -374,7 +383,22 @@ class TransactionItem extends StatelessWidget {
     return Slidable(
       actionPane: const SlidableScrollActionPane(),
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          log("nhan nut nay");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditTransactionScreen(
+                transCode: transCode!,
+                typeSTR: typeSTR,
+                note:note,
+                budget: budget,
+                category: category,
+                amount: amount,
+              ),
+            ),
+          );
+        },
         child: Row(
           children: [
             Container(

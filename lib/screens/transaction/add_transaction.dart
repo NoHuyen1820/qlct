@@ -325,7 +325,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                                     return DropdownButtonFormField<String>(
                                                         validator: (value) =>
                                                         value == "0000000"
-                                                            ? 'Please select budget!'
+                                                            ? AppLocalizations.of(context)!.validBudget
                                                             : null,
                                                     value: _budget,
                                                     items: mapBudgetCodes

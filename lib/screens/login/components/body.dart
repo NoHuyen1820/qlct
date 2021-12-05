@@ -69,7 +69,11 @@ class _LoginState extends State<Body> {
                       if (user != null) {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => const RootApp(currentIndex: 0)));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Tài khoản không tồn tại")));
                       }
+
                     }
                   },
                 )

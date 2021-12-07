@@ -373,14 +373,14 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
 class BudgetModalBottomSheet extends StatefulWidget {
   final String name;
   final String amount;
-  final String password;
+  final String? password;
   final bool isCreate;
 
   const BudgetModalBottomSheet({
     Key? key,
     required this.name,
     required this.amount,
-    required this.password,
+    this.password,
     required this.isCreate,
   }) : super(key: key);
 
@@ -405,7 +405,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
   initState() {
     nameBudgetController.text = widget.name;
     amountBudgetController.text = widget.amount;
-    passwordBudgetController.text = widget.password;
+    // passwordBudgetController.text = widget.password;
     super.initState();
   }
 
@@ -478,7 +478,6 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
         Budget budget = Budget(
           name: nameBudgetController.text ,
           amount: amountBudgetController.text,
-          password: passwordBudgetController.text,
           userCode: _auth.getCurrentUID(),
         );
         await _budgetService.createBudget(budget);
@@ -515,7 +514,6 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
           ),
           child: SingleChildScrollView(
             child: Form(
-              key: _formKey,
               child: Column(
                 children: [
                    Text(
@@ -527,6 +525,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
                         fontWeight: FontWeight.w300),
                   ),
                   Form(
+                      key: _formKey,
                       child: Column(
                     children: [
                       MinimalInputField(
@@ -536,6 +535,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
                             } if (value.length > 30){
                               return AppLocalizations.of(context)!.validNote;
                             }
+                             return null;
                           },
                           fieldName: AppLocalizations.of(context)!.name,
                           controller: nameBudgetController,
@@ -546,10 +546,9 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           validator: (value){
-                            if( value == null || value.isEmpty){
-                              return AppLocalizations.of(context)!.validAmount;
-                            }
-                            return null;
+                          if (value!.isEmpty){
+                            return " Vui lòng nhập số tiền ngân sách! ";
+                          }
                           },
                           fieldName: AppLocalizations.of(context)!.amount,
                           controller: amountBudgetController,

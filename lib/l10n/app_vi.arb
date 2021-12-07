@@ -7,7 +7,7 @@
  "signUpQuestion": "Chưa có tài khoản?",
  "or":"HOẶC",
  "validEmailOne" : "Vui lòng nhập email!",
- "validEmailTwo" : "Mật khẩu của bạn không đúng định dạng! ",
+ "validEmailTwo" : "Email của bạn không đúng định dạng! ",
  "validPassOne": "Vui lòng nhập mật khẩu",
  "validPassTwo": "Mật khẩu phải ít nhất 6 kí tự",
  "validPassThree": "Vui lòng nhập lại mật khẩu!",

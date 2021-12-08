@@ -18,7 +18,10 @@ class NotifyProvider with ChangeNotifier {
               id: nM.content!.id!,
               periodic: nM.schedule.toString(),
               name: nM.content!.title!,
-              isEnable: true));
+              isEnable: true,
+              body: nM.content!.body!,
+          )
+      );
     }
     _schedules = loadNotifies;
     notifyListeners();
@@ -42,10 +45,12 @@ class Schedule {
   final String periodic;
   final String name;
   final bool isEnable;
+  final String body;
   Schedule({
     required this.id,
     required this.periodic,
     required this.name,
     required this.isEnable,
+    required this.body
 });
 }

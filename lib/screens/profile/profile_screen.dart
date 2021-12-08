@@ -7,6 +7,7 @@ import 'package:qlct/firebase/auth_service.dart';
 import 'package:qlct/notifications.dart';
 import 'package:qlct/provider/notify_provider.dart';
 import 'package:qlct/screens/login/login_screen.dart';
+import 'package:qlct/services/schedule_service/schedule_service.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -22,12 +23,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   var logger = Logger(
     printer: PrettyPrinter(),
   );
-  // final TextEditingController _email =
-  //     TextEditingController();
-  // TextEditingController dateOfBirth = TextEditingController(text: "04-19-1992");
-  // TextEditingController password = TextEditingController(text: "123456");
   final _auth = AuthService();
   bool _isLoading = false;
+  var scheService = ScheduleService();
 
   @override
   void initState() {
@@ -289,7 +287,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: Card(
                                 elevation: 5,
                                 child: ListTile(
-                                  title: Text(fetchedSchedules[index].name),
+                                  title: Text(fetchedSchedules[index].name + fetchedSchedules[index].body),
                                   // subtitle: Text(fetchedSchedules[index].periodic),
                                   trailing: IconButton(
                                     onPressed: () => showDialog<String>(
@@ -333,6 +331,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       ),
                                                     ),
                                                     onPressed: () async {
+                                                      await scheService.deleteSchedule(fetchedSchedules[index].id.toString());
                                                       await cancelScheduleNotificationById(fetchedSchedules[index].id);
                                                       await scheduleData.fetch();
                                                       Navigator.of(context).pop();

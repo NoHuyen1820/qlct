@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qlct/theme/colors.dart';
 
+
 class RoundedButton extends StatelessWidget {
   final String text;
   final Function()? press;
@@ -9,8 +10,8 @@ class RoundedButton extends StatelessWidget {
     Key? key,
     this.text = "",
     this.press,
-    this.color = QLCTColors.mainPurpleColor,
-    this.textColor = QLCTColors.whiteColor,
+    this.color = purpleMain,
+    this.textColor = Colors.white70,
   }) : super(key: key);
 
   @override
@@ -26,7 +27,8 @@ class RoundedButton extends StatelessWidget {
           onPressed: press,
           child: Text(
             text,
-            style: TextStyle(color: textColor),
+            style: TextStyle(color: textColor,
+                fontSize: 18),
           ),
           color: color,
         ),

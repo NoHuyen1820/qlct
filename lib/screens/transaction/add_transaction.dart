@@ -10,6 +10,7 @@ import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/schedule_service/schedule_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../constants.dart';
 import '../../notifications.dart';
@@ -60,7 +61,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
           onPressed: () async {
             if(_formKey.currentState!.validate()){
               ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Processing"))
+                  SnackBar(content: Text(AppLocalizations.of(context)!.processing))
               );
               Transaction transaction = Transaction(
                 amount: amountTransController.text,
@@ -194,7 +195,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
 
  @override
   void initState() {
-   mapBudgetCodes[_budget] = "-- Choose";
+   mapBudgetCodes[_budget] = "-- Chọn";
     _userCode = authService.getCurrentUID();
     super.initState();
   }
@@ -222,9 +223,9 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                       const SizedBox(
                           height: 20
                       ),
-                      const Text(
-                        "New Transaction",
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.newTransaction,
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 35.0,
                             decorationStyle: TextDecorationStyle.wavy),
@@ -239,7 +240,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                         ],
                         validator:(value){
                           if( value ==null || value.isEmpty){
-                            return "Please enter amount!";
+                            return AppLocalizations.of(context)!.validAmount;
                           }
                           return null;
                         },
@@ -257,8 +258,8 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            radioCustom("INCOME", "0", QLCTColors.mainGreenColor),
-                            radioCustom("EXPENSE", "1", QLCTColors.mainRedColor),
+                            radioCustom(AppLocalizations.of(context)!.income, "0", QLCTColors.mainGreenColor),
+                            radioCustom(AppLocalizations.of(context)!.expense, "1", QLCTColors.mainRedColor),
                           ],
                         ),
                       ),
@@ -279,8 +280,8 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                 children: <Widget>[
                                   SizedBox(
                                     width: size.width /5,
-                                    child: const Text("Category",
-                                    style:TextStyle(
+                                    child:  Text(AppLocalizations.of(context)!.category,
+                                    style:const TextStyle(
                                       fontFamily: "Rubik-Bold",
                                       fontSize:18,
                                       color: Colors.black87,
@@ -335,8 +336,8 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                   children: <Widget>[
                                     SizedBox(
                                       width: size.width /5,
-                                      child: const Text("Budget",
-                                          style:TextStyle(
+                                      child: Text(AppLocalizations.of(context)!.budgetItem,
+                                          style:const TextStyle(
                                             fontSize:18,
                                             fontFamily: "Rubik-Bold",
                                             color: Colors.black87,
@@ -361,7 +362,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                                     return DropdownButtonFormField<String>(
                                                         validator: (value) =>
                                                         value == "0000000"
-                                                            ? 'Please select budget!'
+                                                            ? 'Vui lòng chọn ngân sách!'
                                                             : null,
                                                     value: _budget,
                                                     items: mapBudgetCodes
@@ -379,7 +380,6 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                                           color: Colors.black87,
                                                           fontSize: 18,
                                                         ),
-                                                        // hint: const Text("Category"),
                                                         onChanged: (valueNew)  {
                                                           setState(() {
                                                             _budget = valueNew!;
@@ -406,8 +406,8 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                   children: <Widget>[
                                     SizedBox(
                                       width: size.width /5,
-                                      child: const Text("Note",
-                                          style:TextStyle(
+                                      child: Text(AppLocalizations.of(context)!.note,
+                                          style:const TextStyle(
                                             fontSize:18,
                                             fontFamily: "Rubik-Bold",
                                             color: Colors.black87,
@@ -425,7 +425,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                               validator: (value){
                                                 if(value!.length > 30)
                                                   {
-                                                    return "Note is less than or equal to 30 characters";
+                                                    return AppLocalizations.of(context)!.validNote;
                                                   }
                                                 return null;
                                               },
@@ -497,8 +497,8 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                   children: <Widget>[
                                     SizedBox(
                                       width: size.width /5,
-                                      child: const Text("Make recurring",
-                                          style:TextStyle(
+                                      child: Text(AppLocalizations.of(context)!.makeRecurring,
+                                          style:const TextStyle(
                                             fontSize:18,
                                             fontFamily: "Rubik-Bold",
                                             color: Colors.black87,
@@ -547,7 +547,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                   ]
                               ),
                               const SizedBox(height:18),
-                              buttonCustom("SAVE", QLCTColors.mainPurpleColor),
+                              buttonCustom(AppLocalizations.of(context)!.save, QLCTColors.mainPurpleColor),
                             ],
                           ),
                         ),

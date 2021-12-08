@@ -11,6 +11,8 @@ import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../root_app.dart';
 
 class FinanceOverviewFragment extends StatelessWidget {
@@ -67,8 +69,8 @@ class FinanceOverviewFragment extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => RootApp(currentIndex: indexPage??0,)));
                   },
-                  child: const Text("SEE ALL",
-                      style: TextStyle(color: QLCTColors.mainPurpleColor)),
+                  child:  Text(AppLocalizations.of(context)!.seeAll,
+                      style: const TextStyle(color: QLCTColors.mainPurpleColor)),
                 ))
           ],
         ),
@@ -176,27 +178,18 @@ class FinanceItem extends StatelessWidget{
       actionPane: const SlidableScrollActionPane(),
       actions:  <Widget>[
         IconSlideAction(
-          caption: 'Remove',
+          caption: AppLocalizations.of(context)!.remove,
           color: QLCTColors.mainRedColor,
           icon: FontAwesomeIcons.solidTrashAlt,
           onTap: () => showDialog<String>(
             context: context,
             builder: (BuildContext context ) => CupertinoAlertDialog(
-              title: const Text(
-                "Attention",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.red,
-                ),
-              ),
               content: Column(
                 children: [
                   Text(
-                    // TODO edit text title budget
-                    kind == 1 ? "If you delete this budget, "
-                        "all related records will also be deleted. Deleted data will not be recovered. "
-                        "Do you really want to delete it?"
-                        :"Are you sure delete this item?",
+
+                    kind == 1 ? AppLocalizations.of(context)!.detailBudgetItem
+                        :AppLocalizations.of(context)!.detailTrans,
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black87,
@@ -206,18 +199,19 @@ class FinanceItem extends StatelessWidget{
               ),
               actions:<Widget> [
                 CupertinoButton(
-                  child: const Text(
-                    "Cancel",
-                    style: TextStyle(fontSize: 16, color: QLCTColors.mainRedColor),
+                  child: Text(
+                    AppLocalizations.of(context)!.cancel,
+                    style: const TextStyle(fontSize: 16, color: Colors.black87),
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 CupertinoButton(
-                    child: const Text(
-                      "Agree",
-                      style: TextStyle(
+                    child: Text(
+                      AppLocalizations.of(context)!.buttonDelete,
+                      style: const TextStyle(
+                        color: QLCTColors.mainRedColor,
                         fontSize: 16,
                       ),
                     ),

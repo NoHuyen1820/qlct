@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:qlct/Screens/Login/login_screen.dart';
@@ -5,6 +6,7 @@ import 'package:qlct/Screens/Signup/signup_screen.dart';
 import 'package:qlct/Screens/Welcome/components/background.dart';
 import 'package:qlct/components/rounded_button.dart';
 import 'package:qlct/theme/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -16,10 +18,14 @@ class Body extends StatelessWidget {
         child: SingleChildScrollView(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              "Money Management",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            SizedBox(
+              height: size.height * 0.05,
+            ),
+             Text(
+             AppLocalizations.of(context)!.welcomeTitle ,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             SizedBox(
               height: size.height * 0.03,
@@ -32,7 +38,7 @@ class Body extends StatelessWidget {
               height: size.height * 0.05,
             ),
             RoundedButton(
-              text: "Sign In",
+              text: AppLocalizations.of(context)!.buttonSignIn,
               press: () {
                 Navigator.push(
                   context,
@@ -45,7 +51,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "Sign Up",
+              text: AppLocalizations.of(context)!.buttonSignUp,
               press: () {
                 Navigator.push(
                   context,

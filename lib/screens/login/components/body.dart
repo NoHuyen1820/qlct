@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:qlct/Screens/Login/components/background.dart';
 import 'package:qlct/Screens/Signup/signup_screen.dart';
 import 'package:qlct/Screens/root_app.dart';
@@ -9,6 +10,7 @@ import 'package:qlct/components/rounded_password_field.dart';
 import 'package:qlct/firebase/auth_service.dart';
 import 'package:qlct/model/user.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -21,7 +23,9 @@ class Body extends StatefulWidget {
 
 class _LoginState extends State<Body> {
   final _formKey = GlobalKey<FormState>();
-
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
@@ -37,9 +41,9 @@ class _LoginState extends State<Body> {
           Form(
               key: _formKey,
               child: Column(children: <Widget>[
-                const Text(
-                  "SIGN IN",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                Text(
+                  AppLocalizations.of(context)!.buttonSignIn,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                 ),
                 SizedBox(height: size.height * 0.03),
                 RoundedInputEmailField(
@@ -49,25 +53,34 @@ class _LoginState extends State<Body> {
                 ),
                 RoundedPasswordField(
                   controller: passwordController,
-                  hintText: "Password",
+                  hintText: AppLocalizations.of(context)!.buttonHinPass,
                   onChange: (value) {},
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please enter password!";
+                      return AppLocalizations.of(context)!.validPassOne;
                     }
                     return null;
                   },
                 ),
                 RoundedButton(
-                  text: "Sign In",
+                  text: AppLocalizations.of(context)!.buttonSignIn,
                   press: () async {
                     if (_formKey.currentState!.validate()) {
-                      UserNew? user =
-                          await authService.signInWithEmailAndPasswordLocal(
-                              emailController.text, passwordController.text);
-                      if (user != null) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const RootApp(currentIndex: 0)));
+                      try {
+                        UserNew? user =
+                        await authService.signInWithEmailAndPasswordLocal(
+                            emailController.text, passwordController.text);
+                        if (user != null) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const RootApp(currentIndex: 0)));
+                        }
+                      } on Exception catch (_, e) {
+                        logger.e(e);
+                        passwordController.text = "";
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Email hoặc mật khẩu không đúng")));
                       }
                     }
                   },

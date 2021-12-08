@@ -46,7 +46,7 @@ Future<void> createReminderNotificationByDay(int id, String name, NotificationDa
   log("BEGIN - createReminderNotificationByDay");
   await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        id: createUniqueId(),
+        id: id,
         channelKey: 'scheduled_channel',
         title: '${Emojis.time_alarm_clock} $name',
         body: 'You have 1 recurring daily transaction today',
@@ -60,8 +60,8 @@ Future<void> createReminderNotificationByDay(int id, String name, NotificationDa
       ],
       schedule: NotificationCalendar(
         repeats: true,
-        hour: 8,
-        minute: 0,
+        hour: DateTime.now().hour,
+        minute: DateTime.now().minute + 1,
         second: 0,
         millisecond: 0,
       )
@@ -89,7 +89,7 @@ Future<void> createReminderNotificationByWeek(int id, String name, NotificationD
         repeats: true,
         weekday: scheduled.dateTime.weekday,
         hour: 8,
-        minute: 0,
+        minute: 20,
         second: 0,
         millisecond: 0,
       )

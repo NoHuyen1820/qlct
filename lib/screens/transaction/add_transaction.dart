@@ -83,7 +83,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                     category: int.parse(_mycategory!),
                     budgetCode: _budget,
                     note: noteController.text,
-                    hour: -1,
+                    hour: 8,
                     dayOfWeek: -1,
                     dayOfMonth: -1,
                   );

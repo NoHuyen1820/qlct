@@ -61,7 +61,7 @@ Future<void> createReminderNotificationByDay(int id, String name, NotificationDa
       schedule: NotificationCalendar(
         repeats: true,
         hour: DateTime.now().hour,
-        minute: DateTime.now().minute + 1,
+        minute: DateTime.now().minute + 2,
         second: 0,
         millisecond: 0,
       )
@@ -88,8 +88,10 @@ Future<void> createReminderNotificationByWeek(int id, String name, NotificationD
       schedule: NotificationCalendar(
         repeats: true,
         weekday: scheduled.dateTime.weekday,
-        hour: 8,
-        minute: 20,
+        hour: DateTime.now().hour,
+        minute: DateTime.now().minute + 4,
+        // hour: 8,
+        // minute: 20,
         second: 0,
         millisecond: 0,
       )
@@ -116,8 +118,10 @@ Future<void> createReminderNotificationByMonth(int id, String name, Notification
       schedule: NotificationCalendar(
         repeats: true,
         day: scheduled.dateTime.day,
-        hour: 8,
-        minute: 0,
+        hour: DateTime.now().hour,
+        minute: DateTime.now().minute + 6,
+        // hour: 8,
+        // minute: 0,
         second: 0,
         millisecond: 0,
       )

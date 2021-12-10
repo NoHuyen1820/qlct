@@ -48,8 +48,8 @@ Future<void> createReminderNotificationByDay(int id, String name, NotificationDa
       content: NotificationContent(
         id: id,
         channelKey: 'scheduled_channel',
-        title: '${Emojis.time_alarm_clock} $name',
-        body: 'You have 1 recurring daily transaction today',
+        title: '${Emojis.time_alarm_clock} Money Management',
+        body: 'Bạn có chi tiêu $name hàng ngày hôm nay',
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [
@@ -75,8 +75,8 @@ Future<void> createReminderNotificationByWeek(int id, String name, NotificationD
       content: NotificationContent(
         id: id,
         channelKey: 'scheduled_channel',
-        title: '${Emojis.time_alarm_clock} $name',
-        body: 'You have 1 recurring weekly transaction today',
+        title: '${Emojis.time_alarm_clock} Money Management ',
+        body: 'Bạn có chi tiêu $name định kì hàng tuần hôm nay',
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [
@@ -105,8 +105,8 @@ Future<void> createReminderNotificationByMonth(int id, String name, Notification
       content: NotificationContent(
         id: id,
         channelKey: 'scheduled_channel',
-        title: '${Emojis.time_alarm_clock} $name',
-        body: 'You have 1 recurring monthly transaction today',
+        title: '${Emojis.time_alarm_clock} Money Management',
+        body: 'Bạn có chi tiêu $name định kì hàng tháng hôm nay ',
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [

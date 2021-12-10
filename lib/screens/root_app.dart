@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttericon/iconic_icons.dart';
@@ -77,14 +79,20 @@ class _RootAppState extends State<RootApp> {
     AwesomeNotifications().actionStream.listen((event) {
       // Navigator.push(context, MaterialPageRoute(
       //     builder: (context) => const RootApp(currentIndex: 4)));
+      if (event.channelKey == 'basic_channel' && Platform.isIOS) {
+        AwesomeNotifications().getGlobalBadgeCounter().then((value) => 
+        AwesomeNotifications().setGlobalBadgeCounter(value - 1));
+      }
       // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>
       //     const RootApp(currentIndex: 2),
-      // ), (route) => false);
+      // ), (route) => route.isFirst);
     });
   }
 
   @override
   void dispose() {
+    AwesomeNotifications().actionSink.close();
+    AwesomeNotifications().createdSink.close();
     super.dispose();
   }
 

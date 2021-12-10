@@ -16,5 +16,7 @@ class Hosting {
   static const String updateTransaction = host + "/transaction/updateTransaction";
   static const String createTransaction = host + "/transaction/createTransaction";
   static const String deleteTransaction = host + "/transaction/deleteTransaction";
+  static const String createSchedule = host + "/schedule/createSchedule";
+  static const String deleteSchedule = host + "/schedule/deleteSchedule";
 }
 

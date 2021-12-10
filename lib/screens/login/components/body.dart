@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:qlct/Screens/Login/components/background.dart';
 import 'package:qlct/Screens/Signup/signup_screen.dart';
 import 'package:qlct/Screens/root_app.dart';
@@ -22,7 +23,9 @@ class Body extends StatefulWidget {
 
 class _LoginState extends State<Body> {
   final _formKey = GlobalKey<FormState>();
-
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
@@ -63,17 +66,22 @@ class _LoginState extends State<Body> {
                   text: AppLocalizations.of(context)!.buttonSignIn,
                   press: () async {
                     if (_formKey.currentState!.validate()) {
-                      UserNew? user =
-                          await authService.signInWithEmailAndPasswordLocal(
-                              emailController.text, passwordController.text);
-                      if (user != null) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const RootApp(currentIndex: 0)));
-                      } else {
+                      try {
+                        UserNew? user =
+                        await authService.signInWithEmailAndPasswordLocal(
+                            emailController.text, passwordController.text);
+                        if (user != null) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const RootApp(currentIndex: 0)));
+                        }
+                      } on Exception catch (_, e) {
+                        logger.e(e);
+                        passwordController.text = "";
                         ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Tài khoản không tồn tại")));
+                            const SnackBar(content: Text("Email hoặc mật khẩu không đúng")));
                       }
-
                     }
                   },
                 )

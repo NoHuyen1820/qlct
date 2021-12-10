@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:qlct/firebase/auth_service.dart';
 import 'package:qlct/model/budget.dart';
+import 'package:qlct/model/schedule.dart' as scheduleModel;
 import 'package:qlct/model/transaction.dart';
 import 'package:qlct/provider/notify_provider.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
+import 'package:qlct/services/schedule_service/schedule_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -75,16 +77,50 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                 case dayScheduleNotify:
                   createReminderNotificationByDay(id, categorySelect[int.parse(_mycategory!)]!,
                       NotificationDateTime(dateTime: DateTime.now()));
+                  scheduleModel.Schedule schedule = scheduleModel.Schedule(
+                    scheduleId: id,
+                    amount: amountTransController.text,
+                    type: int.parse(selectedTransType) ,
+                    category: int.parse(_mycategory!),
+                    budgetCode: _budget,
+                    note: noteController.text,
+                    hour: 8,
+                    dayOfWeek: -1,
+                    dayOfMonth: -1,
+                  );
+                  await scheService.createSchedule(schedule);
                   break;
                 case weekScheduleNotify:
                   createReminderNotificationByWeek(id, categorySelect[int.parse(_mycategory!)]!,
-                      NotificationDateTime(
-                      dateTime: DateTime.now()));
+                      NotificationDateTime(dateTime: DateTime.now()));
+                  scheduleModel.Schedule schedule = scheduleModel.Schedule(
+                    scheduleId: id,
+                    amount: amountTransController.text,
+                    type: int.parse(selectedTransType) ,
+                    category: int.parse(_mycategory!),
+                    budgetCode: _budget,
+                    note: noteController.text,
+                    hour: -1,
+                    dayOfWeek: DateTime.now().weekday,
+                    dayOfMonth: -1,
+                  );
+                  await scheService.createSchedule(schedule);
                   break;
                 case monthScheduleNotify:
                   createReminderNotificationByMonth(id, categorySelect[int.parse(_mycategory!)]!,
-                      NotificationDateTime(
-                      dateTime: DateTime.now()));
+                      NotificationDateTime(dateTime: DateTime.now()));
+                  scheduleModel.Schedule schedule = scheduleModel.Schedule(
+                    scheduleId: id,
+                    amount: amountTransController.text,
+                    type: int.parse(selectedTransType) ,
+                    category: int.parse(_mycategory!),
+                    budgetCode: _budget,
+                    note: noteController.text,
+                    hour: -1,
+                    dayOfWeek: -1,
+                    dayOfMonth: DateTime.now().day,
+                  );
+                  await scheService.createSchedule(schedule);
                   break;
               }
               await scheduleData.fetch();
@@ -151,7 +187,8 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
 
   var budgetService = BudgetService();
   var authService = AuthService();
-  var transService =TransactionService();
+  var transService = TransactionService();
+  var scheService = ScheduleService();
   late String _userCode;
   String? _budget = "0000000"; //_budgetList.first.toString() ;
   var mapBudgetCodes = <String?, String>{}; // <code, name>
@@ -325,7 +362,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                                                     return DropdownButtonFormField<String>(
                                                         validator: (value) =>
                                                         value == "0000000"
-                                                            ? AppLocalizations.of(context)!.validBudget
+                                                            ? 'Vui lòng chọn ngân sách!'
                                                             : null,
                                                     value: _budget,
                                                     items: mapBudgetCodes

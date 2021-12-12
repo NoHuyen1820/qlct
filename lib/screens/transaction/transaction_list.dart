@@ -267,7 +267,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                               height: 8,
                                             ),
                                             Text(
-                                              _totalIncome,
+                                              NumberFormat.currency(locale: 'vi').format(double.parse(_totalIncome)),
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 16,
@@ -327,7 +327,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                               height: 8,
                                             ),
                                             Text(
-                                              _totalExpense,
+                                              NumberFormat.currency(locale: 'vi').format(double.parse( _totalExpense)),
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,

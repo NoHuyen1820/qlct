@@ -160,7 +160,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     logger.i("BEGIN - END - buildAmountTotalTransactions: " +
         amountTotalTransactions.toString());
     amountsTransactions.insert(0, amountTotalTransactions.toString());
-    amountsTransactions.insert(1, amount2TotalTransactions.toString());
+    amountsTransactions.insert(1,"-" + amount2TotalTransactions.toString());
     return amountsTransactions;
   }
   Future<List<FinanceItem>> buildTransactionFinanceItem() async {

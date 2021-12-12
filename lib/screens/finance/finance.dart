@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/web_symbols_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qlct/screens/transaction/edit_transaction.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:qlct/theme/colors.dart';
@@ -18,6 +21,7 @@ import '../root_app.dart';
 class FinanceOverviewFragment extends StatelessWidget {
   final String title;
   final String amount;
+  final String? amount2;
   final Future<String>? futureAmount;
   final List<FinanceItem>? items;
   final Future<List<FinanceItem>>? futureItems;
@@ -30,7 +34,7 @@ class FinanceOverviewFragment extends StatelessWidget {
       this.futureAmount,
       this.items,
       this.futureItems,
-      this.indexPage})
+      this.indexPage, this.amount2})
       : super(key: key);
 
   @override
@@ -57,7 +61,15 @@ class FinanceOverviewFragment extends StatelessWidget {
                       NumberFormat.currency(locale: 'vi').format(double.parse(amount)),
                       style: const TextStyle(
                           fontSize: 30.0, color: QLCTColors.mainPurpleColor),
-                    ))
+                    )),
+                  const SizedBox(height: 10,),
+                  amount2 != null ?  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      NumberFormat.currency(locale: 'vi').format(double.parse(amount2!)),
+                      style: const TextStyle(
+                          fontSize: 30.0, color: QLCTColors.mainRedColor),
+                    )): const SizedBox(height: 20,),
               ],
             ),
             for (var item in items!) item,
@@ -159,10 +171,10 @@ class FinanceItem extends StatelessWidget{
                       )
                     ],
                   )),
-                  Container(
-                      margin: const EdgeInsets.only(left: 10.0),
-                      child: const FaIcon(FontAwesome.angle_right,
-                          color: Colors.black38))
+                  // Container(
+                  //     margin: const EdgeInsets.only(left: 10.0),
+                  //     child: const FaIcon(FontAwesome.angle_right,
+                  //         color: Colors.black38))
                 ],
               ),
             ),
@@ -217,7 +229,7 @@ class FinanceItem extends StatelessWidget{
                     ),
                     onPressed: () async {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Processing"))
+                          const SnackBar(content: Text("Đang xử lý"))
                       );
                             if (kind == 1) {
                              await budgetService.deleteBudget(itemNumber!);
@@ -348,22 +360,29 @@ class BudgetCard extends StatelessWidget {
 
 class TransactionItem extends StatelessWidget {
   final Icon? icon;
+  final String? transCode;
   final String? title;
   final String subtitle;
   final String amount;
+  final String? category;
   final int type;
+  final String? typeSTR;
+  final String? budget;
+  final String? note;
 
   const TransactionItem(
       {Key? key,
       this.icon,
+      required this.transCode,
       required this.title,
       required this.subtitle,
       required this.amount,
-      required this.type})
+      required this.type, this.budget, this.note, this.category, this.typeSTR})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TransactionService transactionService = TransactionService();
     Decimal amountInt = Decimal.parse(amount);
     bool isNegative = amountInt.isNegative;
     if (type == 1) {
@@ -374,7 +393,22 @@ class TransactionItem extends StatelessWidget {
     return Slidable(
       actionPane: const SlidableScrollActionPane(),
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          log("nhan nut nay");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditTransactionScreen(
+                transCode: transCode!,
+                typeSTR: typeSTR,
+                note:note,
+                budget: budget,
+                category: category,
+                amount: amount,
+              ),
+            ),
+          );
+        },
         child: Row(
           children: [
             Container(
@@ -424,6 +458,60 @@ class TransactionItem extends StatelessWidget {
           ],
         ),
       ),
+      actions:  <Widget>[
+        IconSlideAction(
+          caption: AppLocalizations.of(context)!.remove,
+          color: QLCTColors.mainRedColor,
+          icon: FontAwesomeIcons.solidTrashAlt,
+          onTap: () => showDialog<String>(
+              context: context,
+              builder: (BuildContext context ) => CupertinoAlertDialog(
+                content: Column(
+                    children: [
+                      Text(
+
+                        AppLocalizations.of(context)!.detailTrans,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ]
+                ),
+                actions:<Widget> [
+                  CupertinoButton(
+                    child: Text(
+                      AppLocalizations.of(context)!.cancel,
+                      style: const TextStyle(fontSize: 16, color: Colors.black87),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  CupertinoButton(
+                      child: Text(
+                        AppLocalizations.of(context)!.buttonDelete,
+                        style: const TextStyle(
+                          color: QLCTColors.mainRedColor,
+                          fontSize: 16,
+                        ),
+                      ),
+                      onPressed: () async {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Đang xử lý"))
+                        );
+
+                        await transactionService.deleteTransaction(transCode!);
+
+                        Navigator.of(context).pop();
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => const RootApp(currentIndex: 0)));
+                      })
+                ],
+              )
+          ),
+        )
+      ],
     );
   }
 }

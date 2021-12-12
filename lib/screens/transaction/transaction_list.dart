@@ -267,7 +267,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                               height: 8,
                                             ),
                                             Text(
-                                              _totalIncome,
+                                              NumberFormat.currency(locale: 'vi').format(double.parse(_totalIncome)),
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 16,
@@ -327,7 +327,7 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
                                               height: 8,
                                             ),
                                             Text(
-                                              _totalExpense,
+                                              NumberFormat.currency(locale: 'vi').format(double.parse( _totalExpense)),
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
@@ -385,10 +385,16 @@ class _TransactionListScreenState extends State<TransactionListScreen> {
         categorySTR = categorySelect[trans.category];
       }
       TransactionItem transactionItem = TransactionItem(
+        transCode: trans.transactionNumber,
         title: categorySTR,
         subtitle: trans.createdAt.toString().substring(0, 10),
         amount: trans.amount.toString(),
         type: trans.type!.toInt(),
+        typeSTR: trans.type!.toString(),
+        budget: trans.budgetCode,
+        note: trans.note,
+        category: trans.category.toString(),
+
       );
       transactionItems.add(transactionItem);
     }

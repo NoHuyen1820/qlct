@@ -1,3 +1,5 @@
+
+
 import 'package:big_decimal/big_decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -97,7 +99,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   if (snapshot.hasData) {
                     return FinanceOverviewFragment(
                       title: AppLocalizations.of(context)!.transaction,
-                      amount: snapshot.data[0].toString(),
+                      amount: snapshot.data[0][0].toString(),
+                      amount2: snapshot.data[0][1].toString(),
                       items: transactionItems,
                       indexPage: 1,
                     );
@@ -149,12 +152,16 @@ class _OverviewScreenState extends State<OverviewScreen> {
   // and add into transactionItems
   List<Transaction> transactions = [];
   List<FinanceItem> transactionItems = [];
-  BigDecimal amountTotalTransactions = BigDecimal.parse("0.0");
-  Future<String> buildAmountTotalTransactions() async {
+  BigDecimal amountTotalTransactions = BigDecimal.parse("0.0"); // income
+  BigDecimal amount2TotalTransactions = BigDecimal.parse("0.0"); // outcome
+  List<String> amountsTransactions = [];
+  Future<List<String>> buildAmountTotalTransactions() async {
     transactionItems = await buildTransactionFinanceItem();
     logger.i("BEGIN - END - buildAmountTotalTransactions: " +
         amountTotalTransactions.toString());
-    return amountTotalTransactions.toString();
+    amountsTransactions.insert(0, amountTotalTransactions.toString());
+    amountsTransactions.insert(1, amount2TotalTransactions.toString());
+    return amountsTransactions;
   }
   Future<List<FinanceItem>> buildTransactionFinanceItem() async {
     logger.i("BEGIN - buildTransactionFinanceItem");
@@ -164,8 +171,15 @@ class _OverviewScreenState extends State<OverviewScreen> {
     transactions = await transactionFu;
     transactionItems = [];
     amountTotalTransactions = BigDecimal.parse("0.0");
+    amount2TotalTransactions = BigDecimal.parse("0.0");
     for (Transaction trans in transactions) {
-      amountTotalTransactions += BigDecimal.parse(trans.amount);
+      if (trans.type == 0) {
+        amountTotalTransactions += BigDecimal.parse(trans.amount);
+      }
+      if (trans.type == 1) {
+        amount2TotalTransactions += BigDecimal.parse(trans.amount);
+      }
+
       String? categorySTR ="Other category";
       if(categorySelect.containsKey(trans.category)){
         categorySTR = categorySelect[trans.category];

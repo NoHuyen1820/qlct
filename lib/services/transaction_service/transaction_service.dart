@@ -100,6 +100,18 @@ class TransactionService {
     log("END - TransactionService: createTransaction");
   }
 
+  updateTransaction(Transaction transaction) async {
+    log("BEGIN - TransactionService: updateTransaction");
+    String url = Hosting.updateTransaction;
+    String jsonBody = jsonEncode(transaction);
+    log(jsonBody);
+    Future<ResponseDTO> responseFu = Protocol.makePostRequest(url, jsonBody);
+    ResponseDTO responseDTO = await responseFu;
+    dynamic data = responseDTO.data; // [dynamic, dynamic, ..., dynamic]
+    log(data.runtimeType.toString());
+    log("END - TransactionService: updateTransaction");
+  }
+
   deleteTransaction(String transactionNumber) async {
     log("BEGIN - TransactionService: deleteTransaction");
     String url = Hosting.deleteTransaction;

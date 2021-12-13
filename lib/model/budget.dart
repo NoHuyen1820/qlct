@@ -12,9 +12,13 @@ class Budget {
   String? description;
   String name;
   int? color;
+  String? completeTarget;
+
 
   @JsonKey(fromJson: QLCTUtils.intToString, toJson: QLCTUtils.stringToInt)
   String amount;
+  @JsonKey(fromJson: QLCTUtils.intToString, toJson: QLCTUtils.stringToInt)
+  String amountTarget;
   int? status;
   int? type;
   bool? deleteFlag;
@@ -46,7 +50,9 @@ class Budget {
       this.updatedAt,
       this.createdAt,
       this.startAt,
-      this.endAt
+      this.endAt,
+      required this.amountTarget,
+      this.completeTarget,
   });
 
   Map<String, dynamic> toJson() => _$BudgetToJson(this);

@@ -15,6 +15,7 @@ Budget _$BudgetFromJson(Map<String, dynamic> json) => Budget(
       name: json['name'] as String,
       color: json['color'] as int?,
       amount: QLCTUtils.intToString(json['amount'] as int),
+      amountTarget:QLCTUtils.intToString(json['amountTarget'] as int),
       status: json['status'] as int?,
       type: json['type'] as int?,
       deleteFlag: json['deleteFlag'] as bool?,
@@ -26,6 +27,7 @@ Budget _$BudgetFromJson(Map<String, dynamic> json) => Budget(
       endAt: json['endAt'] == null
           ? null
           : QLCTUtils.stringToDateTime(json['endAt'] as String?),
+      completeTarget:json['completeTarget'] as String?,
     );
 
 Map<String, dynamic> _$BudgetToJson(Budget instance) => <String, dynamic>{
@@ -37,6 +39,7 @@ Map<String, dynamic> _$BudgetToJson(Budget instance) => <String, dynamic>{
       'name': instance.name,
       'color': instance.color,
       'amount': QLCTUtils.stringToInt(instance.amount),
+      'amountTarget':QLCTUtils.stringToInt(instance.amountTarget),
       'status': instance.status,
       'type': instance.type,
       'deleteFlag': instance.deleteFlag,
@@ -44,4 +47,5 @@ Map<String, dynamic> _$BudgetToJson(Budget instance) => <String, dynamic>{
       'createdAt': instance.createdAt?.toIso8601String(),
       'startAt': instance.startAt?.toIso8601String(),
       'endAt': instance.endAt?.toIso8601String(),
+      'completeTarget':instance.completeTarget,
     };

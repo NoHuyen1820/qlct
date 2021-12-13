@@ -1,6 +1,7 @@
 
 
 import 'package:big_decimal/big_decimal.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:qlct/components/chart/pie_finance_chart.dart';
@@ -11,6 +12,7 @@ import 'package:qlct/screens/finance/finance.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/services/transaction_service/transaction_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants.dart';
 
 class OverviewScreen extends StatefulWidget {
@@ -35,9 +37,9 @@ class _OverviewScreenState extends State<OverviewScreen> {
   @override
   void initState() {
     _userCode = authService.getCurrentUID();
+    WidgetsBinding.instance!.addPostFrameCallback((_) => showAlertBudget());
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -116,6 +118,34 @@ class _OverviewScreenState extends State<OverviewScreen> {
     );
   }
 
+  final keyIsFirstLoaded = 'is_first_loaded';
+ showAlertBudget() async{
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+   bool? isFirstLoaded = prefs.getBool(keyIsFirstLoaded);
+     if(isFirstLoaded == null){
+       showDialog <void> (
+         context: context,
+         barrierDismissible: false,
+         builder: ( BuildContext context) => CupertinoAlertDialog(
+           title: const Text("Congratulation"),
+           content: Text("^_^"),
+           actions: <Widget>
+           [
+             CupertinoButton(
+               onPressed: () {
+                 Navigator.of(context).pop();
+                 prefs.setBool(keyIsFirstLoaded, false);
+               },
+               child:const Text("OK"),
+             ),
+
+           ],
+         ),
+       );
+
+     }
+
+  }
   // Call budgetService get all budgets
   // and add into budgetItems
   List<FinanceItem> budgetItems = [];

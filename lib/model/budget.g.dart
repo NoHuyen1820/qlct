@@ -15,7 +15,9 @@ Budget _$BudgetFromJson(Map<String, dynamic> json) => Budget(
       name: json['name'] as String,
       color: json['color'] as int?,
       amount: QLCTUtils.intToString(json['amount'] as int),
-      amountTarget:QLCTUtils.intToString(json['amountTarget'] as int),
+      amountTarget: json['amountTarget'] == null
+            ? null
+            : QLCTUtils.intToString(json['amountTarget'] as int),
       status: json['status'] as int?,
       type: json['type'] as int?,
       deleteFlag: json['deleteFlag'] as bool?,
@@ -39,7 +41,7 @@ Map<String, dynamic> _$BudgetToJson(Budget instance) => <String, dynamic>{
       'name': instance.name,
       'color': instance.color,
       'amount': QLCTUtils.stringToInt(instance.amount),
-      'amountTarget':QLCTUtils.stringToInt(instance.amountTarget),
+      'amountTarget':QLCTUtils.stringToInt(instance.amountTarget!),
       'status': instance.status,
       'type': instance.type,
       'deleteFlag': instance.deleteFlag,

@@ -396,6 +396,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController nameBudgetController = TextEditingController();
   final TextEditingController amountBudgetController = TextEditingController();
+  final TextEditingController amountTargetBudgetController = TextEditingController();
   final TextEditingController passwordBudgetController = TextEditingController();
   String selectedBudgetType = "1";
 
@@ -480,7 +481,8 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
           name: nameBudgetController.text ,
           amount: amountBudgetController.text,
           userCode: _auth.getCurrentUID(),
-          amountTarget: '',
+          amountTarget: amountTargetBudgetController.text.isEmpty ? "0" : amountTargetBudgetController.text,
+          completeTarget: _complete,
         );
         await _budgetService.createBudget(budget);
         Navigator.of(context).pop();
@@ -501,7 +503,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
       ),
     );
   }
-String? _complete ="6";
+String? _complete ="-1";
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
@@ -563,9 +565,10 @@ String? _complete ="6";
                             FilteringTextInputFormatter.digitsOnly
                           ],
                           fieldName: 'SỐ TIỀN MỤC TIÊU',
+                          controller: amountTargetBudgetController,
                           colorFieldName:QLCTColors.mainPurpleColor,),
                         SizedBox(height: 20,),
-                        Text("THỜI GIAN HOÀN THÀNH",
+                        const Text("THỜI GIAN HOÀN THÀNH",
                         style: TextStyle(
 
                         ),),

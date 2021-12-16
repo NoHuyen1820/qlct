@@ -37,7 +37,7 @@
   "name": "TÊN",
   "validNameBudget": "Vui lòng nhập tên ngân sách!",
   "validNote": "Dữ liệu nhập nhỏ hơn hoặc bằng 30 ký tự",
-  "amount": "SỐ TIỀN",
+  "amount": "SỐ TIỀN HIỆN CÓ",
   "validAmount": " Vui lòng nhập số tiền!",
   "profile": "Thông Tin Cá Nhân",
   "defaultName": "Tên mặc định",

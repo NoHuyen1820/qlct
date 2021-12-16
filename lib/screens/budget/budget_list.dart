@@ -13,6 +13,7 @@ import 'package:qlct/screens/finance/finance.dart';
 import 'package:qlct/services/budget_service/budget_service.dart';
 import 'package:qlct/theme/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../constants.dart';
 import '../root_app.dart';
 
 
@@ -479,6 +480,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
           name: nameBudgetController.text ,
           amount: amountBudgetController.text,
           userCode: _auth.getCurrentUID(),
+          amountTarget: '',
         );
         await _budgetService.createBudget(budget);
         Navigator.of(context).pop();
@@ -499,7 +501,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
       ),
     );
   }
-
+String? _complete ="6";
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
@@ -524,42 +526,97 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
                         fontSize: 25,
                         fontWeight: FontWeight.w300),
                   ),
-                  Form(
-                      key: _formKey,
-                      child: Column(
-                    children: [
-                      MinimalInputField(
-                          validator:(value){
-                            if(value == null || value.isEmpty){
-                              return AppLocalizations.of(context)!.validNameBudget;
-                            } if (value.length > 30){
-                              return AppLocalizations.of(context)!.validNote;
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                        key: _formKey,
+                        child: Column(
+                      children: [
+                        MinimalInputField(
+                            validator:(value){
+                              if(value == null || value.isEmpty){
+                                return AppLocalizations.of(context)!.validNameBudget;
+                              } if (value.length > 30){
+                                return AppLocalizations.of(context)!.validNote;
+                              }
+                               return null;
+                            },
+                            fieldName: AppLocalizations.of(context)!.name,
+                            controller: nameBudgetController,
+                            colorFieldName: QLCTColors.mainPurpleColor),
+                        MinimalInputField(
+                          keyboardType:TextInputType.number,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            validator: (value){
+                            if (value!.isEmpty){
+                              return " Vui lòng nhập số tiền ngân sách! ";
                             }
-                             return null;
-                          },
-                          fieldName: AppLocalizations.of(context)!.name,
-                          controller: nameBudgetController,
-                          colorFieldName: QLCTColors.mainPurpleColor),
-                      MinimalInputField(
-                        keyboardType:TextInputType.number,
+                            },
+                            fieldName: AppLocalizations.of(context)!.amount,
+                            controller: amountBudgetController,
+                            colorFieldName: QLCTColors.mainPurpleColor),
+                        MinimalInputField(
+                          keyboardType:TextInputType.number,
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly
                           ],
-                          validator: (value){
-                          if (value!.isEmpty){
-                            return " Vui lòng nhập số tiền ngân sách! ";
-                          }
-                          },
-                          fieldName: AppLocalizations.of(context)!.amount,
-                          controller: amountBudgetController,
-                          colorFieldName: QLCTColors.mainPurpleColor),
-                      // MinimalInputField(
-                      //     fieldName: "PASSWORD",
-                      //     controller: passwordBudgetController,
-                      //     colorFieldName: QLCTColors.mainPurpleColor),
-                      buttonCustom(AppLocalizations.of(context)!.save, QLCTColors.mainPurpleColor),
-                    ],
-                  )),
+                          fieldName: 'SỐ TIỀN MỤC TIÊU',
+                          colorFieldName:QLCTColors.mainPurpleColor,),
+                        SizedBox(height: 20,),
+                        Text("THỜI GIAN HOÀN THÀNH",
+                        style: TextStyle(
+
+                        ),),
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              DropdownButtonHideUnderline(
+                                child: ButtonTheme(
+                                  buttonColor: Colors.black,
+                                  alignedDropdown:true,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration:BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:BorderRadius.circular(10.0)
+                                      ),
+                                      child: DropdownButton<String>(
+                                          value: _complete,
+                                          items: completeOption.map((description, value){
+                                            return MapEntry(description,
+                                                DropdownMenuItem(
+                                                  value: value,
+                                                  child: Text(description),
+                                                ));
+                                          }).values.toList(),
+                                          iconSize: 30,
+                                          icon: null,
+                                          style: const TextStyle(
+                                            color: Colors.black87,
+                                            fontSize: 18,
+                                          ),
+                                          // hint: const Text("Category"),
+                                          onChanged: (valueNew)  {
+                                            setState(() {
+                                              _complete = valueNew;
+                                              //_getRecurringList();
+                                            });
+                                          }
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        buttonCustom(AppLocalizations.of(context)!.save, QLCTColors.mainPurpleColor),
+                      ],
+                    )),
+                  ),
                 ],
               ),
             ),

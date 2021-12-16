@@ -98,7 +98,14 @@ const Map<int, Color> categoryColors = {
   11:QLCTColors.mainCRallyColor,
   12:QLCTColors.mainBRallyColor,
 };
-
+const Map<String, String> completeOption ={
+  "1 tháng": "1",
+  "2 tháng":"2",
+  "3 tháng":"3",
+  "6 tháng":"4",
+  "12 tháng":"5",
+  "Không":"6",
+};
 
 const Map<String, String> recurringOptions = {
   "Không lặp lại":noneScheduleNotify,

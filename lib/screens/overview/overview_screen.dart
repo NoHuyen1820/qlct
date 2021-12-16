@@ -1,5 +1,6 @@
 
 
+import 'dart:developer';
 import 'package:big_decimal/big_decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,13 +34,20 @@ class _OverviewScreenState extends State<OverviewScreen> {
   var authService = AuthService();
   late String _userCode;
   List<String> _budgetCodes =[];
+  List<Budget> _budgets = [];
 
   @override
   void initState() {
     _userCode = authService.getCurrentUID();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => showAlertBudget());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => showAlertBudget(context));
     super.initState();
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -119,33 +127,90 @@ class _OverviewScreenState extends State<OverviewScreen> {
   }
 
   final keyIsFirstLoaded = 'is_first_loaded';
- showAlertBudget() async{
+ showAlertBudget(BuildContext context) async {
+   log("BEGIN: showAlertBudget");
    SharedPreferences prefs = await SharedPreferences.getInstance();
-   bool? isFirstLoaded = prefs.getBool(keyIsFirstLoaded);
-     if(isFirstLoaded == null){
-       showDialog <void> (
-         context: context,
-         barrierDismissible: false,
-         builder: ( BuildContext context) => CupertinoAlertDialog(
-           title: const Text("Congratulation"),
-           content: Text("^_^"),
-           actions: <Widget>
-           [
-             CupertinoButton(
-               onPressed: () {
-                 Navigator.of(context).pop();
-                 prefs.setBool(keyIsFirstLoaded, false);
-               },
-               child:const Text("OK"),
-             ),
+   await Future.delayed(const Duration(seconds: 5));
+   await buildBudgetFinanceItem();
+   await Future.delayed(const Duration(seconds: 5));
 
-           ],
-         ),
-       );
+   // scan all budgets
+   DateTime currentDate = DateTime.now();
+   bool isShowDialog = false;
+   String messageDialog = "";
+   log("length budgets: " + _budgets.length.toString());
+   List<Budget> budgetsNeedUpdate = [];
+   for (Budget b in _budgets) {
+     log("status: "+ b.name + "have status " + b.status.toString());
+     DateTime? endDate = b.endAt;
+     if (endDate != null) {
+       int currentAmount = int.parse(b.amount);
+       int targetAmount = int.parse(b.amountTarget!);
+       int deltaDays = currentDate.compareTo(endDate);
+       if (/*deltaDays >= 0 &&*/ currentAmount.compareTo(targetAmount) != -1 &&
+        b.status != -1) {
+         // dialog success
+         messageDialog += "Ngân sách " + b.name.toUpperCase() + " của bạn đã hoàn thành đúng hạn.\n";
+         log("message dialog success: " + messageDialog);
+         budgetsNeedUpdate.add(b);
+         isShowDialog = true;
+         continue;
+       }
+       if (deltaDays < 0 && endDate.difference(currentDate).inDays < 5 &&
+           currentAmount.compareTo(targetAmount) == -1 && b.status != -1) { // undue
+         // dialog warning
+         messageDialog += "Ngân sách " + b.name.toUpperCase() + " của bạn sắp đến hạn.\n";
+         log("message dialog warning: " + messageDialog);
+         isShowDialog = true;
+         continue;
+       }
+       if (deltaDays >= 0 && currentAmount.compareTo(targetAmount) == -1 &&
+           b.status != -1) {
+         // dialog mission fail
+         messageDialog += "Ngân sách " + b.name.toUpperCase() + "  đã vượt quá thời hạn.\n";
+         log("message dialog mission fail: " + messageDialog);
+         isShowDialog = true;
+         continue;
+       }
 
      }
-
+   }
+   bool? isFirstLoaded = prefs.getBool(keyIsFirstLoaded);
+   log("isFirstLoaded " + isFirstLoaded!.toString());
+   log("messageDialog " + messageDialog.toString());
+   log("isShowDialog " + isShowDialog.toString());
+    if (/*isFirstLoaded == null &&*/ messageDialog.isNotEmpty && isShowDialog) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: const Text("**** Chú ý ****"),
+          content: Text(messageDialog),
+          actions: <Widget>[
+            CupertinoButton(
+              onPressed: () {
+                if(budgetsNeedUpdate.isNotEmpty) {
+                  for (Budget b in budgetsNeedUpdate) {
+                    Budget newBudget = Budget(
+                      budgetCode: b.budgetCode,
+                      name: b.name,
+                      amount: b.amount,
+                      amountTarget: b.amountTarget,
+                      status: -1);
+                    budgetService.updateBudget(newBudget);
+                  }
+                }
+                Navigator.of(context).pop();
+                prefs.setBool(keyIsFirstLoaded, false);
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    }
   }
+
   // Call budgetService get all budgets
   // and add into budgetItems
   List<FinanceItem> budgetItems = [];
@@ -160,6 +225,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
     logger.i("BEGIN - buildBudgetFinanceItem");
     Future<List<Budget>> budgetFu = budgetService.getAllBudget(_userCode);
     List<Budget> budgets = await budgetFu;
+    _budgets = budgets;
     budgetItems = [];
     amountTotalBudgets = BigDecimal.parse("0.0");
     for (Budget b in budgets) {

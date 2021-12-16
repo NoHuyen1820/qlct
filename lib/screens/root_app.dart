@@ -41,15 +41,15 @@ class _RootAppState extends State<RootApp> {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         showDialog(context: context, builder: (context) => CupertinoAlertDialog(
-          title: const Text('Allow notifications'),
-          content: const Text('Our app would like to send you notifications'),
+          title: const Text('Thông báo'),
+          content: const Text('Ứng dụng của chúng tôi muốn gửi cho bạn thông báo'),
           actions: [
             TextButton(
                 onPressed: (){
                   Navigator.pop(context);
                 },
                 child: const Text(
-                    'Don\'t allow',
+                    'Không cho phép',
                   style: TextStyle(color: Colors.grey),
                 )
             ),
@@ -59,7 +59,7 @@ class _RootAppState extends State<RootApp> {
                       .then((_) => Navigator.pop(context));
                 },
                 child: const Text(
-                  'Allow',
+                  'Cho phép',
                   style: TextStyle(
                       color: QLCTColors.mainPurpleColor,
                       fontWeight: FontWeight.bold),

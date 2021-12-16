@@ -97,14 +97,15 @@ const Map<int, Color> categoryColors = {
   10:QLCTColors.mainFRallyColor,
   11:QLCTColors.mainCRallyColor,
   12:QLCTColors.mainBRallyColor,
+  13:QLCTColors.mainDRallyColor,
 };
 const Map<String, String> completeOption ={
   "1 tháng": "1",
   "2 tháng":"2",
   "3 tháng":"3",
-  "6 tháng":"4",
-  "12 tháng":"5",
-  "Không":"6",
+  "6 tháng":"6",
+  "12 tháng":"12",
+  "Không":"-1",
 };
 
 const Map<String, String> recurringOptions = {

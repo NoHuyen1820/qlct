@@ -72,9 +72,8 @@ class _ScheduleListScreenState extends State<ScheduleListScreen> {
                         child: Card(
                           elevation: 5,
                           child: ListTile(
-                            title: Text(fetchedSchedules[index].name +'\n'+
-                                fetchedSchedules[index].body),
-                            // subtitle: Text(fetchedSchedules[index].periodic),
+                            title: Text(fetchedSchedules[index].name),
+                            subtitle: Text(fetchedSchedules[index].body),
                             trailing: IconButton(
                               onPressed: () => showDialog<String>(
                                   context: context,

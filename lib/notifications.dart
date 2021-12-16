@@ -49,7 +49,7 @@ Future<void> createReminderNotificationByDay(int id, String name, NotificationDa
         id: id,
         channelKey: 'scheduled_channel',
         title: '${Emojis.time_alarm_clock} Money Management',
-        body: 'Bạn có chi tiêu $name hàng ngày hôm nay',
+        body: 'Bạn có chi tiêu $name định kì hôm nay',
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [

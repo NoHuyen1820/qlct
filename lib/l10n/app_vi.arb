@@ -33,7 +33,7 @@
   "note": "Ghi chú",
   "makeRecurring": "Chọn định kỳ",
   "save": "Lưu",
-  "editBudget":"CẬP NHẬT NGÂN SÁCH",
+  "editBudget":"TẠO NGÂN SÁCH",
   "name": "TÊN",
   "validNameBudget": "Vui lòng nhập tên ngân sách!",
   "validNote": "Dữ liệu nhập nhỏ hơn hoặc bằng 30 ký tự",

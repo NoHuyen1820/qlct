@@ -18,7 +18,7 @@ class Budget {
   @JsonKey(fromJson: QLCTUtils.intToString, toJson: QLCTUtils.stringToInt)
   String amount;
   @JsonKey(fromJson: QLCTUtils.intToString, toJson: QLCTUtils.stringToInt)
-  String amountTarget;
+  String? amountTarget;
   int? status;
   int? type;
   bool? deleteFlag;

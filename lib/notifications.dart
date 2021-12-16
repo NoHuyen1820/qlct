@@ -42,14 +42,14 @@ Future<void> createReminderNotification(NotificationWeekAndTime scheduled) async
   );
 }
 
-Future<void> createReminderNotificationByDay(int id, String name, NotificationDateTime scheduled) async {
+Future<void> createReminderNotificationByDay(int id, String name, String amount, NotificationDateTime scheduled) async {
   log("BEGIN - createReminderNotificationByDay");
   await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: id,
         channelKey: 'scheduled_channel',
         title: '${Emojis.time_alarm_clock} Money Management',
-        body: 'Bạn có chi tiêu $name định kì hôm nay',
+        body: 'Bạn có một chi tiêu hằng ngày cho $name $amount VND',
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [
@@ -69,14 +69,14 @@ Future<void> createReminderNotificationByDay(int id, String name, NotificationDa
   log("END - createReminderNotificationByDay");
 }
 
-Future<void> createReminderNotificationByWeek(int id, String name, NotificationDateTime scheduled) async {
+Future<void> createReminderNotificationByWeek(int id, String name,String amount, NotificationDateTime scheduled) async {
   log("BEGIN - createReminderNotificationByWeek");
   await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: id,
         channelKey: 'scheduled_channel',
         title: '${Emojis.time_alarm_clock} Money Management ',
-        body: 'Bạn có chi tiêu $name định kì hàng tuần hôm nay',
+        body: 'Bạn có một chi tiêu hằng tuần cho $name $amount VND',
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [
@@ -99,14 +99,14 @@ Future<void> createReminderNotificationByWeek(int id, String name, NotificationD
   log("BEGIN - createReminderNotificationByWeek");
 }
 
-Future<void> createReminderNotificationByMonth(int id, String name, NotificationDateTime scheduled) async {
+Future<void> createReminderNotificationByMonth(int id, String name,String amount, NotificationDateTime scheduled) async {
   log("BEGIN - createReminderNotificationByMonth");
   await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: id,
         channelKey: 'scheduled_channel',
         title: '${Emojis.time_alarm_clock} Money Management',
-        body: 'Bạn có chi tiêu $name định kì hàng tháng hôm nay ',
+        body: 'Bạn có một chi tiêu hằng tháng cho $name $amount VND ',
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [

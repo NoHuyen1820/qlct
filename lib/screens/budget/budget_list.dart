@@ -567,11 +567,17 @@ String? _complete ="-1";
                           fieldName: 'SỐ TIỀN MỤC TIÊU',
                           controller: amountTargetBudgetController,
                           colorFieldName:QLCTColors.mainPurpleColor,),
-                        SizedBox(height: 20,),
-                        const Text("THỜI GIAN HOÀN THÀNH",
-                        style: TextStyle(
-
-                        ),),
+                        const SizedBox(height: 20,),
+                        Container(
+                          margin: const EdgeInsets.only(right:170.0),
+                          child: const Text("THỜI GIAN HOÀN THÀNH",
+                            style: TextStyle(color: grey,
+                            fontSize: 15,
+                            fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20,),
                         SizedBox(
                           child: Row(
                             children: [
@@ -579,8 +585,7 @@ String? _complete ="-1";
                                 child: ButtonTheme(
                                   buttonColor: Colors.black,
                                   alignedDropdown:true,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                  child: Expanded(
                                     child: Container(
                                       decoration:BoxDecoration(
                                           color: Colors.white,
@@ -616,6 +621,7 @@ String? _complete ="-1";
                             ],
                           ),
                         ),
+                        const SizedBox(height: 20,),
                         buttonCustom(AppLocalizations.of(context)!.save, QLCTColors.mainPurpleColor),
                       ],
                     )),

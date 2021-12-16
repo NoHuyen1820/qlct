@@ -262,7 +262,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           )),
                       const Spacer(),
                       Container(
-                        margin: const EdgeInsets.only(left: 10.0),
+                        margin: const EdgeInsets.only(left: 8.0),
                         child: const FaIcon(FontAwesome.angle_right,
                             color: Colors.black38),
                       ),

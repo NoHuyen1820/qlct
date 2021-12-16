@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/typicons_icons.dart';
@@ -57,81 +59,90 @@ class _ScheduleListScreenState extends State<ScheduleListScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _isLoading
-              ? const Center(
+          if (_isLoading) const Center(
                   child: CircularProgressIndicator(),
-                )
-              : Column(
+                ) else Column(
                   children: [
                     ListView.builder(
                       shrinkWrap: true,
                       itemCount: fetchedSchedules.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 4, vertical: 2),
-                        child: Card(
-                          elevation: 5,
-                          child: ListTile(
-                            title: Text(fetchedSchedules[index].name),
-                            subtitle: Text(fetchedSchedules[index].body),
-                            trailing: IconButton(
-                              onPressed: () => showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      CupertinoAlertDialog(
-                                        content: Column(children: const [
-                                          Text(
-                                            "Bạn có chắc chắn xóa định kì này?",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-                                        ]),
-                                        actions: <Widget>[
-                                          CupertinoButton(
-                                            child: const Text(
-                                              "Huỷ",
+                      itemBuilder: (context, index) {
+                        String body = fetchedSchedules[index].body;
+                        List<String> newBody = body.split(" ");
+                        String reccuring = newBody.sublist(5,7).join(" ");
+                        String category =newBody.sublist(8,newBody.length -1).join(" ");
+                        String amount = newBody.sublist(newBody.length -1, newBody.length).join(" ");
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4, vertical: 2),
+                          child: Card(
+                            elevation: 5,
+                            child: ListTile(
+                              title: Text(category + " " + "-" + " " + reccuring.toUpperCase()),
+                              subtitle: Text(amount + " "+ "VND",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: QLCTColors.mainGreenColor,
+                              ),),
+                              trailing: IconButton(
+                                onPressed: () => showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        CupertinoAlertDialog(
+                                          content: Column(children: const [
+                                            Text(
+                                              "Bạn có chắc chắn xóa định kì này?",
                                               style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black87),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          CupertinoButton(
-                                              child: const Text(
-                                                "Đồng ý",
-                                                style: TextStyle(
-                                                  color:
-                                                      QLCTColors.mainRedColor,
-                                                  fontSize: 16,
-                                                ),
+                                                fontSize: 16,
+                                                color: Colors.black87,
                                               ),
-                                              onPressed: () async {
-                                                await scheService
-                                                    .deleteSchedule(
-                                                        fetchedSchedules[
-                                                                index]
-                                                            .id
-                                                            .toString());
-                                                await cancelScheduleNotificationById(
-                                                    fetchedSchedules[index]
-                                                        .id);
-                                                await scheduleData.fetch();
+                                            ),
+                                          ]),
+                                          actions: <Widget>[
+                                            CupertinoButton(
+                                              child: const Text(
+                                                "Huỷ",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.black87),
+                                              ),
+                                              onPressed: () {
                                                 Navigator.of(context).pop();
-                                              })
-                                        ],
-                                      )),
-                              icon: const Icon(
-                                Typicons.trash,
-                                color: QLCTColors.mainRedColor,
+                                              },
+                                            ),
+                                            CupertinoButton(
+                                                child: const Text(
+                                                  "Đồng ý",
+                                                  style: TextStyle(
+                                                    color:
+                                                    QLCTColors.mainRedColor,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                                onPressed: () async {
+                                                  await scheService
+                                                      .deleteSchedule(
+                                                      fetchedSchedules[
+                                                      index]
+                                                          .id
+                                                          .toString());
+                                                  await cancelScheduleNotificationById(
+                                                      fetchedSchedules[index]
+                                                          .id);
+                                                  await scheduleData.fetch();
+                                                  Navigator.of(context).pop();
+                                                })
+                                          ],
+                                        )),
+                                icon: const Icon(
+                                  Typicons.trash,
+                                  color: QLCTColors.mainRedColor,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
+                        );
+                      }
                     ),
                   ],
                 ),

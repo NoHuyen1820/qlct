@@ -76,7 +76,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
               switch (_recurring) {
                 case dayScheduleNotify:
                   createReminderNotificationByDay(id, categorySelect[int.parse(_mycategory!)]!,
-                      NotificationDateTime(dateTime: DateTime.now()));
+                      amountTransController.text, NotificationDateTime(dateTime: DateTime.now()));
                   scheduleModel.Schedule schedule = scheduleModel.Schedule(
                     scheduleId: id,
                     amount: amountTransController.text,
@@ -91,7 +91,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                   await scheService.createSchedule(schedule);
                   break;
                 case weekScheduleNotify:
-                  createReminderNotificationByWeek(id, categorySelect[int.parse(_mycategory!)]!,
+                  createReminderNotificationByWeek(id, categorySelect[int.parse(_mycategory!)]!,amountTransController.text,
                       NotificationDateTime(dateTime: DateTime.now()));
                   scheduleModel.Schedule schedule = scheduleModel.Schedule(
                     scheduleId: id,
@@ -107,7 +107,7 @@ class _AddTransactionScreenState  extends State <AddTransactionScreen>{
                   await scheService.createSchedule(schedule);
                   break;
                 case monthScheduleNotify:
-                  createReminderNotificationByMonth(id, categorySelect[int.parse(_mycategory!)]!,
+                  createReminderNotificationByMonth(id, categorySelect[int.parse(_mycategory!)]!,amountTransController.text,
                       NotificationDateTime(dateTime: DateTime.now()));
                   scheduleModel.Schedule schedule = scheduleModel.Schedule(
                     scheduleId: id,

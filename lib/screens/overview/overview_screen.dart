@@ -176,7 +176,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
      }
    }
    bool? isFirstLoaded = prefs.getBool(keyIsFirstLoaded);
-   log("isFirstLoaded " + isFirstLoaded!.toString());
+   log("isFirstLoaded " + isFirstLoaded.toString());
    log("messageDialog " + messageDialog.toString());
    log("isShowDialog " + isShowDialog.toString());
     if (/*isFirstLoaded == null &&*/ messageDialog.isNotEmpty && isShowDialog) {
@@ -184,7 +184,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => CupertinoAlertDialog(
-          title: const Text("**** Chú ý ****"),
+          title: const Text("Thông báo"),
           content: Text(messageDialog),
           actions: <Widget>[
             CupertinoButton(

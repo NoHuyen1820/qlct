@@ -60,8 +60,8 @@ Future<void> createReminderNotificationByDay(int id, String name, String amount,
       ],
       schedule: NotificationCalendar(
         repeats: true,
-        hour: DateTime.now().hour,
-        minute: DateTime.now().minute + 2,
+        hour: 8,
+        minute: 20,
         second: 0,
         millisecond: 0,
       )
@@ -88,10 +88,8 @@ Future<void> createReminderNotificationByWeek(int id, String name,String amount,
       schedule: NotificationCalendar(
         repeats: true,
         weekday: scheduled.dateTime.weekday,
-        hour: DateTime.now().hour,
-        minute: DateTime.now().minute + 4,
-        // hour: 8,
-        // minute: 20,
+        hour: 8,
+        minute: 20,
         second: 0,
         millisecond: 0,
       )
@@ -106,7 +104,7 @@ Future<void> createReminderNotificationByMonth(int id, String name,String amount
         id: id,
         channelKey: 'scheduled_channel',
         title: '${Emojis.time_alarm_clock} Money Management',
-        body: 'Bạn có một chi tiêu hằng tháng cho $name $amount VND ',
+        body: 'Bạn có một chi tiêu hằng tháng cho $name $amount VND',
         notificationLayout: NotificationLayout.Default,
       ),
       actionButtons: [
@@ -118,10 +116,8 @@ Future<void> createReminderNotificationByMonth(int id, String name,String amount
       schedule: NotificationCalendar(
         repeats: true,
         day: scheduled.dateTime.day,
-        hour: DateTime.now().hour,
-        minute: DateTime.now().minute + 6,
-        // hour: 8,
-        // minute: 0,
+        hour: 8,
+        minute: 0,
         second: 0,
         millisecond: 0,
       )

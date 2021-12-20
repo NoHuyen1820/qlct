@@ -92,7 +92,7 @@ class _SignUpState extends State<Body> {
                      if (_formKey.currentState!.validate()) {
                        // call check validate
                       ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Processing")));
+                          const SnackBar(content: Text("Đang xử lý")));
 
                         await authService.createUserWithEmailAndPasswordLocal(
                             emailController.text, passwordController.text,displayNameController.text);

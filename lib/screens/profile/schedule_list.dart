@@ -70,19 +70,19 @@ class _ScheduleListScreenState extends State<ScheduleListScreen> {
                         String body = fetchedSchedules[index].body;
                         List<String> newBody = body.split(" ");
                         String reccuring = newBody.sublist(5,7).join(" ");
-                        String category =newBody.sublist(8,newBody.length -1).join(" ");
-                        String amount = newBody.sublist(newBody.length -1, newBody.length).join(" ");
+                        String category =newBody.sublist(8,newBody.length -2).join(" ");
+                        String amount = newBody.sublist(newBody.length -2, newBody.length).join(" ");
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 4, vertical: 2),
                           child: Card(
                             elevation: 5,
                             child: ListTile(
-                              title: Text(category + " " + "-" + " " + reccuring.toUpperCase()),
-                              subtitle: Text(amount + " "+ "VND",
+                              title: Text(category +" - "+ reccuring.toUpperCase()),
+                              subtitle: Text(amount,
                               style: const TextStyle(
                                 fontSize: 16,
-                                color: QLCTColors.mainGreenColor,
+                                color: QLCTColors.mainPurpleColor,
                               ),),
                               trailing: IconButton(
                                 onPressed: () => showDialog<String>(

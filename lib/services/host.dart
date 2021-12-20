@@ -1,5 +1,6 @@
 class Hosting {
   static const String hostDCT = "192.168.1.3";
+  static const String hostHXD = "192.168.1.87";
   static const String hostNgrok = "http://localhost:1818";
   static const String local = "localhost";
   static const String host = "http://" + local + ":1818";

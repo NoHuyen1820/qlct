@@ -109,7 +109,7 @@ class FinanceItem extends StatelessWidget{
       required this.amount,
       this.type,
       this.itemNumber,
-      this.kind})
+      this.kind,})
       : super(key: key);
 
   @override
@@ -258,7 +258,9 @@ class BudgetCard extends StatelessWidget {
   final String amount;
   final String? password;
   final Function()? press;
+  final String? completeTarget;
   final bool isCreate;
+  final DateTime? endDate;
 
   const BudgetCard({
     Key? key,
@@ -268,7 +270,7 @@ class BudgetCard extends StatelessWidget {
     required this.press,
     this.svgSrc,
     this.pngSrc,
-    required this.isCreate,
+    required this.isCreate, this.endDate, this.completeTarget,
   }) : super(key: key);
 
   @override
@@ -278,7 +280,9 @@ class BudgetCard extends StatelessWidget {
     return Container(
       // padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: isCreate ? Colors.purpleAccent : const Color(0xfff7f7f7),
+        color: null == endDate
+            ? (isCreate ? Colors.purpleAccent : const Color(0xfff7f7f7))
+            :( isCreate ? Colors.purpleAccent : const Color(0xFFB2F2FF)),
         borderRadius: BorderRadius.circular(13),
         boxShadow: isCreate
             ? [
@@ -348,6 +352,18 @@ class BudgetCard extends StatelessWidget {
                     fontSize: 25,
                   ),
                 ),
+                if(null != endDate)
+                  Text("($completeTarget tháng)",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
+                      fontFamily: "Rubik-Bold",
+                      color: isCreate ? Colors.white : Colors.black87,
+                    )
+
+                  ),
                 const Spacer(),
               ],
             ),

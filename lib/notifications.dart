@@ -61,7 +61,7 @@ Future<void> createReminderNotificationByDay(int id, String name, String amount,
       schedule: NotificationCalendar(
         repeats: true,
         hour: 8,
-        minute: 20,
+        minute: 0,
         second: 0,
         millisecond: 0,
       )
@@ -89,7 +89,7 @@ Future<void> createReminderNotificationByWeek(int id, String name,String amount,
         repeats: true,
         weekday: scheduled.dateTime.weekday,
         hour: 8,
-        minute: 20,
+        minute: 0,
         second: 0,
         millisecond: 0,
       )

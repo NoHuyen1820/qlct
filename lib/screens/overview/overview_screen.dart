@@ -92,7 +92,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                     return FinanceOverviewFragment(
                       title: AppLocalizations.of(context)!.budget,
                       amount: snapshot.data[0].toString(),
-                      items: budgetItems,
+                      items: budgetItems.length <=4 ? budgetItems: budgetItems.sublist(0, 3),
                       indexPage: 2,
                     );
                   } else {
@@ -111,7 +111,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
                       title: AppLocalizations.of(context)!.transaction,
                       amount: snapshot.data[0][0].toString(),
                       amount2: snapshot.data[0][1].toString(),
-                      items: transactionItems,
+                      items: transactionItems.length <=4 ? transactionItems: transactionItems.sublist(0, 3),
                       indexPage: 1,
                     );
                   } else {

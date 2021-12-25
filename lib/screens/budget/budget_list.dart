@@ -32,6 +32,10 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
   late String selectedBudgetType;
   List<BudgetCard> bcs = [];
 
+  var logger = Logger(
+    printer: PrettyPrinter(),
+  );
+
   @override
   void initState() {
     _children = [];
@@ -334,6 +338,8 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                       password:
                           b.password!.isEmpty ? '' : b.password.toString(),
                       isCreate: false,
+                      amountTarget: b.amountTarget,
+                      completeTarget: b.completeTarget,
                     );
                   });
             }
@@ -348,6 +354,8 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
                     amount: b.amount,
                     password: '',
                     isCreate: false,
+                    amountTarget: b.amountTarget,
+                    completeTarget:b.completeTarget,
                   );
                 });
           }
@@ -356,6 +364,9 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
         title: b.name,
         amount: b.amount,
         password: b.password,
+        endDate:b.endAt,
+        completeTarget: b.completeTarget,
+
       );
       bcs.add(bc);
     }
@@ -374,8 +385,10 @@ class _BudgetListScreenState extends State<BudgetListScreen> {
 class BudgetModalBottomSheet extends StatefulWidget {
   final String name;
   final String amount;
+  final String? amountTarget;
   final String? password;
   final bool isCreate;
+  final String? completeTarget;
 
   const BudgetModalBottomSheet({
     Key? key,
@@ -383,6 +396,8 @@ class BudgetModalBottomSheet extends StatefulWidget {
     required this.amount,
     this.password,
     required this.isCreate,
+    this.amountTarget,
+    this.completeTarget,
   }) : super(key: key);
 
   @override
@@ -399,6 +414,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
   final TextEditingController amountTargetBudgetController = TextEditingController();
   final TextEditingController passwordBudgetController = TextEditingController();
   String selectedBudgetType = "1";
+  String? _complete ="-1";
 
   final BudgetService _budgetService = BudgetService();
   final _auth = AuthService();
@@ -407,7 +423,17 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
   initState() {
     nameBudgetController.text = widget.name;
     amountBudgetController.text = widget.amount;
-    // passwordBudgetController.text = widget.password;
+    if (widget.amountTarget != null && widget.amountTarget != "-1") {
+      amountTargetBudgetController.text = widget.amountTarget!;
+    }
+    if(widget.amountTarget == "-1"){
+      amountTargetBudgetController.text= " ";
+    }
+
+    if (widget.completeTarget != null) {
+      _complete = widget.completeTarget;
+    }
+
     super.initState();
   }
 
@@ -481,7 +507,7 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
           name: nameBudgetController.text ,
           amount: amountBudgetController.text,
           userCode: _auth.getCurrentUID(),
-          amountTarget: amountTargetBudgetController.text.isEmpty ? "0" : amountTargetBudgetController.text,
+          amountTarget: amountTargetBudgetController.text.isEmpty ? "-1" : amountTargetBudgetController.text,
           completeTarget: _complete,
         );
         await _budgetService.createBudget(budget);
@@ -503,7 +529,6 @@ class _BudgetModalBottomSheetState extends State<BudgetModalBottomSheet> {
       ),
     );
   }
-String? _complete ="-1";
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
